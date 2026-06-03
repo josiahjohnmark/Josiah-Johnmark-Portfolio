@@ -6,3 +6,5 @@ coverage/
 *.log
 .env*
 !.env.example
+projects videos/
+drawings and art/

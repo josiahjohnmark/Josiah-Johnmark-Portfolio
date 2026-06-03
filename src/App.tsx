@@ -55,136 +55,116 @@ const staggerContainer = {
 };
 
 // Preset projects data for portfolio
-// Preset projects data for portfolio
 const PROJECTS_DATA = [
   {
     id: 1,
-    title: "Luxurious Real Estate Hub",
+    title: "Project 1",
     category: "Development",
-    shortDesc: "High-performance properties search engine and showcase booking portal.",
-    image: "/josiah-no-background.png",
-    tags: ["React 19", "Neumorphic UI", "Vercel"],
-    details: "Crafted a gorgeous, lightweight real estate sample app. Implements high-end bento listings, maps integration, and fluid search filters for property catalogs.",
-    metric: "1.2s Page Load",
-    iframeUrl: "https://real-estate-sample-website.vercel.app/"
+    shortDesc: "Creative interactive media development.",
+    tags: ["Vite", "Framer Motion", "Tailwind CSS"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
   },
   {
     id: 2,
-    title: "Skylite Aviation Portal",
+    title: "Project 2",
     category: "Development",
-    shortDesc: "Tactile private aviation schedule board and booking console.",
-    image: "/josiah-no-background.png",
-    tags: ["Vite", "Liquid Glass", "Framer Motion"],
-    details: "Created an immersive schedule board and booking system for aircraft. Responsive mock dashboards let clients request flights with premium micro-interactions.",
-    metric: "60 FPS Transitions",
-    iframeUrl: "https://skylite-plane.vercel.app/"
+    shortDesc: "Creative interactive media development.",
+    tags: ["React 19", "Neumorphic UI", "Vercel"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
   },
   {
     id: 3,
-    title: "Premium Design Showcase",
+    title: "Project 3",
     category: "Development",
-    shortDesc: "Tactile digital landscape with dynamic theme modifiers and modular grids.",
-    image: "/josiah-no-background.png",
+    shortDesc: "Creative interactive media development.",
     tags: ["Next.js 15", "Web Audio API", "Tailwind CSS"],
-    details: "Engineered a high-fidelity interactive creative layout. Features dynamic backdrop-filter blur windows, modular interactive grids, and integrated background sound triggers.",
-    metric: "99/100 Lighthouse",
-    iframeUrl: "https://premium-web-design-sample.vercel.app/"
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
+  },
+  {
+    id: 4,
+    title: "Project 4",
+    category: "Development",
+    shortDesc: "Creative interactive media development.",
+    tags: ["Three.js", "WebGL", "TypeScript"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
+  },
+  {
+    id: 5,
+    title: "Project 5",
+    category: "Development",
+    shortDesc: "Creative interactive media development.",
+    tags: ["React 19", "Vercel"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
+  },
+  {
+    id: 6,
+    title: "Project 6",
+    category: "Development",
+    shortDesc: "Creative interactive media development.",
+    tags: ["Vite", "Framer Motion"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
+  },
+  {
+    id: 7,
+    title: "Project 7",
+    category: "Development",
+    shortDesc: "Creative interactive media development.",
+    tags: ["Web Audio API", "Tailwind CSS"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
+  },
+  {
+    id: 8,
+    title: "Project 8",
+    category: "Development",
+    shortDesc: "Creative interactive media development.",
+    tags: ["Three.js", "WebGL"],
+    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    metric: "60 FPS loop",
+    iframeUrl: ""
   }
 ];
 
 interface ProjectCardProps {
   proj: typeof PROJECTS_DATA[0];
-  setSelectedProject: React.Dispatch<React.SetStateAction<typeof PROJECTS_DATA[0] | null>>;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ proj, setSelectedProject }) => {
-  const videoRef = React.useRef<HTMLVideoElement>(null);
+const ProjectCard: React.FC<ProjectCardProps> = ({ proj }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    if (videoRef.current) {
-      videoRef.current.play().catch(err => console.log("Video play failed:", err));
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  };
-
   const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-  const videoSrc = `/videos/${slug}.mp4`;
+  const staticImageSrc = `/images/thumbnails/${slug}.webp`;
+  const animationSrc = `/images/animations/${slug}.webp`;
 
   return (
     <motion.div
       layout
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="neu-out rounded-[2.5rem] border border-white/60 p-6 md:p-8 flex flex-col lg:flex-row gap-8 group transition-all duration-300 w-full min-h-[50vh] lg:min-h-[60vh] justify-between items-stretch"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="neu-out rounded-[2.5rem] border border-white/60 p-4 md:p-6 group transition-all duration-300 w-full hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] hover:-translate-y-2"
     >
-      {/* Video / Image Preview Area */}
-      <div 
-        className="w-full lg:w-[55%] aspect-[16/10] neu-in rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner cursor-pointer flex-shrink-0" 
-        onClick={() => setSelectedProject(proj)}
-      >
-        <div className="w-full h-full rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center relative">
-          {/* Video element */}
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            poster={proj.image}
-            muted
-            playsInline
-            loop
-            className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 z-10"
-          />
-
-          {/* Static image fallback */}
+      {/* Full scale image area - no aspect-video restriction to prevent cropping */}
+      <div className="w-full neu-in rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
+        <div className="w-full rounded-2xl overflow-hidden bg-[#e0e5ec] flex items-center justify-center relative">
           <img 
-            src={proj.image} 
+            src={isHovered ? animationSrc : staticImageSrc} 
             alt={proj.title}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-105 z-0" 
+            className="w-full h-auto object-contain transition-transform duration-[1000ms] group-hover:scale-[1.01] z-0"
+            style={{ display: 'block' }}
           />
-          
-          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none z-20">
-            <span className="text-white font-bold bg-cyan-600/90 px-4 py-2 rounded-xl text-xs backdrop-blur-sm shadow-lg">Playing Video Preview</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Text Details Area */}
-      <div className="flex-1 flex flex-col justify-between py-2 gap-4">
-        <div className="space-y-3">
-          <span className="text-xs font-bold text-cyan-600 uppercase tracking-widest block">{proj.category}</span>
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-[#1a202c] tracking-tight group-hover:text-cyan-600 transition-colors uppercase leading-tight">
-            {proj.title}
-          </h3>
-          <p className="text-xs md:text-sm text-gray-600 font-semibold leading-relaxed">{proj.shortDesc}</p>
-          <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed bg-white/40 border border-white/20 p-4 rounded-2xl font-medium">{proj.details}</p>
-        </div>
-
-        <div className="flex flex-col gap-4 border-t border-gray-300/40 pt-4">
-          <div className="flex flex-wrap gap-1.5">
-            {proj.tags.map(t => (
-              <span key={t} className="text-[9px] font-bold text-gray-600 neu-in px-3 py-1.5 rounded-lg">{t}</span>
-            ))}
-          </div>
-          <div className="flex gap-3 items-center">
-            <button 
-              onClick={() => setSelectedProject(proj)}
-              className="px-5 py-3 text-[10px] font-black uppercase rounded-xl neu-out hover:text-cyan-600 active:scale-95 transition-all text-center cursor-pointer pointer-events-auto"
-            >
-              Case Study
-            </button>
-            <div className="neu-out p-3 rounded-xl text-center border border-white/60 flex-1 flex justify-between items-center px-4 h-[42px]">
-              <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider block">Telemetry</span>
-              <span className="text-xs font-black text-cyan-600">{proj.metric}</span>
-            </div>
-          </div>
         </div>
       </div>
     </motion.div>
@@ -249,6 +229,7 @@ export default function App() {
   // Portfolio filters state
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<typeof PROJECTS_DATA[0] | null>(null);
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   // Blog states
   const [blogSearch, setBlogSearch] = useState("");
@@ -1295,16 +1276,43 @@ export default function App() {
               </div>
             </div>
 
-            {/* Projects Column Stack */}
-            <div className="flex flex-col gap-12 lg:gap-16 w-full">
-              {filteredProjects.map(proj => (
+            {/* Projects Grid (Two-by-Two / Side-by-Side) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full">
+              {filteredProjects.slice(0, showAllProjects ? undefined : 4).map(proj => (
                 <ProjectCard 
                   key={proj.id}
                   proj={proj}
-                  setSelectedProject={setSelectedProject}
                 />
               ))}
             </div>
+
+            {/* See More Toggle */}
+            {filteredProjects.length > 4 && (
+              <div className="flex justify-center mt-16 lg:mt-24 w-full pointer-events-auto">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowAllProjects(!showAllProjects)}
+                  className="relative px-10 py-5 rounded-[2rem] font-bold text-xs md:text-sm text-white uppercase tracking-widest transition-all duration-300 cursor-pointer overflow-hidden shadow-[0_10px_25px_rgba(6,182,212,0.25)] border border-cyan-400/30 group"
+                >
+                  {/* Glowing background gradient */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-indigo-500 to-cyan-500 bg-[length:200%_auto] group-hover:bg-right transition-all duration-500 z-0" />
+                  
+                  {/* Outer light glow effect */}
+                  <span className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-[2rem] blur opacity-30 group-hover:opacity-75 transition-opacity duration-300 -z-10" />
+
+                  {/* Button content */}
+                  <span className="relative z-10 flex items-center justify-center gap-3">
+                    <Sparkles size={14} className="text-cyan-200 animate-pulse" />
+                    <span>{showAllProjects ? 'Show Less' : 'See More Projects'}</span>
+                    <Plus 
+                      size={14} 
+                      className={`text-cyan-200 transition-transform duration-300 ${showAllProjects ? 'rotate-45' : 'group-hover:rotate-90'}`} 
+                    />
+                  </span>
+                </motion.button>
+              </div>
+            )}
           </div>
         </section>
 

@@ -27,9 +27,9 @@ const BRUSHES: BrushType[] = [
 ];
 
 const GALLERY_DRAWINGS = [
-  { title: "Chiaroscuro Face Study", year: "2025", medium: "Graphite on Paper", desc: "Fine paper shading focusing on extreme light-contrast shadows." },
-  { title: "Symmetrical Botanical Study", year: "2024", medium: "Ink and Hatching", desc: "Traditional cross-hatching detail cataloging geometric growth patterns." },
-  { title: "Anatomical Hand Study", year: "2025", medium: "Carbon Pencil", desc: "Detailed traditional anatomical sketch analyzing muscular tendon tension." }
+  { title: "Chiaroscuro Face Study", year: "2025", medium: "Graphite on Paper", desc: "Fine paper shading focusing on extreme light-contrast shadows.", image: "/images/drawings/drawing-1.webp" },
+  { title: "Symmetrical Botanical Study", year: "2024", medium: "Ink and Hatching", desc: "Traditional cross-hatching detail cataloging geometric growth patterns.", image: "/images/drawings/drawing-2.webp" },
+  { title: "Anatomical Hand Study", year: "2025", medium: "Carbon Pencil", desc: "Detailed traditional anatomical sketch analyzing muscular tendon tension.", image: "/images/drawings/drawing-3.webp" }
 ];
 
 export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsModalProps) {
@@ -373,10 +373,10 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
               
               <div className="space-y-4">
                 {/* Traditional styled picture frame placeholder */}
-                <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-300 rounded-2xl flex items-center justify-center relative shadow-inner border border-gray-400/20 group-hover:scale-[1.02] transition-transform duration-500">
-                  <Image size={40} className="text-gray-400 group-hover:text-pink-400/60 transition-colors" strokeWidth={1} />
-                  <div className="absolute inset-2 border border-dashed border-gray-400/30 rounded-xl"></div>
-                  <div className="absolute bottom-2 right-3 font-mono text-[7px] text-gray-500 tracking-widest">{draw.year}</div>
+                <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-300 rounded-2xl flex items-center justify-center relative shadow-inner border border-gray-400/20 group-hover:scale-[1.02] transition-transform duration-500 overflow-hidden">
+                  <img src={draw.image} alt={draw.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-2 border border-dashed border-white/40 rounded-xl pointer-events-none mix-blend-overlay"></div>
+                  <div className="absolute bottom-2 right-3 font-mono text-[7px] text-white bg-black/40 px-1.5 py-0.5 rounded backdrop-blur-sm tracking-widest pointer-events-none">{draw.year}</div>
                 </div>
 
                 <div>
