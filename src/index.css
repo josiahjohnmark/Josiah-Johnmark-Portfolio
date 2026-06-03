@@ -23,9 +23,11 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.neu-out-hover:hover {
-  box-shadow: 16px 16px 32px #adadb8, -16px -16px 32px #ffffff;
-  transform: translateY(-4px);
+@media (hover: hover) {
+  .neu-out-hover:hover {
+    box-shadow: 16px 16px 32px #adadb8, -16px -16px 32px #ffffff;
+    transform: translateY(-4px);
+  }
 }
 
 .neu-out-large {
@@ -44,9 +46,11 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.neu-btn:hover {
-  box-shadow: 8px 8px 16px #adadb8, -8px -8px 16px #ffffff;
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .neu-btn:hover {
+    box-shadow: 8px 8px 16px #adadb8, -8px -8px 16px #ffffff;
+    transform: translateY(-2px);
+  }
 }
 
 .neu-btn:active, .neu-btn-active {
@@ -121,9 +125,11 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.neu-slider::-webkit-slider-thumb:hover {
-  box-shadow: 3px 3px 6px #bebec9, -3px -3px 6px #ffffff;
-  transform: scale(1.1);
+@media (hover: hover) {
+  .neu-slider::-webkit-slider-thumb:hover {
+    box-shadow: 3px 3px 6px #bebec9, -3px -3px 6px #ffffff;
+    transform: scale(1.1);
+  }
 }
 
 .neu-slider::-webkit-slider-thumb:active {
@@ -193,9 +199,11 @@ body {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.interactive-item:hover {
-  transform: translateY(-2px) scale(1.015);
-  box-shadow: 16px 16px 32px #adadb8, -16px -16px 32px #ffffff;
+@media (hover: hover) {
+  .interactive-item:hover {
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 16px 16px 32px #adadb8, -16px -16px 32px #ffffff;
+  }
 }
 
 .interactive-item:active {
@@ -207,9 +215,11 @@ body {
 .neu-hover {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.neu-hover:hover {
-  box-shadow: 14px 14px 28px #b8b8c4, -14px -14px 28px #ffffff;
-  transform: scale(1.03);
+@media (hover: hover) {
+  .neu-hover:hover {
+    box-shadow: 14px 14px 28px #b8b8c4, -14px -14px 28px #ffffff;
+    transform: scale(1.03);
+  }
 }
 .neu-hover:active {
   box-shadow: inset 4px 4px 8px #bebec9, inset -4px -4px 8px #ffffff;
@@ -219,7 +229,9 @@ body {
 .tab-hover {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.tab-hover:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .tab-hover:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+  }
 }
