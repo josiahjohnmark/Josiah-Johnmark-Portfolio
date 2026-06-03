@@ -1,0 +1,6 @@
+{
+  "name": "Neumorphic Hero",
+  "description": "A sleek hero section demonstrating the soft, tactile depth of Neumorphism UI design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
