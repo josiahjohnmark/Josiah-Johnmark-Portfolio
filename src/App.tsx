@@ -141,9 +141,10 @@ const PROJECTS_DATA = [
 interface ProjectCardProps {
   proj: typeof PROJECTS_DATA[0];
   pageInteractive: boolean;
+  onClick: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -155,11 +156,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive }) => {
       layout
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="neu-out rounded-[2.5rem] border border-white/60 p-4 md:p-6 group transition-all duration-300 w-full hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] hover:-translate-y-2"
+      onClick={onClick}
+      className="neu-out rounded-[2rem] md:rounded-[2.5rem] border border-white/60 p-4 md:p-6 group transition-all duration-300 w-full md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer"
     >
       {/* Full scale image area - no aspect-video restriction to prevent cropping */}
-      <div className="w-full neu-in rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
-        <div className="w-full rounded-2xl overflow-hidden bg-[#e0e5ec] relative">
+      <div className="w-full neu-in rounded-2xl md:rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
+        <div className="w-full rounded-xl md:rounded-2xl overflow-hidden bg-[#e0e5ec] relative">
           {/* Static Thumbnail */}
           <img 
             src={staticImageSrc} 
@@ -183,6 +185,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive }) => {
             />
           )}
         </div>
+      </div>
+      <div className="mt-4 flex justify-between items-center px-1">
+        <div>
+          <h4 className="text-xs md:text-sm font-bold text-gray-800 tracking-tight uppercase group-hover:text-cyan-600 transition-colors">{proj.title}</h4>
+          <span className="text-[9px] font-mono text-gray-400 font-bold uppercase tracking-wider block mt-0.5">{proj.category}</span>
+        </div>
+        <span className="text-[9px] font-bold text-cyan-600 bg-white/60 border border-white/50 px-2.5 py-1 rounded-xl shadow-sm font-mono uppercase tracking-widest">{proj.metric}</span>
       </div>
     </motion.div>
   );
@@ -671,7 +680,7 @@ export default function App() {
         {/* HERO SECTION */}
         <section id="hero" className="w-full flex flex-col justify-start relative z-10 pt-2 lg:pt-4 pb-8">
                 {/* Main Content Area */}
-                <main className="flex-grow relative z-20 flex px-6 md:px-12 lg:px-20 max-w-[1600px] mx-auto w-full pt-0">
+                <main className="flex-grow relative z-20 flex px-4 md:px-12 lg:px-20 max-w-[1600px] mx-auto w-full pt-0">
           
           {/* Vertical text (Left Edge) */}
           <motion.div 
@@ -698,7 +707,7 @@ export default function App() {
                animate="animate"
                className="z-20 text-center mb-8 w-full pointer-events-auto flex flex-col items-center"
             >
-               <h1 className="text-4xl sm:text-6xl md:text-[5rem] lg:text-[5.5rem] xl:text-[6.5rem] font-bold text-[#1a202c] tracking-tighter mb-2 leading-none font-syncopate">
+               <h1 className="text-[1.65rem] xs:text-[2.2rem] sm:text-5xl md:text-[5rem] lg:text-[5.5rem] xl:text-[6.5rem] font-bold text-[#1a202c] tracking-tighter mb-2 leading-none font-syncopate break-words">
                  Josiah Johnmark
                </h1>
                <div className="flex items-center gap-4 mb-3">
@@ -749,7 +758,7 @@ export default function App() {
               variants={staggerContainer}
               initial="initial"
               animate="animate"
-              className="w-full max-w-[1300px] grid grid-cols-1 md:grid-cols-12 gap-4 xl:gap-6 relative z-10 px-4 xl:px-0 auto-rows-auto md:auto-rows-[160px] xl:auto-rows-[170px]"
+              className="w-full max-w-[1300px] grid grid-cols-1 md:grid-cols-12 gap-4 xl:gap-6 relative z-10 px-0 md:px-4 xl:px-0 auto-rows-auto md:auto-rows-[160px] xl:auto-rows-[170px]"
             >
                {/* Card 1: Web Stack (Core Ecosystem) */}
                <motion.div 
