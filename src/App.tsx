@@ -1591,7 +1591,7 @@ export default function App() {
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 20 }}
-                className="w-full max-w-[1000px] lg:max-w-5xl bg-[#e0e5ec] rounded-2xl border border-white/80 p-4 sm:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative overflow-hidden flex flex-col max-h-[95vh] sm:max-h-[90vh]"
+                className="w-full max-w-[1000px] lg:max-w-5xl bg-[#e0e5ec] rounded-2xl border border-white/80 p-4 sm:p-6 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative overflow-hidden flex flex-col max-h-[95vh] sm:max-h-[90vh] overscroll-contain"
               >
                 {/* Header close */}
                 <div className="flex justify-between items-center mb-6 z-10">
@@ -1640,7 +1640,7 @@ export default function App() {
                 initial={{ scale: 0.9, y: 30 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 30 }}
-                className={`w-full bg-[#e0e5ec] rounded-2xl border border-white/80 p-4 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative transition-all duration-500 overflow-y-auto max-h-[95vh] md:max-h-[90vh] max-w-[1000px] lg:max-w-5xl`}
+                className={`w-full bg-[#e0e5ec] rounded-[2rem] border border-white/80 p-4 sm:p-6 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative transition-all duration-500 overflow-y-auto max-h-[95vh] md:max-h-[90vh] max-w-[1000px] lg:max-w-5xl overscroll-contain`}
               >
                 <div className="flex justify-between items-center mb-6">
                   <div>
