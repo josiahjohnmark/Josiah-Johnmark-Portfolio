@@ -158,12 +158,26 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj }) => {
     >
       {/* Full scale image area - no aspect-video restriction to prevent cropping */}
       <div className="w-full neu-in rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
-        <div className="w-full rounded-2xl overflow-hidden bg-[#e0e5ec] flex items-center justify-center relative">
+        <div className="w-full rounded-2xl overflow-hidden bg-[#e0e5ec] relative">
+          {/* Static Thumbnail */}
           <img 
-            src={isHovered ? animationSrc : staticImageSrc} 
-            alt={proj.title}
-            className="w-full h-auto object-contain transition-transform duration-[1000ms] group-hover:scale-[1.01] z-0"
-            style={{ display: 'block' }}
+            src={staticImageSrc} 
+            alt={`${proj.title} Thumbnail`}
+            className="w-full h-auto object-contain transition-opacity duration-500 relative z-10"
+            style={{ 
+              opacity: isHovered ? 0 : 1,
+              display: 'block' 
+            }}
+          />
+          {/* Animated WebP (Preloaded dynamically via DOM overlay) */}
+          <img 
+            src={animationSrc} 
+            alt={`${proj.title} Animation`}
+            className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
+            style={{ 
+              opacity: isHovered ? 1 : 0,
+              display: 'block'
+            }}
           />
         </div>
       </div>
