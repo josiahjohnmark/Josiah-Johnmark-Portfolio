@@ -1307,6 +1307,7 @@ export default function App() {
                   key={proj.id}
                   proj={proj}
                   pageInteractive={pageInteractive}
+                  onClick={() => setSelectedProject(proj)}
                 />
               ))}
             </div>
