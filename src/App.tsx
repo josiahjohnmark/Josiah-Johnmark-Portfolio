@@ -140,9 +140,10 @@ const PROJECTS_DATA = [
 
 interface ProjectCardProps {
   proj: typeof PROJECTS_DATA[0];
+  pageInteractive: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ proj }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -169,16 +170,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj }) => {
               display: 'block' 
             }}
           />
-          {/* Animated WebP (Preloaded dynamically via DOM overlay) */}
-          <img 
-            src={animationSrc} 
-            alt={`${proj.title} Animation`}
-            className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
-            style={{ 
-              opacity: isHovered ? 1 : 0,
-              display: 'block'
-            }}
-          />
+          {/* Animated WebP (Preloaded dynamically via DOM overlay after page becomes interactive) */}
+          {pageInteractive && (
+            <img 
+              src={animationSrc} 
+              alt={`${proj.title} Animation`}
+              className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
+              style={{ 
+                opacity: isHovered ? 1 : 0,
+                display: 'block'
+              }}
+            />
+          )}
         </div>
       </div>
     </motion.div>
@@ -288,11 +291,16 @@ export default function App() {
   const [activeRole, setActiveRole] = useState<'developer' | 'artist' | 'editor'>('developer');
   const [isZooming, setIsZooming] = useState(false);
 
+  const [pageInteractive, setPageInteractive] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener('resize', checkMobile);
+
+    const interactiveTimer = setTimeout(() => {
+      setPageInteractive(true);
+    }, 2000); // 2 second delay to let main critical assets render
 
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
       // Smart bypass: If user is typing in active form inputs, ignore global glow triggers
@@ -316,6 +324,7 @@ export default function App() {
     return () => {
       window.removeEventListener('resize', checkMobile);
       window.removeEventListener('keydown', handleGlobalKeyDown);
+      clearTimeout(interactiveTimer);
     };
   }, []);
 
@@ -1288,6 +1297,7 @@ export default function App() {
                 <ProjectCard 
                   key={proj.id}
                   proj={proj}
+                  pageInteractive={pageInteractive}
                 />
               ))}
             </div>
