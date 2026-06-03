@@ -1451,7 +1451,7 @@ export default function App() {
         </section>
 
         {/* Float expandable AI Twin Widget */}
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end w-[calc(100vw-2rem)] sm:w-auto">
           
           {/* Main Expandable chat card */}
           <AnimatePresence>
@@ -1460,7 +1460,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                className="w-[320px] sm:w-[380px] h-[480px] bg-[#e0e5ec]/95 border border-white/80 rounded-[2.5rem] shadow-[15px_15px_30px_#bebec9,-15px_-15px_30px_#ffffff] p-5 flex flex-col mb-4 overflow-hidden backdrop-blur-md relative"
+                className="w-full sm:w-[380px] h-[450px] sm:h-[480px] bg-[#e0e5ec]/95 border border-white/80 rounded-[2rem] sm:rounded-[2.5rem] shadow-[15px_15px_30px_#bebec9,-15px_-15px_30px_#ffffff] p-5 flex flex-col mb-4 overflow-hidden backdrop-blur-md relative"
               >
                 {/* Header */}
                 <div className="flex justify-between items-center border-b border-gray-300/50 pb-3 mb-3">
@@ -1562,7 +1562,7 @@ export default function App() {
           {/* Floating Circle Button */}
           <button 
             onClick={() => setAiTwinOpen(!aiTwinOpen)}
-            className="w-14 h-14 bg-cyan-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-cyan-400 transition-colors active:scale-90 hover:scale-105 z-50 border border-white/40 group relative"
+            className="w-14 h-14 bg-cyan-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-cyan-400 transition-colors active:scale-90 md:hover:scale-105 z-50 border border-white/40 group relative"
           >
             {aiTwinOpen ? <X size={20} /> : <MessageSquare size={20} />}
             {/* Active green blinking dot on the bubble button */}
