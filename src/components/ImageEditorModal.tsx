@@ -77,7 +77,7 @@ export default function ImageEditorModal({ onClose, playSynthNote }: ImageEditor
         
         {/* Cinema Monitor Frame (7 cols) */}
         <div className="lg:col-span-6 xl:col-span-7 flex flex-col gap-3">
-          <div className="neu-in rounded-[2.5rem] overflow-hidden aspect-[4/3] relative flex items-center justify-center border border-white/60 bg-gray-950 shadow-inner">
+          <div className="neu-in rounded-xl overflow-hidden aspect-[4/3] relative flex items-center justify-center border border-white/60 bg-gray-950 shadow-inner">
             
             {/* Portrait Image with Live CSS filter */}
             <img 
@@ -110,7 +110,7 @@ export default function ImageEditorModal({ onClose, playSynthNote }: ImageEditor
           </div>
 
           {/* Quick presets row */}
-          <div className="flex justify-between items-center bg-white/40 border border-white/50 p-2.5 rounded-2xl pointer-events-auto">
+          <div className="flex justify-between items-center bg-white/40 border border-white/50 p-2.5 rounded-xl pointer-events-auto">
             <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest pl-2">Cinema LUT Presets:</span>
             <button 
               onClick={resetFilters}
@@ -126,7 +126,7 @@ export default function ImageEditorModal({ onClose, playSynthNote }: ImageEditor
         <div className="lg:col-span-6 xl:col-span-5 flex flex-col gap-4">
           
           {/* LUT Preset grid select */}
-          <div className="neu-out p-4 rounded-3xl border border-white/60 flex flex-col gap-3">
+          <div className="neu-out p-4 rounded-xl border border-white/60 flex flex-col gap-3">
             <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block">LUT LUTs Matrix</span>
             <div className="grid grid-cols-2 gap-2 pointer-events-auto">
               {LUT_PRESETS.map(lut => (
@@ -145,7 +145,7 @@ export default function ImageEditorModal({ onClose, playSynthNote }: ImageEditor
           </div>
 
           {/* Control sliders deck */}
-          <div className="neu-out p-5 rounded-3xl border border-white/60 space-y-4 flex-grow flex flex-col justify-between pointer-events-auto">
+          <div className="neu-out p-5 rounded-xl border border-white/60 space-y-4 flex-grow flex flex-col justify-between pointer-events-auto">
             <div className="flex justify-between items-center pb-2 border-b border-gray-300/30">
               <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
                 <SlidersHorizontal size={10} />

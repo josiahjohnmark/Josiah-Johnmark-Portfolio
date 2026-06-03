@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Volume2, Music, Sparkles, Activity, AlertCircle } from 'lucide-react';
+import { getAudioContext } from '../utils/audio';
 
 interface PianoModalProps {
   onClose: () => void;
@@ -62,8 +63,7 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
     if (oscWaves.current.length > 5) oscWaves.current.shift();
 
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      const ctx = new AudioContextClass();
+      const ctx = getAudioContext();
       
       const masterGain = ctx.createGain();
       masterGain.gain.setValueAtTime(pianoVolume, ctx.currentTime);
@@ -80,7 +80,7 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
 
         // Envelope: ADSR (Attack, Decay, Sustain, Release)
         gainNode.gain.setValueAtTime(0, ctx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(amp, ctx.currentTime + 0.005); // immediate strike
+        gainNode.gain.linearRampToValueAtTime(amp, ctx.currentTime + 0.025); // Warm attack to prevent click artifacts
         gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration); // smooth string fade
 
         osc.connect(gainNode);
@@ -269,7 +269,7 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
       </div>
 
       {/* Tactile Piano Keybed Container */}
-      <div className="neu-in p-4 pb-6 rounded-3xl border border-white/60 relative">
+      <div className="neu-in p-4 pb-6 rounded-xl border border-white/60 relative">
         
         {/* White and Black key grid wrapper */}
         <div className="relative flex justify-between h-44 w-full bg-slate-300 rounded-2xl overflow-hidden shadow-inner p-1 select-none">
@@ -287,8 +287,8 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
                     : 'bg-white shadow-[0_4px_6px_rgba(0,0,0,0.1),inset_0_-8px_0_#eaeaea] hover:bg-gray-50 active:translate-y-0.5'}`}
               >
                 <div className="flex flex-col items-center select-none pointer-events-none">
-                  <span className="text-[6.5px] font-black text-gray-400 font-sans tracking-tighter uppercase mb-0.5">Key: {key.bindKey}</span>
-                  <span className="text-[8px] font-black text-gray-600 font-mono tracking-tight">{key.name}</span>
+                  <span className="hidden sm:block text-[6.5px] font-black text-gray-400 font-sans tracking-tighter uppercase mb-0.5">Key: {key.bindKey}</span>
+                  <span className="text-[7px] sm:text-[8px] font-black text-gray-600 font-mono tracking-tight">{key.name}</span>
                 </div>
               </button>
             );
@@ -308,8 +308,8 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
                     : 'bg-slate-900 shadow-[2px_2px_4px_rgba(0,0,0,0.3)] hover:bg-slate-800 text-gray-400'}`}
               >
                 <div className="flex flex-col items-center select-none pointer-events-none text-center">
-                  <span className="text-[5.5px] font-black tracking-tighter block leading-none mb-0.5 uppercase">{key.bindKey}</span>
-                  <span className="text-[6.5px] font-bold font-mono tracking-tighter block leading-none">{key.name}</span>
+                  <span className="hidden sm:block text-[5.5px] font-black tracking-tighter leading-none mb-0.5 uppercase">{key.bindKey}</span>
+                  <span className="text-[5px] sm:text-[6.5px] font-bold font-mono tracking-tighter leading-none">{key.name}</span>
                 </div>
               </button>
             );

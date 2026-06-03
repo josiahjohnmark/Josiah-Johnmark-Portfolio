@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
+import { getAudioContext } from './utils/audio';
 
 // Modular Bento Modals and Cards Imports
 import WebStackModal from './components/WebStackModal';
@@ -61,7 +62,7 @@ const PROJECTS_DATA = [
     title: "Luxurious Real Estate Hub",
     category: "Development",
     shortDesc: "High-performance properties search engine and showcase booking portal.",
-    image: "/josiah-logo.png",
+    image: "/josiah-no-background.png",
     tags: ["React 19", "Neumorphic UI", "Vercel"],
     details: "Crafted a gorgeous, lightweight real estate sample app. Implements high-end bento listings, maps integration, and fluid search filters for property catalogs.",
     metric: "1.2s Page Load",
@@ -72,7 +73,7 @@ const PROJECTS_DATA = [
     title: "Skylite Aviation Portal",
     category: "Development",
     shortDesc: "Tactile private aviation schedule board and booking console.",
-    image: "/josiah-logo.png",
+    image: "/josiah-no-background.png",
     tags: ["Vite", "Liquid Glass", "Framer Motion"],
     details: "Created an immersive schedule board and booking system for aircraft. Responsive mock dashboards let clients request flights with premium micro-interactions.",
     metric: "60 FPS Transitions",
@@ -83,7 +84,7 @@ const PROJECTS_DATA = [
     title: "Premium Design Showcase",
     category: "Development",
     shortDesc: "Tactile digital landscape with dynamic theme modifiers and modular grids.",
-    image: "/josiah-logo.png",
+    image: "/josiah-no-background.png",
     tags: ["Next.js 15", "Web Audio API", "Tailwind CSS"],
     details: "Engineered a high-fidelity interactive creative layout. Features dynamic backdrop-filter blur windows, modular interactive grids, and integrated background sound triggers.",
     metric: "99/100 Lighthouse",
@@ -91,6 +92,104 @@ const PROJECTS_DATA = [
   }
 ];
 
+interface ProjectCardProps {
+  proj: typeof PROJECTS_DATA[0];
+  setSelectedProject: React.Dispatch<React.SetStateAction<typeof PROJECTS_DATA[0] | null>>;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ proj, setSelectedProject }) => {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => console.log("Video play failed:", err));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
+  const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+  const videoSrc = `/videos/${slug}.mp4`;
+
+  return (
+    <motion.div
+      layout
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="neu-out rounded-[2.5rem] border border-white/60 p-6 md:p-8 flex flex-col lg:flex-row gap-8 group transition-all duration-300 w-full min-h-[50vh] lg:min-h-[60vh] justify-between items-stretch"
+    >
+      {/* Video / Image Preview Area */}
+      <div 
+        className="w-full lg:w-[55%] aspect-[16/10] neu-in rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner cursor-pointer flex-shrink-0" 
+        onClick={() => setSelectedProject(proj)}
+      >
+        <div className="w-full h-full rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center relative">
+          {/* Video element */}
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            poster={proj.image}
+            muted
+            playsInline
+            loop
+            className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 z-10"
+          />
+
+          {/* Static image fallback */}
+          <img 
+            src={proj.image} 
+            alt={proj.title}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-105 z-0" 
+          />
+          
+          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none z-20">
+            <span className="text-white font-bold bg-cyan-600/90 px-4 py-2 rounded-xl text-xs backdrop-blur-sm shadow-lg">Playing Video Preview</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Text Details Area */}
+      <div className="flex-1 flex flex-col justify-between py-2 gap-4">
+        <div className="space-y-3">
+          <span className="text-xs font-bold text-cyan-600 uppercase tracking-widest block">{proj.category}</span>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-[#1a202c] tracking-tight group-hover:text-cyan-600 transition-colors uppercase leading-tight">
+            {proj.title}
+          </h3>
+          <p className="text-xs md:text-sm text-gray-600 font-semibold leading-relaxed">{proj.shortDesc}</p>
+          <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed bg-white/40 border border-white/20 p-4 rounded-2xl font-medium">{proj.details}</p>
+        </div>
+
+        <div className="flex flex-col gap-4 border-t border-gray-300/40 pt-4">
+          <div className="flex flex-wrap gap-1.5">
+            {proj.tags.map(t => (
+              <span key={t} className="text-[9px] font-bold text-gray-600 neu-in px-3 py-1.5 rounded-lg">{t}</span>
+            ))}
+          </div>
+          <div className="flex gap-3 items-center">
+            <button 
+              onClick={() => setSelectedProject(proj)}
+              className="px-5 py-3 text-[10px] font-black uppercase rounded-xl neu-out hover:text-cyan-600 active:scale-95 transition-all text-center cursor-pointer pointer-events-auto"
+            >
+              Case Study
+            </button>
+            <div className="neu-out p-3 rounded-xl text-center border border-white/60 flex-1 flex justify-between items-center px-4 h-[42px]">
+              <span className="text-[8px] font-bold text-gray-400 uppercase tracking-wider block">Telemetry</span>
+              <span className="text-xs font-black text-cyan-600">{proj.metric}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export default function App() {
   // Bento modals states
@@ -234,6 +333,18 @@ export default function App() {
     };
   }, []);
 
+  // Lock body scroll when bento modals or project case studies are open
+  useEffect(() => {
+    if (activeBento || selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeBento, selectedProject]);
+
   // Click scroll helper for About Me
   const scrollToAbout = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -358,8 +469,7 @@ export default function App() {
     setTimeout(() => setVisualizerBars(Array(12).fill(1)), 350);
 
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      const ctx = new AudioContextClass();
+      const ctx = getAudioContext();
       
       const osc = ctx.createOscillator();
       const gainNode = ctx.createGain();
@@ -397,19 +507,19 @@ export default function App() {
     }
   };
 
-  // Keyboard typing simulator handler
+  // Keyboard typing simulator handler (unused backup)
   const handleKeySimulator = (char: string) => {
     setActiveKeyboardKey(char);
     setTimeout(() => setActiveKeyboardKey(null), 150);
 
     const snippets = [
-      "const vibe = new VibeCoder({ patience: 'steady' });\n",
-      "await vibe.render({ design: 'glassmorphism', responsive: true });\n",
-      "vibe.synthesize({ wave: 'sawtooth', frequency: 440 });\n",
-      "console.log('Think it. Design it. Build it.');\n",
-      "const portfolio = Josiah.scaleUp({ ethical: true });\n",
-      "// Designing tactile custom shadows...\n",
-      "// Mixing low-frequency oscillators for deep bass...\n"
+      "const sessionCache = new RedisPool({ host: '127.0.0.1', port: 6379 });\n",
+      "const modalTransition = { type: 'spring', stiffness: 260, damping: 25 };\n",
+      "await processVideoQueue(jobs);\n",
+      "const activePulse = Array(12).fill(0).map(() => Math.random());\n",
+      "const audioCtx = getAudioContext();\n",
+      "// Calibrating DaVinci Resolve Teal & Orange grading matrices...\n",
+      "// Initializing parallel worker pool pipelines...\n"
     ];
     
     setTypewriterCode(prev => prev + snippets[Math.floor(Math.random() * snippets.length)]);
@@ -526,41 +636,45 @@ export default function App() {
         <div className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] bg-gray-300 rounded-full mix-blend-multiply opacity-20 blur-[100px] blob-anim pointer-events-none" style={{ animationDelay: '3s' }} />
 
         {/* NavBar */}
-        <motion.nav 
-          variants={fadeInSlideUp}
-          initial="initial"
-          animate="animate"
-          className="w-full flex justify-between items-center px-6 md:px-12 lg:px-20 py-4 md:py-6 max-w-[1600px] mx-auto relative z-20"
-        >
-          {/* Logo */}
-          <div className="cursor-pointer group flex-shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <span className="font-syncopate text-lg md:text-xl font-bold tracking-[0.1em] text-gray-800 group-hover:text-cyan-600 transition-colors uppercase select-none">
-              Jay Jay
-            </span>
-          </div>
+        <AnimatePresence>
+          {!activeBento && !selectedProject && (
+            <motion.nav 
+              variants={fadeInSlideUp}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="w-full flex justify-between items-center px-6 md:px-12 lg:px-20 py-4 md:py-6 max-w-[1600px] mx-auto relative z-20"
+            >
+              {/* Logo */}
+              <div className="cursor-pointer group flex-shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                <span className="font-syncopate text-lg md:text-xl font-bold tracking-[0.1em] text-gray-800 group-hover:text-cyan-600 transition-colors uppercase select-none">
+                  Jay Jay
+                </span>
+              </div>
 
-          {/* Links */}
-          <div className="hidden md:flex flex-1 justify-evenly px-8 lg:px-24 text-xs font-semibold text-gray-500 tracking-wide">
-            <a href="#about" onClick={scrollToAbout} className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">About Me</a>
-            <a href="#portfolio" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Portfolio</a>
-            <a href="#services" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Services</a>
-            
-          </div>
+              {/* Links */}
+              <div className="hidden md:flex flex-1 justify-evenly px-8 lg:px-24 text-xs font-semibold text-gray-500 tracking-wide">
+                <a href="#about" onClick={scrollToAbout} className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">About Me</a>
+                <a href="#portfolio" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Portfolio</a>
+                <a href="#services" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Services</a>
+              </div>
 
-          {/* Right CTA */}
-          <div className="flex-shrink-0">
-             <a 
-               href="#contact"
-               className="neu-out px-6 py-3 rounded-xl text-xs font-bold text-gray-800 hover:text-cyan-600 transition-all flex items-center gap-2 group hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover cursor-pointer"
-             >
-                <Sparkles size={12} className="text-cyan-500 animate-pulse pointer-events-none" />
-                Contact
-             </a>
-          </div>
-        </motion.nav>
+              {/* Right CTA */}
+              <div className="flex-shrink-0">
+                 <a 
+                   href="#contact"
+                   className="neu-out px-6 py-3 rounded-xl text-xs font-bold text-gray-800 hover:text-cyan-600 transition-all flex items-center gap-2 group hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover cursor-pointer"
+                 >
+                    <Sparkles size={12} className="text-cyan-500 animate-pulse pointer-events-none" />
+                    Contact
+                 </a>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
 
         {/* HERO SECTION */}
-        <section id="hero" className="w-full flex flex-col justify-start relative z-10 pt-4 lg:pt-8 pb-16">
+        <section id="hero" className="w-full flex flex-col justify-start relative z-10 pt-2 lg:pt-4 pb-8">
                 {/* Main Content Area */}
                 <main className="flex-grow relative z-20 flex px-6 md:px-12 lg:px-20 max-w-[1600px] mx-auto w-full pt-0">
           
@@ -606,44 +720,6 @@ export default function App() {
                </div>
                </motion.div>
 
-            {/* Floating Background Assets outside the grid to prevent pointer event blockages */}
-            <div className="absolute -top-[30px] right-[18%] lg:right-[22%] opacity-85 rotate-[15deg] z-30 hover:rotate-[25deg] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto">
-              <button 
-                onClick={() => {
-                  playSynthNote(329.63, 'coffee');
-                  setAiTwinOpen(true);
-                  handleSendMessage("Coffee is the fuel for vibe coding!");
-                }}
-                className={`w-14 h-14 neu-out rounded-3xl flex items-center justify-center text-gray-500 transition-all hover:text-cyan-600 hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9] ${isZooming ? 'bg-white/95' : 'bg-white/80 backdrop-blur-md'}`}
-              >
-                <Coffee size={24} className="pointer-events-none" />
-              </button>
-            </div>
-            <div className="absolute top-[20px] -right-[1%] opacity-85 rotate-[-10deg] z-30 hover:rotate-[-20deg] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto">
-              <button 
-                onClick={() => {
-                  playSynthNote(440.00, 'headphones');
-                  setAiTwinOpen(true);
-                  handleSendMessage("What kind of music do you code to?");
-                }}
-                className={`w-18 h-18 neu-out rounded-[2rem] flex items-center justify-center text-gray-500 transition-all hover:text-pink-600 hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9] ${isZooming ? 'bg-white/95' : 'bg-white/80 backdrop-blur-md'}`}
-              >
-                <Headphones size={28} className="pointer-events-none" />
-              </button>
-            </div>
-            <div className="absolute bottom-[28%] -right-[2%] opacity-90 rotate-[15deg] z-30 hover:rotate-[25deg] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto">
-              <button 
-                onClick={() => {
-                  playSynthNote(261.63, 'film');
-                  setAiTwinOpen(true);
-                  handleSendMessage("Tell me about your film editing pipeline!");
-                }}
-                className={`w-15 h-15 neu-out rounded-full flex items-center justify-center text-gray-500 transition-all hover:text-purple-600 hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9] ${isZooming ? 'bg-white/95' : 'bg-white/80 backdrop-blur-md'}`}
-              >
-                <Film size={24} className="pointer-events-none" />
-              </button>
-            </div>
-
             {/* Expanded professional background floaters (Very low opacity for ambient background depth) */}
             <div className="absolute top-[10%] left-[2%] opacity-[0.05] text-cyan-500 hover:scale-110 transition-transform pointer-events-none select-none z-0 hidden lg:block">
               <Code size={48} className="animate-pulse" />
@@ -672,7 +748,7 @@ export default function App() {
               variants={staggerContainer}
               initial="initial"
               animate="animate"
-              className="w-full max-w-[1300px] grid grid-cols-1 md:grid-cols-12 gap-4 xl:gap-6 relative z-10 px-4 xl:px-0 auto-rows-[140px] md:auto-rows-[160px] xl:auto-rows-[170px]"
+              className="w-full max-w-[1300px] grid grid-cols-1 md:grid-cols-12 gap-4 xl:gap-6 relative z-10 px-4 xl:px-0 auto-rows-auto md:auto-rows-[160px] xl:auto-rows-[170px]"
             >
                {/* Card 1: Web Stack (Core Ecosystem) */}
                <motion.div 
@@ -841,38 +917,35 @@ export default function App() {
                        })}
                        <div className="absolute -bottom-2 right-10 w-24 h-4 bg-fuchsia-400 blur-md opacity-60"></div>
                      </div>
-                  </div>
-               </motion.div>
+                   </div>
+                </motion.div>
 
-               {/* Card 6: Production Suite (Expanded) */}
+               {/* Card 6: Tools Used */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => {
-                   playSynthNote(440, 'productionSuite');
-                   setAiTwinOpen(true);
-                   handleSendMessage("Tell me about your creative production suite experience with Figma, Adobe, Spline, and Framer!");
-                 }}
-                 className={`relative group col-span-12 md:col-span-3 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-3 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between transition-all duration-500 select-none ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="flex justify-between items-start w-full">
-                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Production Suite</span>
-                     <span className="text-[6.5px] font-bold bg-pink-100 px-1.5 py-0.5 rounded text-pink-700 uppercase">Art Tools</span>
+                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Tools Used</span>
+                     <span className="text-[6.5px] font-bold bg-pink-100 px-1.5 py-0.5 rounded text-pink-700 uppercase">Hub</span>
                   </div>
                   
-                  {/* Grid of design tools circles */}
-                  <div className="flex gap-2.5 justify-center w-full py-1 pointer-events-auto">
-                     <div className="w-8 h-8 rounded-xl bg-white shadow-sm hover:scale-110 hover:shadow-md transition-transform flex items-center justify-center text-rose-500 font-black text-[11px]" title="Figma">F</div>
-                     <div className="w-8 h-8 rounded-xl bg-white shadow-sm hover:scale-110 hover:shadow-md transition-transform flex items-center justify-center text-cyan-500 font-black text-[11px]" title="Spline">S</div>
-                     <div className="w-8 h-8 rounded-xl bg-white shadow-sm hover:scale-110 hover:shadow-md transition-transform flex items-center justify-center text-sky-600 font-black text-[11px]" title="Photoshop">Ps</div>
-                     <div className="w-8 h-8 rounded-xl bg-white shadow-sm hover:scale-110 hover:shadow-md transition-transform flex items-center justify-center text-amber-600 font-black text-[11px]" title="Illustrator">Ai</div>
+                  {/* Dense grid of design & development tool tags */}
+                  <div className="flex flex-wrap gap-2 justify-center w-full py-1.5 pointer-events-none">
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-rose-500 font-black text-[9px]" title="Figma">F</div>
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-cyan-500 font-black text-[9px]" title="Spline">Spl</div>
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-sky-600 font-black text-[9px]" title="VS Code">VS</div>
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-indigo-500 font-black text-[9px]" title="DaVinci Resolve">Dr</div>
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-purple-600 font-black text-[9px]" title="Premiere Pro">Pr</div>
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 font-black text-[9px]" title="Git">Git</div>
                   </div>
 
                   <div>
-                     <span className="text-[9.5px] font-bold text-gray-800 block uppercase tracking-tight">Figma, Adobe & Spline 3D</span>
+                     <span className="text-[9.5px] font-bold text-gray-800 block uppercase tracking-tight">Vibe Coders Hub</span>
                   </div>
                </motion.div>
 
-               {/* Card 7: Creative Channels & Socials (Replaces Sync Voice) */}
+               {/* Card 7: Creative Channels & Socials */}
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => {
@@ -881,7 +954,7 @@ export default function App() {
                  className={`relative group col-span-12 md:col-span-4 lg:col-span-2 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="flex justify-between items-start w-full">
-                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Eleven Labs</span>
+                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Socials</span>
                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                   </div>
                   
@@ -890,12 +963,12 @@ export default function App() {
                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-6 h-6 rounded-lg bg-white neu-out hover:scale-115 transition-transform flex items-center justify-center text-gray-700" onClick={e => e.stopPropagation()}><Github size={12} /></a>
                      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-6 h-6 rounded-lg bg-white neu-out hover:scale-115 transition-transform flex items-center justify-center text-pink-500" onClick={e => e.stopPropagation()}><Instagram size={12} /></a>
                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-6 h-6 rounded-lg bg-white neu-out hover:scale-115 transition-transform flex items-center justify-center text-sky-500" onClick={e => e.stopPropagation()}><Twitter size={12} /></a>
-                     <a href="mailto:josiah@example.com" className="w-6 h-6 rounded-lg bg-white neu-out hover:scale-115 transition-transform flex items-center justify-center text-red-500" onClick={e => e.stopPropagation()}><Mail size={12} /></a>
+                     <a href="mailto:josiahjohnmark9@gmail.com" className="w-6 h-6 rounded-lg bg-white neu-out hover:scale-115 transition-transform flex items-center justify-center text-red-500" onClick={e => e.stopPropagation()}><Mail size={12} /></a>
                   </div>
                   
                   <div className="text-left">
                      <span className="text-[9px] font-bold text-gray-800 block uppercase leading-none">Social Hub</span>
-                     <span className="text-[7.5px] font-bold text-gray-400 block uppercase tracking-wider mt-0.5">Elevenlabs voice</span>
+                     <span className="text-[7.5px] font-bold text-gray-400 block uppercase tracking-wider mt-0.5">Network Nodes</span>
                   </div>
                </motion.div>
 
@@ -938,55 +1011,6 @@ export default function App() {
 
           </div>
         </main>
-
-        {/* Bento Modals AnimatePresence */}
-        <AnimatePresence>
-          {activeBento && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-[#e0e5ec]/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
-            >
-              <motion.div 
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                className="w-full max-w-[650px] bg-[#e0e5ec] rounded-[3rem] border border-white/80 p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative overflow-hidden flex flex-col max-h-[90vh]"
-              >
-                {/* Header close */}
-                <div className="flex justify-between items-center mb-6 z-10">
-                  <h2 className="text-xl font-bold uppercase tracking-widest text-[#1a202c] flex items-center gap-2">
-                    <Sparkles size={16} className="text-cyan-500" />
-                    {activeBento === 'synth' && "Playable Modular Synth"}
-                    {activeBento === 'canvas' && "HTML5 Generative Art Canvas"}
-                    {activeBento === 'creation' && "Cinematic Timeline Editor"}
-                    {activeBento === 'tech' && "Core Technical Skillset"}
-                  </h2>
-                  <button 
-                    onClick={() => setActiveBento(null)}
-                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9]"
-                  >
-                    <X size={18} />
-                  </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto pr-2 z-10 space-y-6">
-                  {/* Modals rendering */}
-                  {activeBento === 'synth' && <PianoModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
-                  {activeBento === 'canvas' && <VisualArtsModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
-                  {activeBento === 'creation' && <ImageEditorModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
-                  {activeBento === 'tech' && <WebStackModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
-                  {activeBento === 'keyboard' && <KeyboardModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
-                </div>
-
-                {/* Background lighting blobs inside modal */}
-                <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-cyan-300 rounded-full filter blur-3xl opacity-20 pointer-events-none"></div>
-                <div className="absolute -top-10 -left-10 w-48 h-48 bg-pink-300 rounded-full filter blur-3xl opacity-20 pointer-events-none"></div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
         </section>
 
         {/* ABOUT ME SECTION */}
@@ -996,7 +1020,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-          className="relative w-full py-20 lg:py-28 z-30 overflow-hidden border-t border-[#bebec9]/30 bg-[#e0e5ec]"
+          className="relative w-full py-12 lg:py-16 z-30 overflow-hidden border-t border-[#bebec9]/30 bg-[#e0e5ec]"
         >
           {/* Subtle Floating Background Icons */}
           <div className="absolute top-[10%] left-[8%] opacity-[0.03] text-cyan-600 rotate-[-12deg] pointer-events-none z-10 hidden md:block">
@@ -1024,28 +1048,18 @@ export default function App() {
                 className="lg:col-span-5 flex flex-col items-center"
               >
                  
-                 {/* Realistic Glass Frame around the profile picture */}
-                 <div className="relative w-full max-w-[360px] aspect-[4/5] rounded-[2.5rem] p-4 flex flex-col group overflow-hidden border border-white/60 bg-white/20 backdrop-blur-md shadow-[0_20px_50px_rgba(31,38,135,0.15)] ring-1 ring-white/50 transition-all duration-500 hover:shadow-[0_25px_60px_rgba(31,38,135,0.25)] hover:scale-[1.02]">
-                   
-                   {/* Realistic Glass Reflection Highlights */}
-                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/35 z-30 pointer-events-none rounded-[2.5rem]" />
-                   <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:left-[150%] transition-all duration-[1500ms] ease-in-out z-30 pointer-events-none" />
-
-                   <div className="relative z-10 w-full h-full rounded-[2rem] overflow-hidden flex flex-col items-center justify-end bg-gradient-to-b from-white/10 to-white/5 shadow-[inset_2px_2px_10px_rgba(255,255,255,0.5),inset_-2px_-2px_10px_rgba(0,0,0,0.05)] border border-white/30">
-                      
-                      {/* Realistic Edge Vignette Blending Overlay to fade sharp picture borders */}
-                      <div className="absolute inset-0 z-20 pointer-events-none rounded-[2rem] shadow-[inset_0_0_30px_rgba(224,229,236,0.95),inset_0_-20px_40px_rgba(224,229,236,0.98)]" />
-
-                      <img 
-                         src="/josiah-profile.jpg?v=3" 
-                         alt="Josiah Johnmark portrait"
-                         className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 group-hover:scale-[1.08] netflix-portrait z-10"
-                         style={{ 
-                           WebkitUserDrag: 'none',
-                           filter: getPortraitFilter()
-                         }}
-                      />
-                   </div>
+                 {/* Clean Neumorphic Frame around the profile picture */}
+                 <div className="relative w-full max-w-[360px] aspect-[4/5] rounded-[2.5rem] p-4 flex flex-col group overflow-hidden border border-white/50 bg-[#e0e5ec] shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] transition-all duration-500 hover:scale-[1.02]">
+                    <div className="relative w-full h-full rounded-[2rem] overflow-hidden flex flex-col items-center justify-end border border-white/30 shadow-inner">
+                       <img 
+                          src="/josiah-profile.jpg?v=3" 
+                          alt="Josiah Johnmark portrait"
+                          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.08] z-10"
+                          style={{ 
+                            WebkitUserDrag: 'none'
+                          }}
+                       />
+                    </div>
                  </div>
 
                  {/* Monospace Name Tag directly below camera frame */}
@@ -1252,9 +1266,9 @@ export default function App() {
         </motion.section>
 
         {/* Projects Section Showcase */}
-        <section id="portfolio" className="relative w-full py-24 lg:py-32 z-30 border-t border-[#bebec9]/30">
+        <section id="portfolio" className="relative w-full py-12 lg:py-16 z-30 border-t border-[#bebec9]/30">
           <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
               <div>
                 <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#1a202c] tracking-tighter uppercase mb-2 font-syncopate select-none">
                   PROJECTS
@@ -1281,151 +1295,22 @@ export default function App() {
               </div>
             </div>
 
-            {/* Projects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Projects Column Stack */}
+            <div className="flex flex-col gap-12 lg:gap-16 w-full">
               {filteredProjects.map(proj => (
-                <motion.div
-                  layout
+                <ProjectCard 
                   key={proj.id}
-                  className="neu-out rounded-[2.5rem] border border-white/60 p-6 flex flex-col group transition-all duration-300"
-                >
-                  {/* Image Screenshot Preview */}
-                  <div className="aspect-[16/9] neu-in rounded-3xl overflow-hidden mb-6 flex items-center justify-center bg-[#e0e5ec] relative p-1 border border-white/40 shadow-inner cursor-pointer" onClick={() => window.open(proj.iframeUrl, '_blank')}>
-                    <div className="w-full h-full rounded-2xl overflow-hidden bg-white/10 flex items-center justify-center relative">
-                      <img 
-                        src={proj.image} 
-                        alt={proj.title}
-                        className="w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-105" 
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-white font-bold bg-cyan-600/90 px-4 py-2 rounded-xl text-xs backdrop-blur-sm shadow-lg">View Live Site</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{proj.category}</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-[#1a202c] mb-2 group-hover:text-cyan-600 transition-colors flex items-center gap-1.5 leading-none">
-                    {proj.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 mb-6 font-semibold">{proj.shortDesc}</p>
-
-                  <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-gray-300/40 pt-4 pointer-events-auto">
-                    <div className="flex flex-wrap gap-1.5">
-                      {proj.tags.map(t => (
-                        <span key={t} className="text-[9px] font-bold text-gray-600 neu-in px-3 py-1.5 rounded-lg">{t}</span>
-                      ))}
-                    </div>
-                    <div className="flex gap-2 shrink-0">
-                      <button 
-                        onClick={() => setSelectedProject(proj)}
-                        className="px-4 py-2.5 text-[9px] font-black uppercase rounded-xl neu-out hover:text-cyan-600 active:scale-95 transition-all text-center cursor-pointer pointer-events-auto"
-                      >
-                        Case Study
-                      </button>
-                      {proj.iframeUrl && (
-                        <a 
-                          href={proj.iframeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2.5 text-[9px] font-black uppercase rounded-xl neu-out text-cyan-600 hover:text-cyan-800 active:scale-95 transition-all text-center cursor-pointer pointer-events-auto"
-                        >
-                          Visit Live
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
+                  proj={proj}
+                  setSelectedProject={setSelectedProject}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* Project Details Modal Drawer */}
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-[#e0e5ec]/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 30 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 30 }}
-                className={`w-full bg-[#e0e5ec] rounded-[3rem] border border-white/80 p-6 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative transition-all duration-500 overflow-y-auto max-h-[90vh] ${selectedProject.iframeUrl ? 'max-w-[850px]' : 'max-w-[600px]'}`}
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <div>
-                    <span className="text-[10px] font-bold text-cyan-600 uppercase tracking-widest">{selectedProject.category} Case Study</span>
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#1a202c] tracking-tight">{selectedProject.title}</h2>
-                  </div>
-                  <button 
-                    onClick={() => setSelectedProject(null)}
-                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9] z-20 shrink-0"
-                  >
-                    <X size={18} className="pointer-events-none" />
-                  </button>
-                </div>
-
-                <div className="space-y-6 text-xs text-gray-600 font-semibold leading-relaxed">
-                  <div className="p-5 neu-in rounded-2xl">
-                    <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 border-b border-gray-300/50 pb-2">Technical Overview</h4>
-                    <p>{selectedProject.details}</p>
-                  </div>
-
-                  {/* Screenshot Modal Preview */}
-                  {selectedProject.iframeUrl && (
-                    <div className="space-y-3 pt-2">
-                      <div className="flex justify-between items-center text-[10px] font-bold text-gray-500 uppercase tracking-widest select-none">
-                        <span>Project Screenshot</span>
-                        <a 
-                          href={selectedProject.iframeUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-cyan-600 hover:text-cyan-800 transition-all font-extrabold flex items-center gap-1 hover:underline hover:scale-105 active:scale-95"
-                        >
-                          Visit Live Site <ChevronRight size={10} className="pointer-events-none" />
-                        </a>
-                      </div>
-                      
-                      <div className="w-full rounded-2xl overflow-hidden border border-white/60 neu-out bg-[#e0e5ec] p-2 shadow-inner">
-                        <div className="w-full aspect-[16/10] bg-white rounded-xl overflow-hidden relative shadow-md cursor-pointer" onClick={() => window.open(selectedProject.iframeUrl, '_blank')}>
-                          <img 
-                            src={selectedProject.image} 
-                            alt={selectedProject.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Efficiency Metric</span>
-                      <span className="text-lg font-black text-cyan-600">{selectedProject.metric}</span>
-                    </div>
-                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Production Grade</span>
-                      <span className="text-lg font-black text-slate-700">Premium SLA</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 justify-center pt-2">
-                    {selectedProject.tags.map(t => (
-                      <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <section id="contact" className="relative w-full py-24 lg:py-32 z-30 border-t border-[#bebec9]/30 bg-[#e0e5ec]">
+        <section id="contact" className="relative w-full py-12 lg:py-16 z-30 border-t border-[#bebec9]/30 bg-[#e0e5ec]">
           <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
-            <div className="mb-16 text-center">
+            <div className="mb-8 text-center">
               <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#1a202c] tracking-tighter uppercase mb-4 font-syncopate select-none">
                 GET IN TOUCH
               </h2>
@@ -1434,7 +1319,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-8">
               
               {/* Card 1: Email */}
               <a 
@@ -1547,7 +1432,7 @@ export default function App() {
                 <div className="flex justify-between items-center border-b border-gray-300/50 pb-3 mb-3">
                   <div className="flex items-center gap-2">
                     <div className="relative w-8 h-8 rounded-full border border-white bg-slate-300 overflow-hidden flex items-center justify-center shadow-inner">
-                      <img src="/josiah-logo.png" alt="Josiah Logo" className="w-[80%] h-[80%] object-contain" />
+                      <img src="/josiah-logo.svg" alt="Josiah Logo" className="w-[80%] h-[80%] object-contain" />
                       {/* Active green node indicator */}
                       <div className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 rounded-full border border-[#e0e5ec] animate-pulse"></div>
                     </div>
@@ -1658,6 +1543,138 @@ export default function App() {
           </button>
 
         </div>
+
+        {/* Bento Modals AnimatePresence */}
+        <AnimatePresence>
+          {activeBento && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-[#e0e5ec]/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            >
+              <motion.div 
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                className="w-full max-w-[1000px] lg:max-w-5xl bg-[#e0e5ec] rounded-2xl border border-white/80 p-4 sm:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative overflow-hidden flex flex-col max-h-[95vh] sm:max-h-[90vh]"
+              >
+                {/* Header close */}
+                <div className="flex justify-between items-center mb-6 z-10">
+                  <h2 className="text-xl font-bold uppercase tracking-widest text-[#1a202c] flex items-center gap-2">
+                    <Sparkles size={16} className="text-cyan-500" />
+                    {activeBento === 'synth' && "Playable Modular Synth"}
+                    {activeBento === 'canvas' && "HTML5 Generative Art Canvas"}
+                    {activeBento === 'creation' && "Cinematic Timeline Editor"}
+                    {activeBento === 'tech' && "Core Technical Skillset"}
+                  </h2>
+                  <button 
+                    onClick={() => setActiveBento(null)}
+                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9]"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto pr-2 z-10 space-y-6">
+                  {/* Modals rendering */}
+                  {activeBento === 'synth' && <PianoModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
+                  {activeBento === 'canvas' && <VisualArtsModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
+                  {activeBento === 'creation' && <ImageEditorModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
+                  {activeBento === 'tech' && <WebStackModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
+                  {activeBento === 'keyboard' && <KeyboardModal onClose={() => setActiveBento(null)} playSynthNote={playSynthNote} />}
+                </div>
+
+                {/* Background lighting blobs inside modal */}
+                <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-cyan-300 rounded-full filter blur-3xl opacity-20 pointer-events-none"></div>
+                <div className="absolute -top-10 -left-10 w-48 h-48 bg-pink-300 rounded-full filter blur-3xl opacity-20 pointer-events-none"></div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Project Details Modal Drawer */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-[#e0e5ec]/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 30 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 30 }}
+                className={`w-full bg-[#e0e5ec] rounded-2xl border border-white/80 p-4 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative transition-all duration-500 overflow-y-auto max-h-[95vh] md:max-h-[90vh] max-w-[1000px] lg:max-w-5xl`}
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <span className="text-[10px] font-bold text-cyan-600 uppercase tracking-widest">{selectedProject.category} Case Study</span>
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#1a202c] tracking-tight">{selectedProject.title}</h2>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9] z-20 shrink-0"
+                  >
+                    <X size={18} className="pointer-events-none" />
+                  </button>
+                </div>
+
+                <div className="space-y-6 text-xs text-gray-600 font-semibold leading-relaxed">
+                  <div className="p-5 neu-in rounded-2xl">
+                    <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 border-b border-gray-300/50 pb-2">Technical Overview</h4>
+                    <p>{selectedProject.details}</p>
+                  </div>
+
+                  {/* Screenshot Modal Preview */}
+                  {selectedProject.iframeUrl && (
+                    <div className="space-y-3 pt-2">
+                      <div className="flex justify-between items-center text-[10px] font-bold text-gray-500 uppercase tracking-widest select-none">
+                        <span>Project Screenshot</span>
+                        <a 
+                          href={selectedProject.iframeUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-cyan-600 hover:text-cyan-800 transition-all font-extrabold flex items-center gap-1 hover:underline hover:scale-105 active:scale-95"
+                        >
+                          Visit Live Site <ChevronRight size={10} className="pointer-events-none" />
+                        </a>
+                      </div>
+                      
+                      <div className="w-full rounded-2xl overflow-hidden border border-white/60 neu-out bg-[#e0e5ec] p-2 shadow-inner">
+                        <div className="w-full aspect-[16/10] bg-white rounded-xl overflow-hidden relative shadow-md cursor-pointer" onClick={() => window.open(selectedProject.iframeUrl, '_blank')}>
+                          <img 
+                            src={selectedProject.image} 
+                            alt={selectedProject.title} 
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
+                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Efficiency Metric</span>
+                      <span className="text-lg font-black text-cyan-600">{selectedProject.metric}</span>
+                    </div>
+                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
+                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Production Grade</span>
+                      <span className="text-lg font-black text-slate-700">Premium SLA</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 justify-center pt-2">
+                    {selectedProject.tags.map(t => (
+                      <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </AnimatePresence>

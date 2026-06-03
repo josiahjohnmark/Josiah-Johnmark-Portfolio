@@ -154,6 +154,47 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
     lastY.current = currentY;
   };
 
+  // Sketchpad Touch Handlers
+  const startDrawingTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    
+    isDrawingRef.current = true;
+    setIsDrawing(true);
+    lastX.current = touch.clientX - rect.left;
+    lastY.current = touch.clientY - rect.top;
+  };
+
+  const drawTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const currentX = touch.clientX - rect.left;
+    const currentY = touch.clientY - rect.top;
+
+    ctx.beginPath();
+    ctx.moveTo(lastX.current, lastY.current);
+    ctx.lineTo(currentX, currentY);
+
+    // Apply custom brush style
+    ctx.strokeStyle = brushColor;
+    ctx.globalAlpha = selectedBrush.opacity;
+    ctx.lineWidth = brushSize * selectedBrush.widthMultiplier;
+    ctx.lineJoin = selectedBrush.lineJoin;
+    ctx.lineCap = selectedBrush.lineCap;
+
+    ctx.stroke();
+
+    lastX.current = currentX;
+    lastY.current = currentY;
+  };
+
   const stopDrawing = () => {
     isDrawingRef.current = false;
     setIsDrawing(false);
@@ -214,7 +255,7 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
           
           {/* Drawing Board Canvas (7 cols) */}
           <div className="lg:col-span-8 flex flex-col gap-3">
-            <div className="neu-in rounded-3xl overflow-hidden aspect-[4/3] relative border border-white/60 bg-white shadow-inner">
+            <div className="neu-in rounded-xl overflow-hidden aspect-[4/3] relative border border-white/60 bg-white shadow-inner">
               <canvas
                 ref={canvasRef}
                 width="400"
@@ -223,6 +264,9 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
+                onTouchStart={startDrawingTouch}
+                onTouchMove={drawTouch}
+                onTouchEnd={stopDrawing}
                 className="w-full h-full object-contain cursor-crosshair touch-none select-none pointer-events-auto"
               />
               {isDrawing && (
@@ -255,7 +299,7 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
           <div className="lg:col-span-4 flex flex-col gap-4">
             
             {/* Color Wheel Circular spectrum */}
-            <div className="neu-out p-4 rounded-3xl border border-white/60 flex flex-col items-center justify-between gap-3 text-center">
+            <div className="neu-out p-4 rounded-xl border border-white/60 flex flex-col items-center justify-between gap-3 text-center">
               <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block w-full text-left">Color Wheel Picker</span>
               
               <div className="relative w-36 h-36 flex items-center justify-center neu-in rounded-full p-1 bg-white">
@@ -280,7 +324,7 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
             </div>
 
             {/* Brushes selection & Slider size */}
-            <div className="neu-out p-5 rounded-3xl border border-white/60 flex flex-col gap-4 flex-grow justify-between">
+            <div className="neu-out p-5 rounded-xl border border-white/60 flex flex-col gap-4 flex-grow justify-between">
               <div className="space-y-2.5">
                 <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block">Brush Instruments</span>
                 <div className="flex flex-col gap-2 pointer-events-auto">
@@ -324,7 +368,7 @@ export default function VisualArtsModal({ onClose, playSynthNote }: VisualArtsMo
         /* GRAPHITE PORTFOLIO GALLERY CARDS */
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow items-stretch">
           {GALLERY_DRAWINGS.map((draw, idx) => (
-            <div key={idx} className="neu-out rounded-3xl border border-white/60 p-5 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-500 bg-[#e0e5ec] relative overflow-hidden group">
+            <div key={idx} className="neu-out rounded-xl border border-white/60 p-5 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-500 bg-[#e0e5ec] relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-purple-500"></div>
               
               <div className="space-y-4">

@@ -70,6 +70,8 @@ body {
 
 .blob-anim {
   animation: blob-float 15s infinite alternate ease-in-out;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 @keyframes blob-float {
@@ -181,14 +183,9 @@ body {
   opacity: 0.5; /* reduce overlay slightly on hover to draw in focus */
 }
 
-/* Low-vibrancy to warm vintage transition for profile portrait */
-.netflix-portrait {
-  filter: none;
+/* Portrait transition style */
+.portrait-normal {
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.netflix-portrait:hover {
-  filter: sepia(0.35) saturate(1.25) brightness(1.05) contrast(0.98) hue-rotate(-5deg) !important;
 }
 
 /* Ultimate universal mouse responsiveness */

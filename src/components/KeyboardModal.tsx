@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Terminal, Keyboard, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
+import { getAudioContext } from '../utils/audio';
 
 interface KeyboardModalProps {
   onClose: () => void;
@@ -14,58 +15,96 @@ const KEYBOARD_ROWS = [
 ];
 
 const SNIPPETS = [
-  "const vibe = new VibeCoder({ speed: 'high-momentum' });\n",
-  "await vibe.synthesize({ piano: 'grand', audioContext: 'active' });\n",
-  "vibe.compile({ aesthetic: 'glassmorphism', rendering: '60fps' });\n",
-  "console.log('Crafting premium bento modules...');\n",
-  "const developer = Josiah.scaleUp({ fullstack: true });\n",
-  "// Adjusting ADSR audio envelope parameters...\n",
-  "// Recalibrating DaVinci Resolve teal & orange grades...\n",
-  "// Initializing Gemini AI twin system instruction...\n",
-  "export default async function VibeNode() { return <Sparkles /> };\n",
-  "const database = await Postgres.connect('josiah-portfolio');\n"
+  `// Setup Redis client with pool connection for thread-safe caching
+const sessionCache = new RedisPool({
+  host: process.env.REDIS_HOST || '127.0.0.1',
+  port: 6379,
+  maxConnections: 32,
+  idleTimeoutMillis: 10000
+});
+`,
+  `// Calibrate studio-grade ADSR envelope on Voltage Controlled Amplifier
+const triggerEnvelope = (gainNode: GainNode, filterNode: BiquadFilterNode) => {
+  const now = audioCtx.currentTime;
+  gainNode.gain.setValueAtTime(0, now);
+  gainNode.gain.linearRampToValueAtTime(0.35, now + 0.025); // Warm attack
+  gainNode.gain.exponentialRampToValueAtTime(0.12, now + 0.15); // Smooth decay
+  filterNode.frequency.exponentialRampToValueAtTime(800, now + 0.25);
+};
+`,
+  `// Spawning concurrent worker threads for Teal & Orange transcode queue
+async function processVideoQueue(jobs: TranscodeJob[]): Promise<void> {
+  const threads = navigator.hardwareConcurrency || 4;
+  const limit = pLimit(threads);
+  const tasks = jobs.map(job => limit(() => renderDaVinciLUT(job)));
+  await Promise.all(tasks);
+}
+`,
+  `// PostgreSQL transaction schema for high-throughput client logs
+const CREATE_TELEMETRY_TABLE = \`
+  CREATE TABLE IF NOT EXISTS telemetry_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    event_type VARCHAR(50) NOT NULL,
+    latency_ms INTEGER NOT NULL,
+    fps_count DOUBLE PRECISION DEFAULT 60.0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  );
+\`;
+await db.query(CREATE_TELEMETRY_TABLE);
+`,
+  `// Spring motion physics setup for modal interface transition
+const modalTransition = {
+  type: 'spring',
+  stiffness: 260,
+  damping: 25,
+  mass: 1.2,
+  restDelta: 0.001
+};
+`
 ];
 
 export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalProps) {
-  const [typedCode, setTypedCode] = useState<string>("// Vibe Code Terminal. Press physical keys or click keys below...\n");
+  const [typedCode, setTypedCode] = useState<string>("// Vibe Code Terminal. Start typing on physical keys to compile production code...\n\n");
   const [activePhysicalKey, setActivePhysicalKey] = useState<string | null>(null);
   const [switchType, setSwitchType] = useState<'blue' | 'brown'>('blue');
   const [keyPressCount, setKeyPressCount] = useState<number>(0);
+  const [snippetIdx, setSnippetIdx] = useState<number>(0);
+  const [charIdx, setCharIdx] = useState<number>(0);
 
   // Custom mechanical keyboard sound synthesizer
   const playMechSound = (keyName: string) => {
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      const ctx = new AudioContextClass();
+      const ctx = getAudioContext();
       
       // Source oscillator & noise buffer
       const osc = ctx.createOscillator();
       const gainNode = ctx.createGain();
       const filterNode = ctx.createBiquadFilter();
 
-      // Mechanical sound differences
+      // Mechanical sound differences with soft attack thresholds to prevent pops
       if (switchType === 'blue') {
         // High clicky clack
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(800 + Math.random() * 200, ctx.currentTime);
         
-        filterNode.type = 'highpass';
-        filterNode.frequency.setValueAtTime(2000, ctx.currentTime);
+        filterNode.type = 'bandpass';
+        filterNode.frequency.setValueAtTime(1500, ctx.currentTime);
+        filterNode.Q.setValueAtTime(5, ctx.currentTime);
         
         gainNode.gain.setValueAtTime(0, ctx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.002);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.02);
+        gainNode.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.012); // Slightly softened attack
+        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
       } else {
         // Quiet tactile thump
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(150 + Math.random() * 50, ctx.currentTime);
+        osc.frequency.setValueAtTime(120 + Math.random() * 30, ctx.currentTime);
         
         filterNode.type = 'lowpass';
-        filterNode.frequency.setValueAtTime(800, ctx.currentTime);
+        filterNode.frequency.setValueAtTime(500, ctx.currentTime);
         
         gainNode.gain.setValueAtTime(0, ctx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.004);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+        gainNode.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 0.018); // Soft cinematic attack
+        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
       }
 
       osc.connect(filterNode);
@@ -84,22 +123,29 @@ export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalP
     setActivePhysicalKey(keyName);
     setKeyPressCount(prev => prev + 1);
 
-    setTypedCode(prevCode => {
-      let charToAdd = "";
-      if (keyName === 'SPACE') {
-        charToAdd = " ";
-      } else if (keyName === 'DELETE') {
-        return prevCode.length > 0 ? prevCode.slice(0, -1) : "";
-      } else if (keyName.length === 1) {
-        charToAdd = keyName.toLowerCase();
-      }
+    if (keyName === 'DELETE') {
+      setTypedCode(prev => prev.length > 0 ? prev.slice(0, -1) : "");
+      setCharIdx(prev => Math.max(0, prev - 1));
+      return;
+    }
 
-      // Limit buffer size to 500 characters
-      if (prevCode.length > 500) {
-        return prevCode.slice(100) + charToAdd;
+    const currentSnippet = SNIPPETS[snippetIdx];
+    const chunk = currentSnippet.slice(charIdx, charIdx + 3);
+    setTypedCode(prev => {
+      // Limit total buffer to avoid memory slowdowns
+      if (prev.length > 500) {
+        return prev.slice(120) + chunk;
       }
-      return prevCode + charToAdd;
+      return prev + chunk;
     });
+
+    const nextCharIdx = charIdx + 3;
+    if (nextCharIdx >= currentSnippet.length) {
+      setSnippetIdx(prev => (prev + 1) % SNIPPETS.length);
+      setCharIdx(0);
+    } else {
+      setCharIdx(nextCharIdx);
+    }
 
     setTimeout(() => setActivePhysicalKey(null), 100);
   };
@@ -194,18 +240,18 @@ export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalP
       </div>
 
       {/* Mechanical Keyboard Deck */}
-      <div className="neu-in p-5 rounded-3xl border border-white/60 relative">
+      <div className="neu-in p-5 rounded-xl border border-white/60 relative">
         <div className="absolute top-2.5 right-6 flex items-center gap-1 opacity-70">
           <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></div>
           <span className="text-[7px] font-black uppercase text-cyan-600 tracking-wider">RGB Matrix Live</span>
         </div>
 
-        <div className="flex flex-col gap-2 max-w-[500px] mx-auto pt-2">
+        <div className="flex flex-col gap-1.5 sm:gap-2 max-w-[500px] mx-auto pt-2">
           {KEYBOARD_ROWS.map((row, rIdx) => (
-            <div key={rIdx} className="flex justify-center gap-1.5">
+            <div key={rIdx} className="flex justify-center gap-1 sm:gap-1.5">
               {/* Row offsets */}
-              {rIdx === 1 && <div className="w-2" />}
-              {rIdx === 2 && <div className="w-5" />}
+              {rIdx === 1 && <div className="w-1 sm:w-2" />}
+              {rIdx === 2 && <div className="w-3 sm:w-5" />}
 
               {row.map(char => {
                 const isActive = activePhysicalKey === char;
@@ -213,7 +259,7 @@ export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalP
                   <button
                     key={char}
                     onClick={() => handleKeyPress(char)}
-                    className={`w-10 h-10 neu-out rounded-lg border border-transparent font-mono text-xs font-bold transition-all duration-75 flex items-center justify-center cursor-pointer pointer-events-auto
+                    className={`w-7 h-7 sm:w-10 sm:h-10 neu-out rounded-lg border border-transparent font-mono text-[9px] sm:text-xs font-bold transition-all duration-75 flex items-center justify-center cursor-pointer pointer-events-auto
                       ${isActive 
                         ? 'bg-cyan-100 border-cyan-400 text-cyan-600 shadow-inner scale-90 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
                         : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95 text-gray-700'}`}
@@ -226,30 +272,30 @@ export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalP
           ))}
 
           {/* Bottom spacebar row */}
-          <div className="flex justify-center gap-2 mt-1">
+          <div className="flex justify-center gap-1.5 sm:gap-2 mt-1">
             <button
               onClick={() => playMechSound('CONTROL')}
-              className="px-2.5 h-10 neu-out bg-white rounded-lg border border-transparent text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-cyan-50/30"
+              className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-cyan-50/30"
             >
               Ctrl
             </button>
             <button
               onClick={() => handleKeyPress('SPACE')}
-              className={`w-48 h-10 neu-out rounded-lg border border-transparent transition-all duration-75 cursor-pointer pointer-events-auto
+              className={`w-28 sm:w-48 h-7 sm:h-10 neu-out rounded-lg border border-transparent transition-all duration-75 cursor-pointer pointer-events-auto
                 ${activePhysicalKey === 'SPACE'
                   ? 'bg-cyan-100 border-cyan-400 shadow-inner scale-95 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
                   : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95'}`}
             >
-              <span className="text-[8px] text-gray-400 font-sans tracking-widest font-bold">SPACEBAR</span>
+              <span className="text-[6.5px] sm:text-[8px] text-gray-400 font-sans tracking-widest font-bold">SPACE</span>
             </button>
             <button
               onClick={() => {
                 playMechSound('DELETE');
                 setTypedCode(prev => prev.length > 2 ? prev.slice(0, -5) : prev);
               }}
-              className="px-2.5 h-10 neu-out bg-white rounded-lg border border-transparent text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-red-50/50 hover:text-red-500 active:scale-90"
+              className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-red-50/50 hover:text-red-500 active:scale-90"
             >
-              Backspace
+              Del
             </button>
           </div>
         </div>

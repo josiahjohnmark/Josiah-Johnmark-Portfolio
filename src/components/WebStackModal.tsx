@@ -201,7 +201,7 @@ export default function WebStackModal({ onClose, playSynthNote }: WebStackModalP
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-grow min-h-[420px]">
         {/* Interactive Neural Node Graph (7 cols) */}
-        <div className="lg:col-span-6 xl:col-span-7 neu-in rounded-3xl p-4 relative overflow-hidden flex items-center justify-center min-h-[300px] border border-white/60">
+        <div className="lg:col-span-6 xl:col-span-7 neu-in rounded-2xl p-4 relative overflow-hidden flex items-center justify-center min-h-[300px] border border-white/60">
           
           {/* Dynamic Grid GridLines overlay */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
@@ -309,7 +309,7 @@ export default function WebStackModal({ onClose, playSynthNote }: WebStackModalP
 
         {/* Selected Node Details Sidebar (5 cols) */}
         <div className="lg:col-span-6 xl:col-span-5 flex flex-col gap-4">
-          <div className="neu-out rounded-3xl p-5 border border-white/60 space-y-4 flex-grow flex flex-col">
+          <div className="neu-out rounded-xl p-5 border border-white/60 space-y-4 flex-grow flex flex-col">
             
             {/* Header / Category Badge */}
             <div className="flex justify-between items-start gap-2">
