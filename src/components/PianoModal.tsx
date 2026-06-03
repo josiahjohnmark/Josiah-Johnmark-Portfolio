@@ -271,50 +271,53 @@ export default function PianoModal({ onClose, playSynthNote }: PianoModalProps) 
       {/* Tactile Piano Keybed Container */}
       <div className="neu-in p-4 pb-6 rounded-xl border border-white/60 relative">
         
-        {/* White and Black key grid wrapper */}
-        <div className="relative flex justify-between h-44 w-full bg-slate-300 rounded-2xl overflow-hidden shadow-inner p-1 select-none">
-          
-          {/* Render White Keys */}
-          {PIANO_KEYS.filter(k => !k.isBlack).map(key => {
-            const isActive = activePianoKeys.includes(key.name);
-            return (
-              <button
-                key={key.name}
-                onClick={() => playPianoTone(key.freq, key.name)}
-                className={`flex-1 h-full rounded-xl border-x border-gray-200 transition-all flex flex-col justify-end pb-3 items-center cursor-pointer pointer-events-auto select-none
-                  ${isActive 
-                    ? 'bg-gradient-to-t from-cyan-100 to-cyan-50 shadow-inner translate-y-0.5 border-t border-cyan-300' 
-                    : 'bg-white shadow-[0_4px_6px_rgba(0,0,0,0.1),inset_0_-8px_0_#eaeaea] hover:bg-gray-50 active:translate-y-0.5'}`}
-              >
-                <div className="flex flex-col items-center select-none pointer-events-none">
-                  <span className="hidden sm:block text-[6.5px] font-black text-gray-400 font-sans tracking-tighter uppercase mb-0.5">Key: {key.bindKey}</span>
-                  <span className="text-[7px] sm:text-[8px] font-black text-gray-600 font-mono tracking-tight">{key.name}</span>
-                </div>
-              </button>
-            );
-          })}
+        {/* Scroll wrapper for mobile viewports */}
+        <div className="w-full overflow-x-auto pb-2 scrollbar-none overscroll-contain">
+          {/* White and Black key grid wrapper */}
+          <div className="relative flex justify-between h-44 min-w-[550px] sm:min-w-0 w-full bg-slate-300 rounded-2xl overflow-hidden shadow-inner p-1 select-none">
+            
+            {/* Render White Keys */}
+            {PIANO_KEYS.filter(k => !k.isBlack).map(key => {
+              const isActive = activePianoKeys.includes(key.name);
+              return (
+                <button
+                  key={key.name}
+                  onClick={() => playPianoTone(key.freq, key.name)}
+                  className={`flex-1 h-full rounded-xl border-x border-gray-200 transition-all flex flex-col justify-end pb-3 items-center cursor-pointer pointer-events-auto select-none
+                    ${isActive 
+                      ? 'bg-gradient-to-t from-cyan-100 to-cyan-50 shadow-inner translate-y-0.5 border-t border-cyan-300' 
+                      : 'bg-white shadow-[0_4px_6px_rgba(0,0,0,0.1),inset_0_-8px_0_#eaeaea] hover:bg-gray-50 active:translate-y-0.5'}`}
+                >
+                  <div className="flex flex-col items-center select-none pointer-events-none">
+                    <span className="hidden sm:block text-[6.5px] font-black text-gray-400 font-sans tracking-tighter uppercase mb-0.5">Key: {key.bindKey}</span>
+                    <span className="text-[7px] sm:text-[8px] font-black text-gray-600 font-mono tracking-tight">{key.name}</span>
+                  </div>
+                </button>
+              );
+            })}
 
-          {/* Render Black Keys Absolutely over Whites */}
-          {PIANO_KEYS.filter(k => k.isBlack).map(key => {
-            const isActive = activePianoKeys.includes(key.name);
-            return (
-              <button
-                key={key.name}
-                onClick={() => playPianoTone(key.freq, key.name)}
-                className={`absolute w-[7.8%] h-[58%] rounded-b-lg border-x border-slate-900 transition-all z-20 cursor-pointer pointer-events-auto flex flex-col justify-end pb-1.5 items-center select-none
-                  ${key.leftOffset}
-                  ${isActive 
-                    ? 'bg-cyan-500 text-white translate-y-0.5 shadow-inner' 
-                    : 'bg-slate-900 shadow-[2px_2px_4px_rgba(0,0,0,0.3)] hover:bg-slate-800 text-gray-400'}`}
-              >
-                <div className="flex flex-col items-center select-none pointer-events-none text-center">
-                  <span className="hidden sm:block text-[5.5px] font-black tracking-tighter leading-none mb-0.5 uppercase">{key.bindKey}</span>
-                  <span className="text-[5px] sm:text-[6.5px] font-bold font-mono tracking-tighter leading-none">{key.name}</span>
-                </div>
-              </button>
-            );
-          })}
+            {/* Render Black Keys Absolutely over Whites */}
+            {PIANO_KEYS.filter(k => k.isBlack).map(key => {
+              const isActive = activePianoKeys.includes(key.name);
+              return (
+                <button
+                  key={key.name}
+                  onClick={() => playPianoTone(key.freq, key.name)}
+                  className={`absolute w-[7.8%] h-[58%] rounded-b-lg border-x border-slate-900 transition-all z-20 cursor-pointer pointer-events-auto flex flex-col justify-end pb-1.5 items-center select-none
+                    ${key.leftOffset}
+                    ${isActive 
+                      ? 'bg-cyan-500 text-white translate-y-0.5 shadow-inner' 
+                      : 'bg-slate-900 shadow-[2px_2px_4px_rgba(0,0,0,0.3)] hover:bg-slate-800 text-gray-400'}`}
+                >
+                  <div className="flex flex-col items-center select-none pointer-events-none text-center">
+                    <span className="hidden sm:block text-[5.5px] font-black tracking-tighter leading-none mb-0.5 uppercase">{key.bindKey}</span>
+                    <span className="text-[5px] sm:text-[6.5px] font-bold font-mono tracking-tighter leading-none">{key.name}</span>
+                  </div>
+                </button>
+              );
+            })}
 
+          </div>
         </div>
       </div>
     </div>
