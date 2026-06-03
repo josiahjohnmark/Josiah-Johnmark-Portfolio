@@ -764,7 +764,7 @@ export default function App() {
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => setActiveBento('tech')}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col justify-between hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-10">
                      <Sparkles size={8} /> Interactive Graph
@@ -798,7 +798,7 @@ export default function App() {
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => setActiveBento('canvas')}
-                 className={`relative group col-span-12 md:col-span-8 lg:col-span-4 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-8 lg:col-span-4 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-pink-500/10 text-pink-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
                      <Sparkles size={8} /> Drawing Studio
@@ -834,7 +834,7 @@ export default function App() {
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => setActiveBento('creation')}
-                 className={`relative group col-span-12 md:col-span-12 lg:col-span-5 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-12 lg:col-span-5 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
                      <Sparkles size={8} /> Cinematic Grades
@@ -884,7 +884,7 @@ export default function App() {
                {/* Card 4: Tools Used (Replaces old Infra) */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <ToolsUsedCard 
                     playSynthNote={playSynthNote}
@@ -898,7 +898,7 @@ export default function App() {
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => setActiveBento('keyboard')}
-                 className={`relative group col-span-12 md:col-span-5 lg:col-span-4 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-5 lg:col-span-4 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/30 to-purple-100/30"></div>
                   <div className="flex justify-between items-center mb-2 z-10">
@@ -961,7 +961,7 @@ export default function App() {
                  onClick={() => {
                    playSynthNote(523.25, 'socialSuite');
                  }}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-2 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-4 lg:col-span-2 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="flex justify-between items-start w-full">
                      <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Socials</span>
@@ -986,7 +986,7 @@ export default function App() {
                <motion.div 
                  variants={fadeInSlideUp}
                  onClick={() => setActiveBento('synth')}
-                 className={`relative group col-span-12 md:col-span-8 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between hover:-translate-y-2 cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className={`relative group col-span-12 md:col-span-8 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
                >
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
                      <Sparkles size={8} /> Play Keys
