@@ -191,37 +191,28 @@ export default function App() {
     switch (activeRole) {
       case 'developer':
         return {
-          title: "01 / THE CODE CONVERSATION",
-          brief: "Interview: AI-First Engineering & Autonomous Agent Systems",
-          q1: "Q: What is your primary tool stack and development philosophy?",
-          a1: "A: I construct clean, secure, and logical fullstack backends. Today, I'm an AI-first engineer harnessing Google Antigravity SDK, Google Flow, Claude Code, Google AI Studio, and Nano Banana nodes alongside advanced autonomous AI agent squads for my production workflows. I treat these tools as strategic multipliers—blending agentic prompt chaining with secure Node/Postgres backends to scale digital ideas rapidly.",
-          q2: "Q: What does 'Vibe Coding' mean with agentic assistance?",
-          a2: "A: It is high-fidelity, rapid production driven by automated AI agent swarms. It means orchestrating AI agents to generate structured codebases while I direct the architecture, transitions, and aesthetics as a creative conductor.",
-          skills: ["Google Antigravity SDK", "Google Flow / AI Studio", "Claude Code / Agents", "Nano Banana / React"],
-          pillars: "ANTIGRAVITY SDK // GOOGLE FLOW NODES // CLAUDE CODE"
+          title: "01 / ENGINEERING & ARCHITECTURE",
+          brief: "Core Systems, AI Integration & High-Scale Backends",
+          narrative: "I build secure, highly scalable, and structurally sound full-stack applications. As an AI-first developer, I leverage cutting-edge systems like Google Antigravity SDK, Google Flow, and autonomous agent swarms to multiply production output while maintaining strict, disciplined engineering standards. I treat code as both a logical matrix and a creative canvas, blending modern reactive frontends with robust Node/Postgres backend infrastructure.",
+          skills: ["Google Antigravity SDK", "Google Flow / Nodes", "Node.js & Postgres", "React & Vite"],
+          pillars: "ENGINEERING SYSTEMS // SCALABLE BACKENDS // AGENTIC WORKFLOWS"
         };
       case 'artist':
         return {
-          title: "02 / THE AESTHETIC SESSION",
-          brief: "Interview: Traditional Sketching, Chiaroscuro & Digital Systems",
-          q1: "Q: What is the core of your drawing philosophy?",
-          a1: "A: Traditional pencil sketch art is the root of my visual composition. I specialize in fine graphite drawing techniques, chiaroscuro shading contrast, museum-grade paper hatching, and traditional sketches. Fusing traditional pencil drawings with 3D digital coordinates creates a rich, physical visual tension.",
-          q2: "Q: Why play audio synthesizers in a web application?",
-          a2: "A: Because sound adds spatial dimension. Synthesizing custom audio waves using Web Audio API nodes proves the web browser is an immersive, multi-sensory canvas.",
-          skills: ["Chiaroscuro Graphite", "Museum Paper Hatching", "Traditional Sketching", "Figma Art / Spline"],
-          pillars: "GRAPHITE PORTRAITS // TRADITIONAL ART // HATCHING PIPELINES"
+          title: "02 / GRAPHITE FORM & COMPOSITION",
+          brief: "Traditional Sketching, Chiaroscuro & Aesthetic Design",
+          narrative: "Traditional graphite sketch art is the foundation of my visual composition. I specialize in fine pencil drawing techniques, chiaroscuro contrast control, and intricate paper hatching. By blending the organic principles of classical sketching with modern digital systems, I bring a unique physical tension and spatial awareness into digital layouts, user experiences, and visual compositions.",
+          skills: ["Classical Graphite sketch", "Chiaroscuro shading", "Figma & UI Systems", "Traditional Hatching"],
+          pillars: "Traditional Sketching // Graphic Composition // Spatial UI"
         };
       case 'editor':
       default:
         return {
-          title: "03 / THE KINETIC DIALOGUE",
-          brief: "Interview: Directing Cinematic Rhythm, Color Grades, and Pacing",
-          q1: "Q: What does video editing bring to your digital engineering?",
-          a1: "A: Pure rhythm and momentum. Premiere Pro and DaVinci Resolve taught me that interface transitions are cinematic frames. I direct attention through color telemetry, balanced motion curves, and steady pacing.",
-          q2: "Q: How do you achieve high-production video value?",
-          a2: "A: I grade with Teal & Orange LUTs, synchronize keyframed audios, and cut frame-accurately so that every visual transition holds strategic narrative meaning.",
-          skills: ["Teal & Orange Grade", "Cinematic Kinetics", "DaVinci Resolve", "Timing Cuts"],
-          pillars: "COLOR LUT PIPELINE // KEYFRAME KINETICS // CINEMATIC CUTS"
+          title: "03 / KINETIC EDITING & TELEMETRY",
+          brief: "Cinematic Pacing, DaVinci Grades & Rhythm Directing",
+          narrative: "I view video editing as a study in physical rhythm and momentum. Using Premiere Pro and DaVinci Resolve, I direct the viewer's attention through precise timing cuts, keyframed motion telemetry, and cinematic Teal & Orange color grading. Every frame and transition in my video pipelines is calibrated to hold strategic narrative meaning, synchronizing video tracks with audio design to create high-impact kinetic experiences.",
+          skills: ["Cinematic Timing Cuts", "Teal & Orange Grade", "DaVinci Resolve & Premiere", "Audio Integration"],
+          pillars: "Cinematic Kinetics // Audio Sync // Telemetry Grades"
         };
     }
   };
@@ -699,6 +690,12 @@ export default function App() {
                    Vibe Coder
                  </span>
                </div>
+               {/* Animated Tagline Accent */}
+               <div className="mt-2 select-none">
+                 <p className="text-[10px] md:text-xs font-black tracking-[0.3em] text-gray-400 uppercase font-mono">
+                   Think it. <span className="text-cyan-500">Design it.</span> Build it.
+                 </p>
+               </div>
                </motion.div>
 
             {/* Expanded professional background floaters (Very low opacity for ambient background depth) */}
@@ -1173,16 +1170,11 @@ export default function App() {
                           {getRoleStory().brief}
                         </p>
                         
-                        {/* Interview Q&A Layout */}
-                        <div className="space-y-3.5 border-l-2 border-cyan-400/25 pl-4 mt-2">
-                          <div className="space-y-1">
-                            <span className="text-[9px] font-mono font-bold text-cyan-600 uppercase tracking-wider block">{getRoleStory().q1}</span>
-                            <span className="text-xs text-gray-600 block leading-relaxed font-semibold">{getRoleStory().a1}</span>
-                          </div>
-                          <div className="space-y-1 pt-2">
-                            <span className="text-[9px] font-mono font-bold text-pink-600 uppercase tracking-wider block">{getRoleStory().q2}</span>
-                            <span className="text-xs text-gray-600 block leading-relaxed font-semibold">{getRoleStory().a2}</span>
-                          </div>
+                        {/* Narrative Layout */}
+                        <div className="border-l-2 border-cyan-400/25 pl-4 mt-2">
+                          <p className="text-xs text-gray-600 leading-relaxed font-semibold">
+                            {getRoleStory().narrative}
+                          </p>
                         </div>
                       </div>
                       
