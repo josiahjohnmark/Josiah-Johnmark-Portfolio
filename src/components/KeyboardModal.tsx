@@ -246,57 +246,59 @@ export default function KeyboardModal({ onClose, playSynthNote }: KeyboardModalP
           <span className="text-[7px] font-black uppercase text-cyan-600 tracking-wider">RGB Matrix Live</span>
         </div>
 
-        <div className="flex flex-col gap-1.5 sm:gap-2 max-w-[500px] mx-auto pt-2">
-          {KEYBOARD_ROWS.map((row, rIdx) => (
-            <div key={rIdx} className="flex justify-center gap-1 sm:gap-1.5">
-              {/* Row offsets */}
-              {rIdx === 1 && <div className="w-1 sm:w-2" />}
-              {rIdx === 2 && <div className="w-3 sm:w-5" />}
+        <div className="w-full overflow-x-auto pb-2 scrollbar-none overscroll-contain">
+          <div className="flex flex-col gap-1.5 sm:gap-2 min-w-[460px] sm:min-w-0 max-w-[500px] mx-auto pt-2">
+            {KEYBOARD_ROWS.map((row, rIdx) => (
+              <div key={rIdx} className="flex justify-center gap-1 sm:gap-1.5">
+                {/* Row offsets */}
+                {rIdx === 1 && <div className="w-1 sm:w-2" />}
+                {rIdx === 2 && <div className="w-3 sm:w-5" />}
 
-              {row.map(char => {
-                const isActive = activePhysicalKey === char;
-                return (
-                  <button
-                    key={char}
-                    onClick={() => handleKeyPress(char)}
-                    className={`w-7 h-7 sm:w-10 sm:h-10 neu-out rounded-lg border border-transparent font-mono text-[9px] sm:text-xs font-bold transition-all duration-75 flex items-center justify-center cursor-pointer pointer-events-auto
-                      ${isActive 
-                        ? 'bg-cyan-100 border-cyan-400 text-cyan-600 shadow-inner scale-90 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
-                        : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95 text-gray-700'}`}
-                  >
-                    {char}
-                  </button>
-                );
-              })}
+                {row.map(char => {
+                  const isActive = activePhysicalKey === char;
+                  return (
+                    <button
+                      key={char}
+                      onClick={() => handleKeyPress(char)}
+                      className={`w-7 h-7 sm:w-10 sm:h-10 neu-out rounded-lg border border-transparent font-mono text-[9px] sm:text-xs font-bold transition-all duration-75 flex items-center justify-center cursor-pointer pointer-events-auto
+                        ${isActive 
+                          ? 'bg-cyan-100 border-cyan-400 text-cyan-600 shadow-inner scale-90 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
+                          : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95 text-gray-700'}`}
+                    >
+                      {char}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+
+            {/* Bottom spacebar row */}
+            <div className="flex justify-center gap-1.5 sm:gap-2 mt-1">
+              <button
+                onClick={() => playMechSound('CONTROL')}
+                className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-cyan-50/30"
+              >
+                Ctrl
+              </button>
+              <button
+                onClick={() => handleKeyPress('SPACE')}
+                className={`w-28 sm:w-48 h-7 sm:h-10 neu-out rounded-lg border border-transparent transition-all duration-75 cursor-pointer pointer-events-auto
+                  ${activePhysicalKey === 'SPACE'
+                    ? 'bg-cyan-100 border-cyan-400 shadow-inner scale-95 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
+                    : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95'}`}
+              >
+                <span className="text-[6.5px] sm:text-[8px] text-gray-400 font-sans tracking-widest font-bold">SPACE</span>
+              </button>
+              <button
+                onClick={() => {
+                  playMechSound('DELETE');
+                  setTypedCode(prev => prev.length > 2 ? prev.slice(0, -5) : prev);
+                }}
+                className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-red-50/50 hover:text-red-500 active:scale-90"
+              >
+                Del
+              </button>
             </div>
-          ))}
-
-          {/* Bottom spacebar row */}
-          <div className="flex justify-center gap-1.5 sm:gap-2 mt-1">
-            <button
-              onClick={() => playMechSound('CONTROL')}
-              className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-cyan-50/30"
-            >
-              Ctrl
-            </button>
-            <button
-              onClick={() => handleKeyPress('SPACE')}
-              className={`w-28 sm:w-48 h-7 sm:h-10 neu-out rounded-lg border border-transparent transition-all duration-75 cursor-pointer pointer-events-auto
-                ${activePhysicalKey === 'SPACE'
-                  ? 'bg-cyan-100 border-cyan-400 shadow-inner scale-95 shadow-[0_0_12px_rgba(6,182,212,0.4)]' 
-                  : 'bg-white hover:bg-cyan-50/50 hover:border-cyan-200/50 active:scale-95'}`}
-            >
-              <span className="text-[6.5px] sm:text-[8px] text-gray-400 font-sans tracking-widest font-bold">SPACE</span>
-            </button>
-            <button
-              onClick={() => {
-                playMechSound('DELETE');
-                setTypedCode(prev => prev.length > 2 ? prev.slice(0, -5) : prev);
-              }}
-              className="px-2 h-7 sm:h-10 neu-out bg-white rounded-lg border border-transparent text-[7px] sm:text-[8px] font-bold text-gray-500 cursor-pointer pointer-events-auto hover:bg-red-50/50 hover:text-red-500 active:scale-90"
-            >
-              Del
-            </button>
           </div>
         </div>
       </div>
