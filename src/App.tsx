@@ -1228,7 +1228,7 @@ export default function App() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 w-full">
                   
                   {/* Deployments Card */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec] interactive-item neu-hover">
+                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
                     <div className="flex justify-between items-start">
                       <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">DEPL_METRICS</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
@@ -1240,7 +1240,7 @@ export default function App() {
                   </div>
 
                   {/* Era Card */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec] interactive-item neu-hover">
+                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
                     <div className="flex justify-between items-start">
                       <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">ACTIVE_ERA</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
@@ -1252,7 +1252,7 @@ export default function App() {
                   </div>
 
                   {/* Status Indicator */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec] interactive-item neu-hover">
+                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
                     <div className="flex justify-between items-start">
                       <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">SYS_STATUS</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>
@@ -1357,9 +1357,9 @@ export default function App() {
               {/* Card 1: Email */}
               <a 
                 href="mailto:josiahjohnmark9@gmail.com"
-                className="neu-out rounded-[2.5rem] p-8 border border-white/60 text-center flex flex-col items-center justify-between hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] hover:-translate-y-1.5 active:scale-98 transition-all duration-300 group"
+                className="neu-out rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-white/60 text-center flex flex-col items-center justify-between md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-1.5 active:scale-[0.98] active:shadow-inner transition-all duration-300 group"
               >
-                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-cyan-500 mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-cyan-500 mb-6 md:group-hover:scale-110 transition-transform">
                   <Mail size={24} className="pointer-events-none" />
                 </div>
                 <div>
@@ -1375,9 +1375,9 @@ export default function App() {
                 href="https://wa.me/2347033223491"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neu-out rounded-[2.5rem] p-8 border border-white/60 text-center flex flex-col items-center justify-between hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] hover:-translate-y-1.5 active:scale-98 transition-all duration-300 group"
+                className="neu-out rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-white/60 text-center flex flex-col items-center justify-between md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-1.5 active:scale-[0.98] active:shadow-inner transition-all duration-300 group"
               >
-                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-emerald-500 mb-6 md:group-hover:scale-110 transition-transform">
                   <MessageSquare size={24} className="pointer-events-none" />
                 </div>
                 <div>
@@ -1393,9 +1393,9 @@ export default function App() {
                 href="https://t.me/+2347033223491"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neu-out rounded-[2.5rem] p-8 border border-white/60 text-center flex flex-col items-center justify-between hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] hover:-translate-y-1.5 active:scale-98 transition-all duration-300 group"
+                className="neu-out rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-white/60 text-center flex flex-col items-center justify-between md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-1.5 active:scale-[0.98] active:shadow-inner transition-all duration-300 group"
               >
-                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-full neu-in flex items-center justify-center text-blue-400 mb-6 md:group-hover:scale-110 transition-transform">
                   <Send size={24} className="pointer-events-none" />
                 </div>
                 <div>
