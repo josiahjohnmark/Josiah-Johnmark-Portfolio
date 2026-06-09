@@ -141,23 +141,50 @@ const PROJECTS_DATA = [
 interface ProjectCardProps {
   proj: typeof PROJECTS_DATA[0];
   pageInteractive: boolean;
+  isMobile: boolean;
+  isActiveMobile: boolean;
+  onMobilePlayToggle: () => void;
   onClick: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive, onClick }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ 
+  proj, 
+  pageInteractive, 
+  isMobile, 
+  isActiveMobile, 
+  onMobilePlayToggle, 
+  onClick 
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
   const staticImageSrc = `/images/thumbnails/${slug}.webp`;
   const animationSrc = `/images/animations/${slug}.webp`;
 
+  const shouldPlay = isMobile ? isActiveMobile : isHovered;
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (isMobile) {
+      e.stopPropagation();
+      onMobilePlayToggle();
+    } else {
+      onClick();
+    }
+  };
+
   return (
     <motion.div
       layout
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={onClick}
-      className="neu-out rounded-[2rem] md:rounded-[2.5rem] border border-white/60 p-4 md:p-6 group transition-all duration-300 w-full md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer"
+      onMouseEnter={() => {
+        if (!isMobile) setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        if (!isMobile) setIsHovered(false);
+      }}
+      onClick={handleCardClick}
+      className={`neu-out rounded-[2rem] md:rounded-[2.5rem] border border-white/60 p-4 md:p-6 group transition-all duration-300 w-full md:hover:shadow-[14px_14px_28px_#bebec9,-14px_-14px_28px_#ffffff] md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer relative ${
+        isMobile && isActiveMobile ? 'shadow-inner' : ''
+      }`}
     >
       {/* Full scale image area - no aspect-video restriction to prevent cropping */}
       <div className="w-full neu-in rounded-2xl md:rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
@@ -168,7 +195,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive, onClic
             alt={`${proj.title} Thumbnail`}
             className="w-full h-auto object-contain transition-opacity duration-500 relative z-10"
             style={{ 
-              opacity: isHovered ? 0 : 1,
+              opacity: shouldPlay ? 0 : 1,
               display: 'block' 
             }}
           />
@@ -179,10 +206,33 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive, onClic
               alt={`${proj.title} Animation`}
               className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
               style={{ 
-                opacity: isHovered ? 1 : 0,
+                opacity: shouldPlay ? 1 : 0,
                 display: 'block'
               }}
             />
+          )}
+
+          {/* Mobile Overlay Play Indicator */}
+          {isMobile && (
+            <div className="absolute top-3 right-3 z-20 flex gap-2">
+              <span className={`px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-wider flex items-center gap-1 ${
+                isActiveMobile 
+                  ? 'bg-cyan-500 text-white animate-pulse' 
+                  : 'bg-white/70 text-gray-600'
+              }`}>
+                {isActiveMobile ? (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                    Playing
+                  </>
+                ) : (
+                  <>
+                    <Play size={8} fill="currentColor" />
+                    Tap to Play
+                  </>
+                )}
+              </span>
+            </div>
           )}
         </div>
       </div>
@@ -191,7 +241,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ proj, pageInteractive, onClic
           <h4 className="text-xs md:text-sm font-bold text-gray-800 tracking-tight uppercase group-hover:text-cyan-600 transition-colors">{proj.title}</h4>
           <span className="text-[9px] font-mono text-gray-400 font-bold uppercase tracking-wider block mt-0.5">{proj.category}</span>
         </div>
-        <span className="text-[9px] font-bold text-cyan-600 bg-white/60 border border-white/50 px-2.5 py-1 rounded-xl shadow-sm font-mono uppercase tracking-widest">{proj.metric}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] font-bold text-cyan-600 bg-white/60 border border-white/50 px-2.5 py-1 rounded-xl shadow-sm font-mono uppercase tracking-widest">{proj.metric}</span>
+        </div>
       </div>
     </motion.div>
   );
@@ -247,6 +299,7 @@ export default function App() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<typeof PROJECTS_DATA[0] | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [activeMobileProjId, setActiveMobileProjId] = useState<number | null>(null);
 
   // Blog states
   const [blogSearch, setBlogSearch] = useState("");
@@ -1307,6 +1360,15 @@ export default function App() {
                   key={proj.id}
                   proj={proj}
                   pageInteractive={pageInteractive}
+                  isMobile={isMobile}
+                  isActiveMobile={activeMobileProjId === proj.id}
+                  onMobilePlayToggle={() => {
+                    if (activeMobileProjId === proj.id) {
+                      setActiveMobileProjId(null);
+                    } else {
+                      setActiveMobileProjId(proj.id);
+                    }
+                  }}
                   onClick={() => setSelectedProject(proj)}
                 />
               ))}
