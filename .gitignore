@@ -8,3 +8,4 @@ coverage/
 !.env.example
 projects videos/
 drawings and art/
+*.zip

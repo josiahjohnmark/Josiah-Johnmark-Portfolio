@@ -5,7 +5,7 @@ import {
   Smartphone, Lightbulb, Cpu, MessageSquare, Send, X, Play, 
   Square, Volume2, Sparkles, Check, Copy, Search, Calendar, Clock, 
   Plus, ChevronRight, Briefcase, RefreshCw, AlertCircle,
-  Github, Instagram, Twitter, Mail, Globe, Brain, Music, Gamepad2
+  Github, Instagram, Twitter, Mail, Globe, Brain, Music, Gamepad2, ExternalLink
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
@@ -63,128 +63,164 @@ const PROJECTS_DATA = [
     id: 1,
     title: "Ludo NX",
     category: "Game Dev",
-    shortDesc: "Next-gen multiplayer & interactive 3D board game experience.",
-    tags: ["Unity", "C#", "Game Design", "Lottie Animations", "Cross-Platform"],
-    details: "Ludo NX is a modern, high-fidelity reimagining of the classic Ludo game. Designed and engineered from the ground up, it combines custom visual assets, realistic dice physics, fluid turn progression, micro-animations, and cross-platform architecture.",
+    shortDesc: "A modern mobile Ludo game combining polished UI/UX, competitive gameplay, player progression, customization, rewards, and a premium board-game aesthetic.",
+    role: "Game Developer · UI/UX Designer · Visual Designer",
+    tools: ["Unity", "Figma", "Canva", "C#", "AI-assisted development"],
+    platform: "Mobile (iOS & Android)",
+    tags: ["Unity", "C#", "Figma", "Game Systems", "Mobile Game"],
     metric: "Flagship Game",
-    iframeUrl: "",
+    thumbnail: "/images/thumbnails/ludo_nx_thumbnail.png",
+    screenshots: [
+      "/images/thumbnails/ludo_nx_thumbnail.png",
+      "/images/ludo_nx/MATCH coundown (2).png",
+      "/images/ludo_nx/game result_page.png",
+      "/images/ludo_nx/friend_list_screen.png",
+      "/images/ludo_nx/freind_request_screen.png",
+      "/images/ludo_nx/iPhone 16 & 17 Pro - 2 (1).png"
+    ],
+    details: "Ludo NX is a premium mobile board game that reimagines the classic Ludo experience with a modern, polished visual style and game-first progression system. I developed Ludo NX as both a game and a product, focusing not only on core gameplay, but also on how players navigate, progress, customize their experience, and interact with the game's economy.",
+    caseStudy: {
+      overview: "Ludo NX is a premium mobile board game that reimagines the classic Ludo experience with a modern, polished visual style and game-first progression system. The project combines game development, UI/UX design, visual design, and interactive systems into one cohesive mobile experience. I designed the interface and visual direction around a clean, premium board-game aesthetic, while building systems for gameplay, player progression, profiles, rewards, rankings, customization, and in-game interactions.",
+      concept: "The core vision was to take an internationally beloved classic and elevate it into a sleek, high-engagement digital title. Rather than treating Ludo as a static digital board, Ludo NX creates an immersive mobile arena with distinct player quadrants, dynamic dice-roll states, and tournament-grade pacing.",
+      myRole: "Game Developer · UI/UX Designer · Visual Designer — End-to-end solo creator responsible for complete product architecture, user research, interface layouts, vector asset creation, C# mechanics programming, and audio design.",
+      uiUx: "Designed the full interface and visual direction in Figma and implemented in Unity. Focused on mobile ergonomic reachability, crystal-clear token path indicators, tactile dice roll controls, tournament-style profile frames, and reward celebration modals.",
+      gameplay: "Engineered 15×15 Ludo board logic, responsive turn management, multiplayer-style player setups, token paths, safe zones, capture logic, realistic dice physics, and multiple difficulty options with smart AI decision engines.",
+      progression: "Built a comprehensive player progression loop: profile levels, experience points, milestone achievements, customizable dice and token skins, daily rewards, missions, rankings ladders, and an integrated in-game shop.",
+      visualDesign: "Developed a distinctive visual language: rich deep-space hues, glowing board accents, custom token silhouettes, vibrant dice pips, and fluid micro-animations that deliver satisfying physical weight to digital moves.",
+      development: "Engineered in Unity using modular C# architecture, decoupled event-driven game controllers, optimized sprite atlases, dynamic Canvas Scalers for phone and tablet aspect ratios, and fluid Lottie/sprite animations.",
+      finalResult: "A comprehensive, high-polish mobile title that demonstrates end-to-end capabilities across game systems engineering, visual polish, product architecture, and user experience."
+    },
     isFeatured: true
   },
   {
     id: 2,
     title: "Selah",
     category: "Apps",
-    shortDesc: "Thoughtfully crafted Bible & spiritual reflection mobile application.",
+    shortDesc: "Thoughtfully crafted Bible & spiritual reflection mobile application with serene typography and daily devotionals.",
+    role: "Mobile Developer · UI/UX Designer",
+    tools: ["Mobile App", "Figma", "Typography", "Clean Architecture"],
+    platform: "Mobile",
     tags: ["Mobile App", "UI/UX Design", "Clean Architecture", "Typography"],
     details: "Selah is a tranquil scripture reading and reflection application designed with serene typography, quiet aesthetic pacing, daily devotionals, custom verse bookmarking, and distraction-free mobile interaction design.",
     metric: "Mobile App",
-    iframeUrl: "",
+    thumbnail: "/images/thumbnails/selah_thumbnail.png",
     isFeatured: true
   },
   {
     id: 3,
-    title: "Client & Freelance Projects",
+    title: "USH Community",
     category: "Client Work",
-    shortDesc: "Commercial software platforms, landing ecosystems, and brand systems.",
-    tags: ["Fullstack", "Client Systems", "UI Systems", "API Integration"],
-    details: "Delivered production design and engineering contracts for various commercial clients and organizations, spanning high-conversion landing portals, brand identity design systems, responsive web apps, and automated digital workflows.",
-    metric: "Production Deployed",
-    iframeUrl: "",
+    shortDesc: "Digital platform built for a thriving community of 20,000+ traders providing access to market insights, trading education, and mentorship.",
+    role: "UI/UX Design · Website Development · Visual Design",
+    focus: "Responsive design · User experience · Trading/finance presentation · Community platform",
+    tools: ["React", "UI/UX Design", "Fintech", "Tailwind CSS"],
+    platform: "Web & Mobile",
+    liveUrl: "https://www.ushcommunity.com/",
+    tags: ["Trading & Finance", "UI/UX Design", "Web Development", "20k+ Community"],
+    details: "USH Community is a digital platform built for a community of traders, providing access to market insights, trading education, analysis, mentorship, and trading-related resources. I designed and developed the website to give the community a clear and professional online presence, with a visual direction suited to the trading and financial space. The focus was on creating a straightforward experience that communicates the platform's purpose while making key information and community resources easy to access for its 20,000+ Telegram community members.",
+    metric: "20k+ Traders",
     isFeatured: true
   },
   {
     id: 4,
+    title: "Zubairu Mustapha Foundation",
+    category: "Client Work",
+    shortDesc: "Official digital presence and impact portal for an NGO dedicated to empowering the boy child across Taraba State, Nigeria.",
+    role: "UI/UX Design · Website Development · Visual Design",
+    focus: "Nonprofit website · Responsive design · Information architecture · Brand presentation",
+    tools: ["Web Development", "UI/UX", "Brand Identity", "Responsive Design"],
+    platform: "Web",
+    liveUrl: "https://zubairumustaphafoundation.org/",
+    tags: ["Nonprofit", "Web Development", "UI/UX Design", "Brand Presentation"],
+    details: "I designed and developed the website for the Zubairu Mustapha Foundation, creating a professional digital presence for an organization focused on empowering the boy child. The website was structured to present the foundation clearly, communicate its mission, and give its work a more accessible online presence. I focused on a clean visual system, intuitive navigation, responsive layouts, and a design that gives the organization a credible and modern identity online.",
+    metric: "Live NGO Portal",
+    isFeatured: true
+  },
+  {
+    id: 5,
     title: "California Coast Real Estate",
     category: "UI Prototypes",
     shortDesc: "High-end coastal property platform with interactive viewport transitions.",
     tags: ["Figma", "UI/UX", "Interactive Web"],
     details: "Interactive production prototype showcasing layout hierarchy, fluid video framing, and responsive residential showcase mechanics.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "project-1"
   },
   {
-    id: 5,
+    id: 6,
     title: "Brain Trainer Cognitive UI",
     category: "UI Prototypes",
     shortDesc: "Interactive neuro-cognitive training dashboard with 3D model interaction.",
     tags: ["3D UI", "Figma", "Motion"],
     details: "Interactive production prototype demonstrating spatial brain visualization, cognitive analytics widgets, and dark-mode aesthetic.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "project-2"
   },
   {
-    id: 6,
+    id: 7,
     title: "Car Brands Showcase",
     category: "UI Prototypes",
     shortDesc: "Dynamic automotive manufacturer brand index with kinetic carousels.",
     tags: ["Automotive", "UI Motion", "Branding"],
     details: "Kinetic automotive portal showcasing brand indexing, typography, and interactive media scrubbers.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "car-brands-hero-section"
   },
   {
-    id: 7,
+    id: 8,
     title: "Interactive 3D Robot Arm",
     category: "UI Prototypes",
     shortDesc: "Robotic industrial automation interface with real-time controls.",
     tags: ["Industrial 3D", "Kinematics", "UI"],
     details: "Kinetic interface prototype demonstrating industrial robotics controls, degrees of freedom visualization, and tactile feedback.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "robot-arm-project"
   },
   {
-    id: 8,
+    id: 9,
     title: "Brand Launch & Kinetic Ad",
     category: "UI Prototypes",
     shortDesc: "High-impact brand launch sequence with layered parallax typography.",
     tags: ["Brand Experience", "Typography", "Motion"],
     details: "Dynamic advertising showcase highlighting motion pacing, bold typography, and cinematic branding.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "hero-section-a-brand-add"
   },
   {
-    id: 9,
+    id: 10,
     title: "Interactive Mouse Physics Hero",
     category: "UI Prototypes",
     shortDesc: "Cursor-reactive kinetic physics interface with tactile depth feedback.",
     tags: ["Physics UI", "Micro-Interactions"],
     details: "Web design prototype exploring cursor kinematics, reactive particles, and responsive physics states.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "hero-section-with-hover-mouse-effects"
   },
   {
-    id: 10,
+    id: 11,
     title: "Fintech & Wealth Experience",
     category: "UI Prototypes",
     shortDesc: "Modern wealth management dashboard with fluid transactional states.",
     tags: ["Fintech", "Dashboard", "UI/UX"],
     details: "Clean financial interface focusing on data density, monetary flow clarity, and premium neo-minimalist styling.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "project-7"
   },
   {
-    id: 11,
+    id: 12,
     title: "Creative Media Studio Portal",
     category: "UI Prototypes",
     shortDesc: "Editorial portfolio interface for visual media artists and creators.",
     tags: ["Editorial", "Creative Tech", "Web Design"],
     details: "High-fashion creative agency layout featuring asymmetrical grids, media curation, and smooth scroll animations.",
     metric: "60 FPS loop",
-    iframeUrl: "",
     isPrototype: true,
     prototypeSlug: "project-8"
   }
@@ -286,90 +322,145 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         </div>
       ) : proj.id === 1 ? (
-        /* Ludo NX Custom Card */
-        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#0c1222] via-[#1e1b4b] to-[#0f172a] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-indigo-500/20">
-          <div className="absolute -right-10 -top-10 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="flex justify-between items-start z-10">
-            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 flex items-center gap-1.5 shadow-sm">
-              <Gamepad2 size={13} className="text-cyan-400 animate-pulse" /> Game Development
-            </span>
-            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-amber-400 bg-amber-400/10 px-3 py-1.5 rounded-xl border border-amber-400/20">
-              Unity 3D
-            </span>
-          </div>
-          <div className="z-10 text-left my-auto py-3">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
-              LUDO <span className="text-cyan-400">NX</span>
+        /* Ludo NX Custom Card with Real Thumbnail */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-[#0c1222] relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-indigo-500/30">
+          <img 
+            src="/images/thumbnails/ludo_nx_thumbnail.png"
+            alt="Ludo NX Mobile Game"
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-60"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c1222] via-[#0c1222]/65 to-transparent"></div>
+          
+          <div className="relative z-10 p-6 flex flex-col justify-between h-full">
+            <div className="flex justify-between items-start">
+              <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-cyan-500/30 text-cyan-200 border border-cyan-400/40 backdrop-blur-md flex items-center gap-1.5 shadow-sm">
+                <Gamepad2 size={13} className="text-cyan-400 animate-pulse" /> Game Development
+              </span>
+              <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-amber-300 bg-amber-400/20 backdrop-blur-md px-3 py-1.5 rounded-xl border border-amber-400/30">
+                Unity 3D · Mobile
+              </span>
             </div>
-            <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
-              {proj.shortDesc}
-            </p>
-          </div>
-          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
-            <span>Unity • C# • Lottie • Cross-Platform</span>
-            <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Case Study <ChevronRight size={12} />
-            </span>
+
+            <div className="text-left my-auto py-2">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-syncopate tracking-tight uppercase flex items-center gap-2 drop-shadow-md">
+                LUDO <span className="text-cyan-400">NX</span>
+              </div>
+              <p className="text-xs md:text-sm text-gray-200 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed drop-shadow">
+                {proj.shortDesc}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-300 uppercase tracking-widest border-t border-white/20 pt-3">
+              <span>Unity • C# • Figma • Mobile</span>
+              <span className="text-cyan-300 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Deep Case Study <ChevronRight size={12} />
+              </span>
+            </div>
           </div>
         </div>
       ) : proj.id === 2 ? (
         /* Selah Bible App Custom Card */
-        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#181c24] via-[#232a36] to-[#12161f] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-amber-500/20">
-          <div className="absolute -right-10 -top-10 w-44 h-44 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="flex justify-between items-start z-10">
-            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center gap-1.5 shadow-sm">
-              <Smartphone size={13} className="text-amber-400" /> App Development
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-[#12161f] relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-amber-500/30">
+          <div className="absolute -right-10 -top-10 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div className="relative z-10 p-6 flex flex-col justify-between h-full">
+            <div className="flex justify-between items-start">
+              <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center gap-1.5 shadow-sm">
+                <Smartphone size={13} className="text-amber-400" /> App Development
+              </span>
+              <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-cyan-400 bg-cyan-400/10 px-3 py-1.5 rounded-xl border border-cyan-400/20">
+                Mobile App
+              </span>
+            </div>
+
+            <div className="text-left my-auto py-2 flex items-center gap-4 sm:gap-5">
+              <img 
+                src="/images/thumbnails/selah_thumbnail.png" 
+                alt="Selah App Logo" 
+                className="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl object-contain shadow-lg border border-white/10 shrink-0 bg-white/5 p-1"
+              />
+              <div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-syncopate tracking-tight uppercase">
+                  SELAH
+                </div>
+                <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-1 max-w-md leading-relaxed">
+                  {proj.shortDesc}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3">
+              <span>Mobile Architecture • UI/UX • Typography</span>
+              <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Case Study <ChevronRight size={12} />
+              </span>
+            </div>
+          </div>
+        </div>
+      ) : proj.id === 3 ? (
+        /* USH Community Custom Card */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#060c1d] via-[#0b1633] to-[#040814] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-blue-500/30">
+          <div className="absolute -right-10 -top-10 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-48 h-48 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div className="relative z-10 flex justify-between items-start">
+            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-400/30 flex items-center gap-1.5 shadow-sm">
+              <Briefcase size={13} className="text-blue-400" /> Client Work · Trading & Finance
             </span>
-            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-cyan-400 bg-cyan-400/10 px-3 py-1.5 rounded-xl border border-cyan-400/20">
-              Mobile App
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-400/20">
+              20k+ Members
             </span>
           </div>
-          <div className="z-10 text-left my-auto py-3">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
-              SELAH
+
+          <div className="relative z-10 text-left my-auto py-2">
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
+              USH <span className="text-blue-400">COMMUNITY</span>
             </div>
             <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
               {proj.shortDesc}
             </p>
           </div>
-          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
-            <span>Mobile Architecture • UI/UX • Typography</span>
+
+          <div className="relative z-10 flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3">
+            <span>Responsive Web • UI/UX • Community Hub</span>
             <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Case Study <ChevronRight size={12} />
+              Case Study & Live Site <ChevronRight size={12} />
             </span>
           </div>
         </div>
-      ) : (
-        /* Client Work Custom Card */
-        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#090d16] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-emerald-500/20">
-          <div className="absolute -right-10 -top-10 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="flex justify-between items-start z-10">
+      ) : proj.id === 4 ? (
+        /* Zubairu Mustapha Foundation Custom Card */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#0c1f17] via-[#122e23] to-[#07130e] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-emerald-500/30">
+          <div className="absolute -right-10 -top-10 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div className="relative z-10 flex justify-between items-start">
             <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1.5 shadow-sm">
-              <Briefcase size={13} className="text-emerald-400" /> Client Solutions
+              <Briefcase size={13} className="text-emerald-400" /> Client Work · Nonprofit NGO
             </span>
-            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-xl border border-emerald-400/20">
-              Production
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-400/20">
+              Live Foundation Portal
             </span>
           </div>
-          <div className="z-10 text-left my-auto py-3">
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
-              CLIENT PROJECTS
+
+          <div className="relative z-10 text-left my-auto py-2">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white font-syncopate tracking-tight uppercase">
+              ZUBAIRU MUSTAPHA <span className="text-emerald-400">FOUNDATION</span>
             </div>
             <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
               {proj.shortDesc}
             </p>
           </div>
-          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
-            <span>Commercial Web • Brand Platforms • API Architecture</span>
+
+          <div className="relative z-10 flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3">
+            <span>NGO Digital Presence • Boy Child Empowerment</span>
             <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Case Study <ChevronRight size={12} />
+              Case Study & Live Site <ChevronRight size={12} />
             </span>
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className="mt-4 flex justify-between items-center px-1">
         <div>
@@ -1374,7 +1465,7 @@ export default function App() {
 
             {/* Projects Grid (Two-by-Two / Side-by-Side) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full">
-              {filteredProjects.slice(0, showAllProjects ? undefined : 4).map(proj => (
+              {filteredProjects.slice(0, (showAllProjects || activeFilter !== "All") ? undefined : 4).map(proj => (
                 <ProjectCard 
                   key={proj.id}
                   proj={proj}
@@ -1394,7 +1485,7 @@ export default function App() {
             </div>
 
             {/* See More Toggle */}
-            {filteredProjects.length > 4 && (
+            {activeFilter === "All" && filteredProjects.length > 4 && (
               <div className="flex justify-center mt-16 lg:mt-24 w-full pointer-events-auto">
                 <motion.button
                   whileHover={{ scale: 1.05, y: -2 }}
@@ -1723,69 +1814,370 @@ export default function App() {
                 exit={{ scale: 0.9, y: 30 }}
                 className={`w-full bg-[#e0e5ec] rounded-[2rem] border border-white/80 p-4 sm:p-6 md:p-8 shadow-[20px_20px_60px_#bebec9,-20px_-20px_60px_#ffffff] relative transition-all duration-500 overflow-y-auto max-h-[95vh] md:max-h-[90vh] max-w-[1000px] lg:max-w-5xl overscroll-contain`}
               >
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-start mb-6">
                   <div>
-                    <span className="text-[10px] font-bold text-cyan-600 uppercase tracking-widest">{selectedProject.category} Case Study</span>
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#1a202c] tracking-tight">{selectedProject.title}</h2>
+                    <span className="text-[10px] font-mono font-bold text-cyan-600 uppercase tracking-widest block mb-1">
+                      {selectedProject.id === 1 
+                        ? 'GAME ARCHITECTURE · MOBILE TITLE'
+                        : selectedProject.category === 'Client Work'
+                        ? 'COMMERCIAL CLIENT PLATFORM'
+                        : `${selectedProject.category} Case Study`}
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#1a202c] font-syncopate tracking-tight uppercase">
+                      {selectedProject.title}
+                    </h2>
                   </div>
                   <button 
                     onClick={() => setSelectedProject(null)}
-                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9] z-20 shrink-0"
+                    className="w-10 h-10 rounded-full neu-out flex items-center justify-center text-gray-600 hover:text-red-500 active:scale-90 active:shadow-[inset_2px_2px_5px_#bebec9] z-20 shrink-0 cursor-pointer"
                   >
                     <X size={18} className="pointer-events-none" />
                   </button>
                 </div>
 
-                <div className="space-y-6 text-xs text-gray-600 font-semibold leading-relaxed">
-                  <div className="p-5 neu-in rounded-2xl">
-                    <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 border-b border-gray-300/50 pb-2">Technical Overview</h4>
-                    <p>{selectedProject.details}</p>
-                  </div>
-
-                  {/* Screenshot Modal Preview */}
-                  {selectedProject.iframeUrl && (
-                    <div className="space-y-3 pt-2">
-                      <div className="flex justify-between items-center text-[10px] font-bold text-gray-500 uppercase tracking-widest select-none">
-                        <span>Project Screenshot</span>
-                        <a 
-                          href={selectedProject.iframeUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-cyan-600 hover:text-cyan-800 transition-all font-extrabold flex items-center gap-1 hover:underline hover:scale-105 active:scale-95"
-                        >
-                          Visit Live Site <ChevronRight size={10} className="pointer-events-none" />
-                        </a>
-                      </div>
-                      
-                      <div className="w-full rounded-2xl overflow-hidden border border-white/60 neu-out bg-[#e0e5ec] p-2 shadow-inner">
-                        <div className="w-full aspect-[16/10] bg-white rounded-xl overflow-hidden relative shadow-md cursor-pointer" onClick={() => window.open(selectedProject.iframeUrl, '_blank')}>
-                          <img 
-                            src={selectedProject.image} 
-                            alt={selectedProject.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                          />
+                {/* Body Content */}
+                {selectedProject.id === 1 ? (
+                  /* ==========================================================
+                     LUDO NX DEDICATED DEEP CASE STUDY BREAKDOWN
+                     Overview → Concept → My Role → UI/UX → Gameplay → Progression → Visual Design → Development → Final Result
+                     ========================================================== */
+                  <div className="space-y-8 text-gray-700">
+                    
+                    {/* Hero Showcase Image */}
+                    <div className="w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/80 neu-out bg-[#0c1222] relative p-2 shadow-inner">
+                      <div className="w-full aspect-[16/9] rounded-xl md:rounded-2xl overflow-hidden relative shadow-md">
+                        <img 
+                          src="/images/thumbnails/ludo_nx_thumbnail.png" 
+                          alt="Ludo NX Mobile Game Preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c1222] via-transparent to-transparent opacity-80" />
+                        <div className="absolute bottom-4 left-4 right-4 flex flex-wrap justify-between items-end gap-2 text-white">
+                          <div>
+                            <span className="text-[8.5px] font-mono uppercase tracking-widest text-cyan-400 font-bold block">Mobile Board Game Experience</span>
+                            <h3 className="text-xl sm:text-2xl font-bold font-syncopate">LUDO NX</h3>
+                          </div>
+                          <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-xl text-[9px] font-mono border border-white/30">
+                            Unity 3D · C# · Mobile
+                          </span>
                         </div>
                       </div>
                     </div>
-                  )}
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Efficiency Metric</span>
-                      <span className="text-lg font-black text-cyan-600">{selectedProject.metric}</span>
+                    {/* Quick Specs Badges */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div className="neu-in p-3 rounded-2xl">
+                        <span className="text-[8px] font-mono text-gray-400 uppercase font-bold block">Role</span>
+                        <span className="text-xs font-bold text-gray-800">Developer & Designer</span>
+                      </div>
+                      <div className="neu-in p-3 rounded-2xl">
+                        <span className="text-[8px] font-mono text-gray-400 uppercase font-bold block">Platform</span>
+                        <span className="text-xs font-bold text-gray-800">Mobile (iOS & Android)</span>
+                      </div>
+                      <div className="neu-in p-3 rounded-2xl">
+                        <span className="text-[8px] font-mono text-gray-400 uppercase font-bold block">Board Format</span>
+                        <span className="text-xs font-bold text-gray-800">15×15 Grid Mechanics</span>
+                      </div>
+                      <div className="neu-in p-3 rounded-2xl">
+                        <span className="text-[8px] font-mono text-gray-400 uppercase font-bold block">Tools</span>
+                        <span className="text-xs font-bold text-gray-800">Unity · Figma · Canva</span>
+                      </div>
                     </div>
-                    <div className="neu-out p-4 rounded-xl text-center border border-white/60">
-                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Production Grade</span>
-                      <span className="text-lg font-black text-slate-700">Premium SLA</span>
+
+                    {/* 9-Part Case Study Flow */}
+                    <div className="space-y-6">
+                      
+                      {/* 1. Overview */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">1</span>
+                          <span>Overview</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Reimagining Classic Board Play for Modern Mobile Gaming</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.overview}
+                        </p>
+                      </div>
+
+                      {/* 2. Concept */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">2</span>
+                          <span>Concept</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Competitive Pace & Tactical Board Space</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.concept}
+                        </p>
+                      </div>
+
+                      {/* 3. My Role */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">3</span>
+                          <span>My Role</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Solo End-to-End Game Development & Visual Leadership</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.myRole}
+                        </p>
+                      </div>
+
+                      {/* 4. UI/UX Design */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">4</span>
+                          <span>UI/UX Design</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Tactile Mobile Ergonomics & Tournament Pacing</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.uiUx}
+                        </p>
+                      </div>
+
+                      {/* 5. Gameplay Systems */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">5</span>
+                          <span>Gameplay Systems</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">15×15 Grid Mechanics & Dynamic Turn Engine</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.gameplay}
+                        </p>
+                      </div>
+
+                      {/* 6. Progression & Economy */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">6</span>
+                          <span>Progression & In-Game Economy</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Rewards, Rankings, Customization & In-Game Shop</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.progression}
+                        </p>
+                      </div>
+
+                      {/* 7. Visual Design */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">7</span>
+                          <span>Visual Design</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">High-Contrast Aesthetic, Particles & Micro-Animations</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.visualDesign}
+                        </p>
+                      </div>
+
+                      {/* 8. Development */}
+                      <div className="p-6 neu-out rounded-2xl bg-[#e0e5ec] border border-white/70 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px]">8</span>
+                          <span>Development Architecture</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">Unity & C# Modular State Machines</h4>
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                          {(selectedProject as any).caseStudy?.development}
+                        </p>
+                      </div>
+
+                      {/* 9. Final Result */}
+                      <div className="p-6 neu-out rounded-2xl bg-gradient-to-br from-cyan-500/10 via-white/50 to-indigo-500/10 border border-cyan-400/40 space-y-2">
+                        <div className="flex items-center gap-2 text-cyan-600 font-mono text-[10px] font-bold uppercase tracking-wider">
+                          <span className="w-5 h-5 rounded-full bg-cyan-600 text-white flex items-center justify-center text-[9px]">9</span>
+                          <span>Final Result</span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900">End-to-End Game Development Mastery</h4>
+                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-medium">
+                          {(selectedProject as any).caseStudy?.finalResult}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    {/* Screenshot Gallery */}
+                    <div className="space-y-4 pt-4">
+                      <div className="flex justify-between items-center text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">
+                        <span>Production Game UI & Screens</span>
+                        <span className="text-cyan-600">Figma & Unity In-Game Captures</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/ludo_nx/MATCH coundown (2).png" 
+                            alt="Match Countdown Screen" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Match Countdown Screen</span>
+                        </div>
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/ludo_nx/game result_page.png" 
+                            alt="Game Result Summary Screen" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Game Result & Stat Board</span>
+                        </div>
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/ludo_nx/friend_list_screen.png" 
+                            alt="Friend List Screen" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Social & Friends Hub</span>
+                        </div>
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/ludo_nx/freind_request_screen.png" 
+                            alt="Friend Requests Screen" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Friend Requests UI</span>
+                        </div>
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/ludo_nx/iPhone 16 & 17 Pro - 2 (1).png" 
+                            alt="Mobile Frame View" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Mobile Viewport Framing</span>
+                        </div>
+                        <div className="neu-in p-2 rounded-2xl">
+                          <img 
+                            src="/images/thumbnails/ludo_nx_thumbnail.png" 
+                            alt="Profile & Board Hub" 
+                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
+                          />
+                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Player Profile & Customization</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 justify-center pt-2">
+                      {selectedProject.tags.map(t => (
+                        <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
+                      ))}
+                    </div>
+
+                  </div>
+                ) : selectedProject.category === 'Client Work' ? (
+                  /* ==========================================================
+                     CLIENT & FREELANCE PROJECT CASE STUDY
+                     (USH Community & Zubairu Mustapha Foundation)
+                     ========================================================== */
+                  <div className="space-y-6 text-gray-700">
+                    
+                    {/* Live Website Header Card */}
+                    <div className="p-6 md:p-8 neu-out rounded-2xl bg-[#e0e5ec] border border-white/80 space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                          <span className="text-[9px] font-mono uppercase font-bold text-cyan-600 tracking-widest block mb-1">
+                            {(selectedProject as any).focus}
+                          </span>
+                          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 font-syncopate">
+                            {selectedProject.title}
+                          </h3>
+                        </div>
+                        {(selectedProject as any).liveUrl && (
+                          <a 
+                            href={(selectedProject as any).liveUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-[0_4px_14px_rgba(6,182,212,0.35)] hover:bg-cyan-400 active:scale-95 transition-all self-start sm:self-auto cursor-pointer"
+                          >
+                            Visit Live Platform <ExternalLink size={14} />
+                          </a>
+                        )}
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium">
+                        {selectedProject.details}
+                      </p>
+                    </div>
+
+                    {/* Key Specs Breakdown */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="neu-in p-4 rounded-2xl">
+                        <span className="text-[8.5px] font-mono text-gray-400 uppercase font-bold block mb-1">My Role</span>
+                        <span className="text-xs font-bold text-gray-800 block">{(selectedProject as any).role || 'UI/UX Design & Development'}</span>
+                      </div>
+                      <div className="neu-in p-4 rounded-2xl">
+                        <span className="text-[8.5px] font-mono text-gray-400 uppercase font-bold block mb-1">Core Focus</span>
+                        <span className="text-xs font-bold text-gray-800 block">{(selectedProject as any).focus || 'Web Systems & Architecture'}</span>
+                      </div>
+                      <div className="neu-in p-4 rounded-2xl">
+                        <span className="text-[8.5px] font-mono text-gray-400 uppercase font-bold block mb-1">Platform Metric</span>
+                        <span className="text-xs font-bold text-cyan-600 block">{selectedProject.metric}</span>
+                      </div>
+                    </div>
+
+                    {/* Direct Live Preview Action */}
+                    {(selectedProject as any).liveUrl && (
+                      <div className="neu-out p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/70">
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-800 uppercase font-syncopate">Explore Live Production Build</h4>
+                          <span className="text-xs text-gray-500 font-mono">{(selectedProject as any).liveUrl}</span>
+                        </div>
+                        <a 
+                          href={(selectedProject as any).liveUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="px-6 py-2.5 neu-in rounded-xl text-xs font-bold text-cyan-600 hover:text-cyan-700 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                        >
+                          Launch in New Tab <ExternalLink size={12} />
+                        </a>
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-2 justify-center pt-2">
+                      {selectedProject.tags.map(t => (
+                        <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
+                      ))}
+                    </div>
+
+                  </div>
+                ) : (
+                  /* ==========================================================
+                     SELAH & UI PROTOTYPES VIEW
+                     ========================================================== */
+                  <div className="space-y-6 text-xs text-gray-600 font-semibold leading-relaxed">
+                    
+                    {/* Thumbnail / Media Preview if available */}
+                    {(selectedProject as any).thumbnail && (
+                      <div className="w-full rounded-2xl overflow-hidden border border-white/80 neu-out bg-[#e0e5ec] p-4 flex items-center justify-center">
+                        <img 
+                          src={(selectedProject as any).thumbnail} 
+                          alt={selectedProject.title} 
+                          className="max-h-48 object-contain rounded-xl shadow"
+                        />
+                      </div>
+                    )}
+
+                    <div className="p-5 neu-in rounded-2xl">
+                      <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 border-b border-gray-300/50 pb-2">Technical Overview</h4>
+                      <p className="text-xs sm:text-sm text-gray-700 font-normal leading-relaxed">{selectedProject.details}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="neu-out p-4 rounded-xl text-center border border-white/60">
+                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Efficiency Metric</span>
+                        <span className="text-lg font-black text-cyan-600">{selectedProject.metric}</span>
+                      </div>
+                      <div className="neu-out p-4 rounded-xl text-center border border-white/60">
+                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider block">Production Grade</span>
+                        <span className="text-lg font-black text-slate-700">60 FPS Responsive</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 justify-center pt-2">
+                      {selectedProject.tags.map(t => (
+                        <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
+                      ))}
                     </div>
                   </div>
-
-                  <div className="flex flex-wrap gap-2 justify-center pt-2">
-                    {selectedProject.tags.map(t => (
-                      <span key={t} className="text-[9px] font-bold text-gray-800 neu-out px-3 py-1.5 rounded-lg border border-white/50">{t}</span>
-                    ))}
-                  </div>
-                </div>
+                )}
               </motion.div>
             </motion.div>
           )}
