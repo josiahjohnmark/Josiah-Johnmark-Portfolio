@@ -4,7 +4,7 @@ import {
   Film, Fingerprint, Network, Tablet, Video, SlidersHorizontal, 
   Smartphone, Lightbulb, Cpu, MessageSquare, Send, X, Play, 
   Square, Volume2, Sparkles, Check, Copy, Search, Calendar, Clock, 
-  Plus, ChevronRight, Briefcase, RefreshCw, AlertCircle,
+  Plus, ChevronRight, ChevronLeft, Maximize2, Briefcase, RefreshCw, AlertCircle,
   Github, Instagram, Twitter, Mail, Globe, Brain, Music, Gamepad2, ExternalLink
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
@@ -57,6 +57,71 @@ const staggerContainer = {
   animate: { transition: { staggerChildren: 0.08 } }
 };
 
+// Ludo NX Screenshot Gallery Data Structures (Full uncropped captures)
+export const LUDO_NX_PORTRAIT_SCREENS = [
+  {
+    id: 'friend_list',
+    title: 'Social & Friends Hub',
+    category: 'Player Social Systems',
+    src: '/images/ludo_nx/friend_list_screen.png',
+    description: 'In-game friends list displaying player levels, online presence indicators, friendship duration, and profile quick-actions.'
+  },
+  {
+    id: 'friend_request',
+    title: 'Friend Requests UI',
+    category: 'Social Inbound Loop',
+    src: '/images/ludo_nx/freind_request_screen.png',
+    description: 'Inbound player friend requests management with one-tap accept/decline actions and player joining history.'
+  },
+  {
+    id: 'friend_search',
+    title: 'Player Search & Lookup',
+    category: 'Matchmaking & Discovery',
+    src: '/images/ludo_nx/friends_search_screen.png',
+    description: 'Search hub allowing players to locate friends by unique username or in-game player ID tag.'
+  },
+  {
+    id: 'game_result',
+    title: 'Match Results & Stat Board',
+    category: 'Progression & Analytics',
+    src: '/images/ludo_nx/game result_page.png',
+    description: 'Post-match victory breakdown displaying NX Points, captured tokens count, win rate percentage, and progression leveling.'
+  },
+  {
+    id: 'mobile_framing',
+    title: 'Mobile Viewport Framing',
+    category: 'Ergonomics & Safe Areas',
+    src: '/images/ludo_nx/iPhone 16 & 17 Pro - 2 (1).png',
+    description: 'Full mobile device mockup showing ergonomic reachability, thumb zones, dynamic notch accommodation, and canvas scaling.'
+  }
+];
+
+export const LUDO_NX_LANDSCAPE_SCREENS = [
+  {
+    id: 'match_countdown',
+    title: 'Match Countdown Arena',
+    category: 'Match Launch Flow',
+    src: '/images/ludo_nx/MATCH coundown (2).png',
+    description: 'High-energy pre-match countdown sequence displaying active player quadrant indicators and dynamic match start transitions.'
+  },
+  {
+    id: '3d_avatar',
+    title: '3D Character & Custom Dice',
+    category: '3D Assets & Visual Polish',
+    src: '/images/thumbnails/ludo_nx_thumbnail.png',
+    description: 'Custom 3D character avatar and gold-engraved Ludo NX dice render, demonstrating 3D character modeling, texturing, and lighting.'
+  },
+  {
+    id: 'board_branding',
+    title: 'Visual Identity & Dice System',
+    category: 'Brand & 3D Renderings',
+    src: '/images/ludo_nx/image 26.png',
+    description: 'Ludo NX visual identity, custom dual-colored 3D dice physics models, and modular board graphic assets.'
+  }
+];
+
+export const ALL_LUDO_SCREENS = [...LUDO_NX_PORTRAIT_SCREENS, ...LUDO_NX_LANDSCAPE_SCREENS];
+
 // Preset projects data for portfolio
 const PROJECTS_DATA = [
   {
@@ -70,14 +135,7 @@ const PROJECTS_DATA = [
     tags: ["Unity", "C#", "Figma", "Game Systems", "Mobile Game"],
     metric: "Flagship Game",
     thumbnail: "/images/thumbnails/ludo_nx_thumbnail.png",
-    screenshots: [
-      "/images/thumbnails/ludo_nx_thumbnail.png",
-      "/images/ludo_nx/MATCH coundown (2).png",
-      "/images/ludo_nx/game result_page.png",
-      "/images/ludo_nx/friend_list_screen.png",
-      "/images/ludo_nx/freind_request_screen.png",
-      "/images/ludo_nx/iPhone 16 & 17 Pro - 2 (1).png"
-    ],
+    screenshots: ALL_LUDO_SCREENS.map(s => s.src),
     details: "Ludo NX is a premium mobile board game that reimagines the classic Ludo experience with a modern, polished visual style and game-first progression system. I developed Ludo NX as both a game and a product, focusing not only on core gameplay, but also on how players navigate, progress, customize their experience, and interact with the game's economy.",
     caseStudy: {
       overview: "Ludo NX is a premium mobile board game that reimagines the classic Ludo experience with a modern, polished visual style and game-first progression system. The project combines game development, UI/UX design, visual design, and interactive systems into one cohesive mobile experience. I designed the interface and visual direction around a clean, premium board-game aesthetic, while building systems for gameplay, player progression, profiles, rewards, rankings, customization, and in-game interactions.",
@@ -490,6 +548,24 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<typeof PROJECTS_DATA[0] | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [activeMobileProjId, setActiveMobileProjId] = useState<number | null>(null);
+
+  // Fullscreen Screenshot Lightbox State & Keyboard Navigation
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') {
+        setLightboxIndex(null);
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev === null ? null : (prev + 1) % ALL_LUDO_SCREENS.length));
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev === null ? null : (prev - 1 + ALL_LUDO_SCREENS.length) % ALL_LUDO_SCREENS.length));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex]);
 
   // Blog states
   const [blogSearch, setBlogSearch] = useState("");
@@ -1997,60 +2073,115 @@ export default function App() {
 
                     </div>
 
-                    {/* Screenshot Gallery */}
-                    <div className="space-y-4 pt-4">
-                      <div className="flex justify-between items-center text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">
-                        <span>Production Game UI & Screens</span>
-                        <span className="text-cyan-600">Figma & Unity In-Game Captures</span>
+                    {/* Screenshot Gallery - Fully Uncropped & Interactive */}
+                    <div className="space-y-6 pt-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-300/60 pb-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono font-bold text-gray-900 uppercase tracking-widest">Production Game UI & Screens</span>
+                            <span className="text-[9px] font-mono font-bold text-cyan-600 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-400/20">Figma & Unity Captures</span>
+                          </div>
+                          <p className="text-[11px] text-gray-500 font-medium mt-0.5">
+                            Displayed in complete, uncropped native aspect ratios. Click any screen to view in full resolution.
+                          </p>
+                        </div>
+                        <span className="text-[10px] font-mono text-cyan-700 bg-cyan-50 neu-out px-3 py-1 rounded-xl border border-white/60 flex items-center gap-1.5 self-start sm:self-auto font-bold">
+                          <Maximize2 size={12} className="text-cyan-600" /> Click to view in full
+                        </span>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/ludo_nx/MATCH coundown (2).png" 
-                            alt="Match Countdown Screen" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Match Countdown Screen</span>
+
+                      {/* Section 1: Mobile UI Screens (Full Height Portrait Display) */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
+                            <Smartphone size={13} className="text-cyan-600" /> Mobile In-Game Screens & Social Flow (Full Portrait View)
+                          </span>
+                          <span className="text-[9px] font-mono text-gray-400 font-bold">5 Screens · Uncropped</span>
                         </div>
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/ludo_nx/game result_page.png" 
-                            alt="Game Result Summary Screen" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Game Result & Stat Board</span>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+                          {LUDO_NX_PORTRAIT_SCREENS.map((screen, idx) => {
+                            const globalIndex = idx;
+                            return (
+                              <div 
+                                key={screen.id}
+                                onClick={() => setLightboxIndex(globalIndex)}
+                                className="neu-in p-2 rounded-2xl flex flex-col justify-between group cursor-pointer hover:shadow-md transition-all duration-300 border border-white/60 bg-[#e2e7ef] relative overflow-hidden"
+                              >
+                                {/* Phone Frame Canvas - Full Screen Uncropped */}
+                                <div className="relative w-full aspect-[9/18.5] rounded-xl overflow-hidden bg-slate-900/5 flex items-center justify-center p-1 border border-white/40 shadow-inner">
+                                  <img 
+                                    src={screen.src} 
+                                    alt={screen.title} 
+                                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-[1.03]"
+                                  />
+                                  {/* Hover overlay hint */}
+                                  <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 rounded-xl backdrop-blur-[1px]">
+                                    <span className="px-2.5 py-1 bg-white/95 text-gray-900 rounded-lg text-[9px] font-mono font-bold flex items-center gap-1 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                      <Maximize2 size={11} className="text-cyan-600" /> View Full
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="pt-2 px-1 text-center">
+                                  <span className="text-[10px] font-bold text-gray-800 block truncate" title={screen.title}>
+                                    {screen.title}
+                                  </span>
+                                  <span className="text-[8px] font-mono text-cyan-700 block truncate uppercase font-semibold">
+                                    {screen.category}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/ludo_nx/friend_list_screen.png" 
-                            alt="Friend List Screen" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Social & Friends Hub</span>
+                      </div>
+
+                      {/* Section 2: Match Arena & 3D Character Direction (Full Landscape View) */}
+                      <div className="space-y-3 pt-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
+                            <Gamepad2 size={13} className="text-cyan-600" /> Match Arena & 3D Visual Direction (Full Landscape View)
+                          </span>
+                          <span className="text-[9px] font-mono text-gray-400 font-bold">3 Captures · Uncropped</span>
                         </div>
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/ludo_nx/freind_request_screen.png" 
-                            alt="Friend Requests Screen" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Friend Requests UI</span>
-                        </div>
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/ludo_nx/iPhone 16 & 17 Pro - 2 (1).png" 
-                            alt="Mobile Frame View" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Mobile Viewport Framing</span>
-                        </div>
-                        <div className="neu-in p-2 rounded-2xl">
-                          <img 
-                            src="/images/thumbnails/ludo_nx_thumbnail.png" 
-                            alt="Profile & Board Hub" 
-                            className="w-full aspect-[4/3] object-cover rounded-xl shadow-sm"
-                          />
-                          <span className="text-[9px] font-mono text-gray-500 block text-center mt-1.5 font-bold">Player Profile & Customization</span>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {LUDO_NX_LANDSCAPE_SCREENS.map((screen, idx) => {
+                            const globalIndex = LUDO_NX_PORTRAIT_SCREENS.length + idx;
+                            return (
+                              <div 
+                                key={screen.id}
+                                onClick={() => setLightboxIndex(globalIndex)}
+                                className="neu-in p-2.5 rounded-2xl flex flex-col justify-between group cursor-pointer hover:shadow-md transition-all duration-300 border border-white/60 bg-[#e2e7ef] relative overflow-hidden"
+                              >
+                                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-900/5 flex items-center justify-center p-1 border border-white/40 shadow-inner">
+                                  <img 
+                                    src={screen.src} 
+                                    alt={screen.title} 
+                                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-[1.03]"
+                                  />
+                                  <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 rounded-xl backdrop-blur-[1px]">
+                                    <span className="px-3 py-1.5 bg-white/95 text-gray-900 rounded-lg text-[9px] font-mono font-bold flex items-center gap-1 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                      <Maximize2 size={11} className="text-cyan-600" /> View Full Resolution
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="pt-2 px-1 flex justify-between items-center">
+                                  <div>
+                                    <span className="text-[10px] font-bold text-gray-800 block">
+                                      {screen.title}
+                                    </span>
+                                    <span className="text-[8px] font-mono text-cyan-700 block uppercase font-semibold">
+                                      {screen.category}
+                                    </span>
+                                  </div>
+                                  <span className="text-[9px] font-mono font-bold text-gray-500 neu-out px-2 py-0.5 rounded-md">
+                                    100% Full
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -2179,6 +2310,110 @@ export default function App() {
                   </div>
                 )}
               </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Fullscreen Screenshot Lightbox Modal (Enlarge & Inspect in Full Resolution) */}
+        <AnimatePresence>
+          {lightboxIndex !== null && ALL_LUDO_SCREENS[lightboxIndex] && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[120] bg-black/92 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6 select-none"
+              onClick={() => setLightboxIndex(null)}
+            >
+              {/* Top Navigation Bar */}
+              <div 
+                className="flex items-center justify-between z-20 bg-slate-900/80 border border-white/10 px-4 py-3 rounded-2xl backdrop-blur-md max-w-5xl w-full mx-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="px-2.5 py-1 rounded-lg text-[9px] font-mono font-bold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+                    {ALL_LUDO_SCREENS[lightboxIndex].category}
+                  </span>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                      {ALL_LUDO_SCREENS[lightboxIndex].title}
+                    </h3>
+                    <span className="text-[10px] font-mono text-gray-400">
+                      Ludo NX • Screen {lightboxIndex + 1} of {ALL_LUDO_SCREENS.length}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="hidden sm:inline-block text-[9px] font-mono text-gray-400 mr-2">
+                    Press ESC or click outside to close
+                  </span>
+                  <button
+                    onClick={() => setLightboxIndex(null)}
+                    className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors active:scale-95 cursor-pointer border border-white/10"
+                    title="Close preview"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Center Image Stage with Left/Right Navigation */}
+              <div 
+                className="relative flex-1 flex items-center justify-center my-2 max-w-6xl w-full mx-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Previous Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex((prev) => (prev === null ? null : (prev - 1 + ALL_LUDO_SCREENS.length) % ALL_LUDO_SCREENS.length));
+                  }}
+                  className="absolute left-1 sm:left-4 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 backdrop-blur-md transition-all active:scale-90 hover:scale-105 cursor-pointer shadow-xl"
+                  title="Previous image"
+                >
+                  <ChevronLeft size={26} />
+                </button>
+
+                {/* The Full Image - 100% visible, uncropped at full resolution */}
+                <div className="max-h-[76vh] md:max-h-[80vh] max-w-[88vw] flex items-center justify-center">
+                  <motion.img
+                    key={ALL_LUDO_SCREENS[lightboxIndex].src}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                    src={ALL_LUDO_SCREENS[lightboxIndex].src}
+                    alt={ALL_LUDO_SCREENS[lightboxIndex].title}
+                    className="max-h-[76vh] md:max-h-[80vh] max-w-[88vw] object-contain rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)] border border-white/15"
+                  />
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex((prev) => (prev === null ? null : (prev + 1) % ALL_LUDO_SCREENS.length));
+                  }}
+                  className="absolute right-1 sm:right-4 z-20 w-12 h-12 rounded-2xl bg-black/60 hover:bg-black/90 text-white flex items-center justify-center border border-white/20 backdrop-blur-md transition-all active:scale-90 hover:scale-105 cursor-pointer shadow-xl"
+                  title="Next image"
+                >
+                  <ChevronRight size={26} />
+                </button>
+              </div>
+
+              {/* Bottom Information Bar */}
+              <div 
+                className="z-20 bg-slate-900/80 border border-white/10 px-5 py-3 rounded-2xl backdrop-blur-md max-w-4xl w-full mx-auto text-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className="text-xs sm:text-sm text-gray-200 font-medium">
+                  {ALL_LUDO_SCREENS[lightboxIndex].description}
+                </p>
+                <div className="flex items-center justify-center gap-4 mt-2 text-[9px] font-mono text-gray-400">
+                  <span>← / → Keyboard arrow keys to browse</span>
+                  <span>•</span>
+                  <span>Full Resolution Original Screen</span>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
