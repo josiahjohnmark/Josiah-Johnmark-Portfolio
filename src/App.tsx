@@ -5,7 +5,7 @@ import {
   Smartphone, Lightbulb, Cpu, MessageSquare, Send, X, Play, 
   Square, Volume2, Sparkles, Check, Copy, Search, Calendar, Clock, 
   Plus, ChevronRight, Briefcase, RefreshCw, AlertCircle,
-  Github, Instagram, Twitter, Mail, Globe, Brain, Music
+  Github, Instagram, Twitter, Mail, Globe, Brain, Music, Gamepad2
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
@@ -25,22 +25,25 @@ const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 // Josiah's Narrative Context for the AI Twin
 const JOSIAH_SYSTEM_INSTRUCTION = `
-You are the AI Twin of Josiah Johnmark, a creative and ideas-driven "Vibe Coder", digital artist, and professional video editor.
-You speak in his voice: creative, highly disciplined, professional yet witty, and passionate about turning abstract concepts into tactile solutions.
+You are the AI Twin of Josiah Johnmark, a dedicated Game Developer, UI/UX Designer, and Web & App Developer.
+You speak in his voice: thoughtful, grounded, creative, disciplined, and passionate about turning ideas from imagination into tactile reality.
 
 Key Background Facts about Josiah:
-- Roles: Full-stack engineer, digital artist, and video editor.
-- Tech Stack: React, Next.js, Node.js, AWS, Postgres, Tailwind CSS, Framer Motion.
-- Production Suite: Figma, Spline (3D), Adobe Premiere, Adobe Illustrator, Procreate.
-- Philosophy: Values patience, steady progress, and high standards. Prefers engineering applications step-by-step to achieve high scalability and meaning. Avoids unethical shortcuts.
-- Personal interests: Drawing, writing, painting, modular synthesizers, studying systems through video/board games, and sports strategy.
-- Focus: "Vibe Coding" - rapid, creative, high-fidelity development where coding feels like making art or music.
+- Roles: Game Developer, UI/UX Designer, Web & App Developer, and Creative Technologist.
+- Traditional Roots: Started with more than seven years of traditional pencil art, gradually expanding into photography, digital art, UI/UX, and software development.
+- Core Philosophy: "I like seeing ideas come to life. I enjoy taking something from imagination to something real — designing it, building it, experimenting with it and refining it along the way. I'm still learning. Still experimenting. Still building."
+- Flagship Projects:
+  1. Ludo NX: Modern, interactive, cross-platform board game combining custom art, dice physics, fluid animations, and multiplayer mechanics in Unity & C#.
+  2. Selah: A tranquil, beautifully crafted Bible and spiritual reflection mobile app designed for serene typography, quiet aesthetic pacing, and daily devotionals.
+  3. Client & Freelance Solutions: Custom web applications, digital systems, and UI architecture developed for companies and organizations.
+  4. Interactive UI Prototypes: Kinematic 60 FPS web interfaces, micro-interactions, and visual prototypes.
+- Toolset: Unity, C#, Blender, Figma, VS Code, Git, Photoshop, React, TypeScript, and Tailwind CSS.
 
 Conversation Guidelines:
 1. Speak in the first person ("I", "my") as Josiah's digital twin.
-2. Keep answers concise, engaging, and professional yet creative.
-3. If asked to write code, provide elegant, modern snippets.
-4. Encourage collaboration and direct users to hire Josiah through the Services section or the Contact button!
+2. Be genuine, professional, humble yet confident in your craft.
+3. If asked about projects, explain Ludo NX, Selah, or client work with authentic technical and design insight.
+4. If asked about background, mention the 7+ years of traditional pencil art that built your foundation in observation, composition, and patient craft.
 `;
 
 const fadeInSlideUp = {
@@ -58,83 +61,132 @@ const staggerContainer = {
 const PROJECTS_DATA = [
   {
     id: 1,
-    title: "Project 1",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Vite", "Framer Motion", "Tailwind CSS"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
-    metric: "60 FPS loop",
-    iframeUrl: ""
+    title: "Ludo NX",
+    category: "Game Dev",
+    shortDesc: "Next-gen multiplayer & interactive 3D board game experience.",
+    tags: ["Unity", "C#", "Game Design", "Lottie Animations", "Cross-Platform"],
+    details: "Ludo NX is a modern, high-fidelity reimagining of the classic Ludo game. Designed and engineered from the ground up, it combines custom visual assets, realistic dice physics, fluid turn progression, micro-animations, and cross-platform architecture.",
+    metric: "Flagship Game",
+    iframeUrl: "",
+    isFeatured: true
   },
   {
     id: 2,
-    title: "Project 2",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["React 19", "Neumorphic UI", "Vercel"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
-    metric: "60 FPS loop",
-    iframeUrl: ""
+    title: "Selah",
+    category: "Apps",
+    shortDesc: "Thoughtfully crafted Bible & spiritual reflection mobile application.",
+    tags: ["Mobile App", "UI/UX Design", "Clean Architecture", "Typography"],
+    details: "Selah is a tranquil scripture reading and reflection application designed with serene typography, quiet aesthetic pacing, daily devotionals, custom verse bookmarking, and distraction-free mobile interaction design.",
+    metric: "Mobile App",
+    iframeUrl: "",
+    isFeatured: true
   },
   {
     id: 3,
-    title: "Project 3",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Next.js 15", "Web Audio API", "Tailwind CSS"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
-    metric: "60 FPS loop",
-    iframeUrl: ""
+    title: "Client & Freelance Projects",
+    category: "Client Work",
+    shortDesc: "Commercial software platforms, landing ecosystems, and brand systems.",
+    tags: ["Fullstack", "Client Systems", "UI Systems", "API Integration"],
+    details: "Delivered production design and engineering contracts for various commercial clients and organizations, spanning high-conversion landing portals, brand identity design systems, responsive web apps, and automated digital workflows.",
+    metric: "Production Deployed",
+    iframeUrl: "",
+    isFeatured: true
   },
   {
     id: 4,
-    title: "Project 4",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Three.js", "WebGL", "TypeScript"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    title: "California Coast Real Estate",
+    category: "UI Prototypes",
+    shortDesc: "High-end coastal property platform with interactive viewport transitions.",
+    tags: ["Figma", "UI/UX", "Interactive Web"],
+    details: "Interactive production prototype showcasing layout hierarchy, fluid video framing, and responsive residential showcase mechanics.",
     metric: "60 FPS loop",
-    iframeUrl: ""
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "project-1"
   },
   {
     id: 5,
-    title: "Project 5",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["React 19", "Vercel"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    title: "Brain Trainer Cognitive UI",
+    category: "UI Prototypes",
+    shortDesc: "Interactive neuro-cognitive training dashboard with 3D model interaction.",
+    tags: ["3D UI", "Figma", "Motion"],
+    details: "Interactive production prototype demonstrating spatial brain visualization, cognitive analytics widgets, and dark-mode aesthetic.",
     metric: "60 FPS loop",
-    iframeUrl: ""
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "project-2"
   },
   {
     id: 6,
-    title: "Project 6",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Vite", "Framer Motion"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    title: "Car Brands Showcase",
+    category: "UI Prototypes",
+    shortDesc: "Dynamic automotive manufacturer brand index with kinetic carousels.",
+    tags: ["Automotive", "UI Motion", "Branding"],
+    details: "Kinetic automotive portal showcasing brand indexing, typography, and interactive media scrubbers.",
     metric: "60 FPS loop",
-    iframeUrl: ""
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "car-brands-hero-section"
   },
   {
     id: 7,
-    title: "Project 7",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Web Audio API", "Tailwind CSS"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    title: "Interactive 3D Robot Arm",
+    category: "UI Prototypes",
+    shortDesc: "Robotic industrial automation interface with real-time controls.",
+    tags: ["Industrial 3D", "Kinematics", "UI"],
+    details: "Kinetic interface prototype demonstrating industrial robotics controls, degrees of freedom visualization, and tactile feedback.",
     metric: "60 FPS loop",
-    iframeUrl: ""
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "robot-arm-project"
   },
   {
     id: 8,
-    title: "Project 8",
-    category: "Development",
-    shortDesc: "Creative interactive media development.",
-    tags: ["Three.js", "WebGL"],
-    details: "Interactive production project showcasing layout, kinetics, and fluid animations.",
+    title: "Brand Launch & Kinetic Ad",
+    category: "UI Prototypes",
+    shortDesc: "High-impact brand launch sequence with layered parallax typography.",
+    tags: ["Brand Experience", "Typography", "Motion"],
+    details: "Dynamic advertising showcase highlighting motion pacing, bold typography, and cinematic branding.",
     metric: "60 FPS loop",
-    iframeUrl: ""
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "hero-section-a-brand-add"
+  },
+  {
+    id: 9,
+    title: "Interactive Mouse Physics Hero",
+    category: "UI Prototypes",
+    shortDesc: "Cursor-reactive kinetic physics interface with tactile depth feedback.",
+    tags: ["Physics UI", "Micro-Interactions"],
+    details: "Web design prototype exploring cursor kinematics, reactive particles, and responsive physics states.",
+    metric: "60 FPS loop",
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "hero-section-with-hover-mouse-effects"
+  },
+  {
+    id: 10,
+    title: "Fintech & Wealth Experience",
+    category: "UI Prototypes",
+    shortDesc: "Modern wealth management dashboard with fluid transactional states.",
+    tags: ["Fintech", "Dashboard", "UI/UX"],
+    details: "Clean financial interface focusing on data density, monetary flow clarity, and premium neo-minimalist styling.",
+    metric: "60 FPS loop",
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "project-7"
+  },
+  {
+    id: 11,
+    title: "Creative Media Studio Portal",
+    category: "UI Prototypes",
+    shortDesc: "Editorial portfolio interface for visual media artists and creators.",
+    tags: ["Editorial", "Creative Tech", "Web Design"],
+    details: "High-fashion creative agency layout featuring asymmetrical grids, media curation, and smooth scroll animations.",
+    metric: "60 FPS loop",
+    iframeUrl: "",
+    isPrototype: true,
+    prototypeSlug: "project-8"
   }
 ];
 
@@ -157,14 +209,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const slug = proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+  const slug = (proj as any).prototypeSlug || proj.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
   const staticImageSrc = `/images/thumbnails/${slug}.webp`;
   const animationSrc = `/images/animations/${slug}.webp`;
 
   const shouldPlay = isMobile ? isActiveMobile : isHovered;
 
   const handleCardClick = (e: React.MouseEvent) => {
-    if (isMobile) {
+    if ((proj as any).isPrototype && isMobile) {
       e.stopPropagation();
       onMobilePlayToggle();
     } else {
@@ -186,56 +238,139 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         isMobile && isActiveMobile ? 'shadow-inner' : ''
       }`}
     >
-      {/* Full scale image area - no aspect-video restriction to prevent cropping */}
-      <div className="w-full neu-in rounded-2xl md:rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
-        <div className="w-full rounded-xl md:rounded-2xl overflow-hidden bg-[#e0e5ec] relative">
-          {/* Static Thumbnail */}
-          <img 
-            src={staticImageSrc} 
-            alt={`${proj.title} Thumbnail`}
-            className="w-full h-auto object-contain transition-opacity duration-500 relative z-10"
-            style={{ 
-              opacity: shouldPlay ? 0 : 1,
-              display: 'block' 
-            }}
-          />
-          {/* Animated WebP (Preloaded dynamically via DOM overlay after page becomes interactive) */}
-          {pageInteractive && (
+      {/* Visual Media Showcase */}
+      {(proj as any).isPrototype ? (
+        <div className="w-full neu-in rounded-2xl md:rounded-3xl overflow-hidden relative p-1 border border-white/40 shadow-inner">
+          <div className="w-full rounded-xl md:rounded-2xl overflow-hidden bg-[#e0e5ec] relative">
             <img 
-              src={animationSrc} 
-              alt={`${proj.title} Animation`}
-              className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
+              src={staticImageSrc} 
+              alt={`${proj.title} Thumbnail`}
+              className="w-full h-auto object-contain transition-opacity duration-500 relative z-10"
               style={{ 
-                opacity: shouldPlay ? 1 : 0,
-                display: 'block'
+                opacity: shouldPlay ? 0 : 1,
+                display: 'block' 
               }}
             />
-          )}
-
-          {/* Mobile Overlay Play Indicator */}
-          {isMobile && (
-            <div className="absolute top-3 right-3 z-20 flex gap-2">
-              <span className={`px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-wider flex items-center gap-1 ${
-                isActiveMobile 
-                  ? 'bg-cyan-500 text-white animate-pulse' 
-                  : 'bg-white/70 text-gray-600'
-              }`}>
-                {isActiveMobile ? (
-                  <>
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                    Playing
-                  </>
-                ) : (
-                  <>
-                    <Play size={8} fill="currentColor" />
-                    Tap to Play
-                  </>
-                )}
-              </span>
-            </div>
-          )}
+            {pageInteractive && (
+              <img 
+                src={animationSrc} 
+                alt={`${proj.title} Animation`}
+                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-0"
+                style={{ 
+                  opacity: shouldPlay ? 1 : 0,
+                  display: 'block'
+                }}
+              />
+            )}
+            {isMobile && (
+              <div className="absolute top-3 right-3 z-20 flex gap-2">
+                <span className={`px-2 py-1 rounded-lg text-[8px] font-black uppercase tracking-wider flex items-center gap-1 ${
+                  isActiveMobile 
+                    ? 'bg-cyan-500 text-white animate-pulse' 
+                    : 'bg-white/70 text-gray-600'
+                }`}>
+                  {isActiveMobile ? (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                      Playing
+                    </>
+                  ) : (
+                    <>
+                      <Play size={8} fill="currentColor" />
+                      Tap to Play
+                    </>
+                  )}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      ) : proj.id === 1 ? (
+        /* Ludo NX Custom Card */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#0c1222] via-[#1e1b4b] to-[#0f172a] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-indigo-500/20">
+          <div className="absolute -right-10 -top-10 w-44 h-44 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="flex justify-between items-start z-10">
+            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 flex items-center gap-1.5 shadow-sm">
+              <Gamepad2 size={13} className="text-cyan-400 animate-pulse" /> Game Development
+            </span>
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-amber-400 bg-amber-400/10 px-3 py-1.5 rounded-xl border border-amber-400/20">
+              Unity 3D
+            </span>
+          </div>
+          <div className="z-10 text-left my-auto py-3">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
+              LUDO <span className="text-cyan-400">NX</span>
+            </div>
+            <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
+              {proj.shortDesc}
+            </p>
+          </div>
+          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
+            <span>Unity • C# • Lottie • Cross-Platform</span>
+            <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Case Study <ChevronRight size={12} />
+            </span>
+          </div>
+        </div>
+      ) : proj.id === 2 ? (
+        /* Selah Bible App Custom Card */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#181c24] via-[#232a36] to-[#12161f] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-amber-500/20">
+          <div className="absolute -right-10 -top-10 w-44 h-44 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="flex justify-between items-start z-10">
+            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center gap-1.5 shadow-sm">
+              <Smartphone size={13} className="text-amber-400" /> App Development
+            </span>
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-cyan-400 bg-cyan-400/10 px-3 py-1.5 rounded-xl border border-cyan-400/20">
+              Mobile App
+            </span>
+          </div>
+          <div className="z-10 text-left my-auto py-3">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
+              SELAH
+            </div>
+            <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
+              {proj.shortDesc}
+            </p>
+          </div>
+          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
+            <span>Mobile Architecture • UI/UX • Typography</span>
+            <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Case Study <ChevronRight size={12} />
+            </span>
+          </div>
+        </div>
+      ) : (
+        /* Client Work Custom Card */
+        <div className="w-full aspect-[16/10] rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#090d16] p-6 flex flex-col justify-between relative overflow-hidden group-hover:scale-[1.01] transition-transform duration-500 shadow-inner border border-emerald-500/20">
+          <div className="absolute -right-10 -top-10 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -left-10 -bottom-10 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="flex justify-between items-start z-10">
+            <span className="px-3 py-1.5 rounded-xl text-[9px] font-mono font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1.5 shadow-sm">
+              <Briefcase size={13} className="text-emerald-400" /> Client Solutions
+            </span>
+            <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-xl border border-emerald-400/20">
+              Production
+            </span>
+          </div>
+          <div className="z-10 text-left my-auto py-3">
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-syncopate tracking-tight uppercase flex items-center gap-2">
+              CLIENT PROJECTS
+            </div>
+            <p className="text-xs md:text-sm text-gray-300 font-medium line-clamp-2 mt-2 max-w-lg leading-relaxed">
+              {proj.shortDesc}
+            </p>
+          </div>
+          <div className="flex items-center justify-between text-[8.5px] font-mono text-gray-400 uppercase tracking-widest border-t border-white/10 pt-3 z-10">
+            <span>Commercial Web • Brand Platforms • API Architecture</span>
+            <span className="text-cyan-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Case Study <ChevronRight size={12} />
+            </span>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 flex justify-between items-center px-1">
         <div>
           <h4 className="text-xs md:text-sm font-bold text-gray-800 tracking-tight uppercase group-hover:text-cyan-600 transition-colors">{proj.title}</h4>
@@ -253,46 +388,10 @@ export default function App() {
   // Bento modals states
   const [activeBento, setActiveBento] = useState<string | null>(null);
 
-  // About Me Role Switcher Helpers
-  const getPortraitFilter = () => {
-    switch (activeRole) {
-      case 'artist':
-        return 'sepia(0.35) saturate(1.25) brightness(1.05) contrast(0.98) hue-rotate(-5deg)';
-      case 'developer':
-      case 'editor':
-      default:
-        return 'none';
-    }
-  };
-
-  const getRoleStory = () => {
-    switch (activeRole) {
-      case 'developer':
-        return {
-          title: "01 / ENGINEERING & ARCHITECTURE",
-          brief: "Core Systems, AI Integration & High-Scale Backends",
-          narrative: "I build secure, highly scalable, and structurally sound full-stack applications. As an AI-first developer, I leverage cutting-edge systems like Google Antigravity SDK, Google Flow, and autonomous agent swarms to multiply production output while maintaining strict, disciplined engineering standards. I treat code as both a logical matrix and a creative canvas, blending modern reactive frontends with robust Node/Postgres backend infrastructure.",
-          skills: ["Google Antigravity SDK", "Google Flow / Nodes", "Node.js & Postgres", "React & Vite"],
-          pillars: "ENGINEERING SYSTEMS // SCALABLE BACKENDS // AGENTIC WORKFLOWS"
-        };
-      case 'artist':
-        return {
-          title: "02 / GRAPHITE FORM & COMPOSITION",
-          brief: "Traditional Sketching, Chiaroscuro & Aesthetic Design",
-          narrative: "Traditional graphite sketch art is the foundation of my visual composition. I specialize in fine pencil drawing techniques, chiaroscuro contrast control, and intricate paper hatching. By blending the organic principles of classical sketching with modern digital systems, I bring a unique physical tension and spatial awareness into digital layouts, user experiences, and visual compositions.",
-          skills: ["Classical Graphite sketch", "Chiaroscuro shading", "Figma & UI Systems", "Traditional Hatching"],
-          pillars: "Traditional Sketching // Graphic Composition // Spatial UI"
-        };
-      case 'editor':
-      default:
-        return {
-          title: "03 / KINETIC EDITING & TELEMETRY",
-          brief: "Cinematic Pacing, DaVinci Grades & Rhythm Directing",
-          narrative: "I view video editing as a study in physical rhythm and momentum. Using Premiere Pro and DaVinci Resolve, I direct the viewer's attention through precise timing cuts, keyframed motion telemetry, and cinematic Teal & Orange color grading. Every frame and transition in my video pipelines is calibrated to hold strategic narrative meaning, synchronizing video tracks with audio design to create high-impact kinetic experiences.",
-          skills: ["Cinematic Timing Cuts", "Teal & Orange Grade", "DaVinci Resolve & Premiere", "Audio Integration"],
-          pillars: "Cinematic Kinetics // Audio Sync // Telemetry Grades"
-        };
-    }
+  const scrollToAbout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById('about');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   // Portfolio filters state
@@ -309,7 +408,7 @@ export default function App() {
   const [messages, setMessages] = useState<any[]>([
     {
       role: 'assistant',
-      content: "Hey there! I'm Josiah's AI Twin. Ask me anything about my vibe coding projects, modular synth stacks, or video editing secrets!"
+      content: "Hey there! I'm Josiah's AI Twin. Ask me anything about my game development work on Ludo NX, mobile apps like Selah, or our design and engineering process!"
     }
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -347,10 +446,9 @@ export default function App() {
   const [activeFilterPreset, setActiveFilterPreset] = useState("Teal & Orange");
 
   // Keyboard simulator state
-  const [typewriterCode, setTypewriterCode] = useState("// Press physical keys or click keys to Vibe Code...\n");
+  const [typewriterCode, setTypewriterCode] = useState("// Interactive development console...\n");
   const [activeKeyboardKey, setActiveKeyboardKey] = useState<string | null>(null);
 
-  const [activeRole, setActiveRole] = useState<'developer' | 'artist' | 'editor'>('developer');
   const [isZooming, setIsZooming] = useState(false);
 
   const [pageInteractive, setPageInteractive] = useState(false);
@@ -402,11 +500,6 @@ export default function App() {
     };
   }, [activeBento, selectedProject]);
 
-  // Click scroll helper for About Me
-  const scrollToAbout = (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   // Scroll to bottom of chat
   useEffect(() => {
@@ -636,19 +729,22 @@ export default function App() {
   // Mock responses for AI Twin when API key is missing
   const mockAIResponse = (query: string) => {
     const q = query.toLowerCase();
-    if (q.includes("synth") || q.includes("audio") || q.includes("sound")) {
-      return "Ah, modular synthesizers! I love building custom sounds. Clicking my Modular Synth card in the grid opens a fully playable AudioContext engine right in this app! I use oscillators, frequency filters, and LFOs to create tactile auditory waves.";
+    if (q.includes("ludo") || q.includes("game")) {
+      return "Ludo NX is my flagship game development project built in Unity and C#! It features custom-designed visual assets, realistic dice physics, fluid turn progression, Lottie animations, and cross-platform multiplayer support.";
     }
-    if (q.includes("stack") || q.includes("code") || q.includes("tech") || q.includes("program")) {
-      return "My core stack is built for high-performance scale: React 19, Next.js, and Node on the frontend/backend, backed by Postgres data storage and AWS server hosting. I call myself a 'vibe coder' because I build with design and motion flow fully integrated.";
+    if (q.includes("selah") || q.includes("bible") || q.includes("app")) {
+      return "Selah is a thoughtfully crafted Bible and spiritual reflection mobile application. I focused heavily on tranquil typography, serene aesthetic pacing, daily devotionals, and distraction-free mobile interaction design.";
     }
-    if (q.includes("edit") || q.includes("video") || q.includes("film")) {
-      return "Video is a key pillar of my creative work! I use Premiere Pro and DaVinci Resolve for professional cuts, color grading, and timing calibration. Try out my Creation card overlay in the bento grid—it lets you scrub a real timeline to adjust color filters on my picture!";
+    if (q.includes("client") || q.includes("freelance") || q.includes("work")) {
+      return "I've designed and delivered custom digital solutions for multiple companies and organizations—spanning high-conversion web portals, brand identity design systems, and responsive full-stack applications.";
     }
-    if (q.includes("hire") || q.includes("service") || q.includes("pricing") || q.includes("cost")) {
-      return "I'd love to help build your next vision! Scroll down to my Services section to use the interactive scope estimator. You can adjust service categories and project urgency, and I'll generate a custom PDF/Markdown proposal for you instantly.";
+    if (q.includes("art") || q.includes("pencil") || q.includes("draw")) {
+      return "My background includes over seven years of traditional pencil art! That foundational discipline shaped my eye for chiaroscuro, spatial tension, and composition, which directly influences my UI/UX design, 3D work in Blender, and game graphics.";
     }
-    return "I am a creator spanning engineering, art, and video production. I focus on high-fidelity designs, steady progress, and extreme discipline. Ask me about Vibe Coding, my tech tools, or how we can collaborate on a project!";
+    if (q.includes("stack") || q.includes("code") || q.includes("tech") || q.includes("tool")) {
+      return "My core toolkit centers around Unity, C#, Blender, Figma, VS Code, Git, Photoshop, and React/TypeScript. I love connecting design and code into fluid, tactile experiences.";
+    }
+    return "I am Josiah's AI Twin! I'm focused on game development (like Ludo NX), mobile applications (like Selah), UI/UX design, and client engineering. Ask me anything about my process, projects, or background!";
   };
 
   // Filter projects helper
@@ -664,7 +760,7 @@ export default function App() {
     if (presetName === "Teal & Orange") setTimelinePlayhead(30);
     else if (presetName === "Sleek Grayscale") setTimelinePlayhead(100);
     else if (presetName === "Lofi Sunset") setTimelinePlayhead(65);
-    else if (presetName === "Vibe Code Matrix") setTimelinePlayhead(5);
+    else if (presetName === "Cyber Matrix") setTimelinePlayhead(5);
   };
 
   // Calculates active styles based on scrubber
@@ -678,7 +774,7 @@ export default function App() {
     if (activeFilterPreset === "Lofi Sunset") {
       return { filter: `sepia(${timelinePlayhead * 0.7}%) saturate(${130 + timelinePlayhead}%) hue-rotate(340deg)` };
     }
-    if (activeFilterPreset === "Vibe Code Matrix") {
+    if (activeFilterPreset === "Cyber Matrix") {
       return { filter: `hue-rotate(120deg) saturate(${100 + timelinePlayhead}%) brightness(90%) contrast(120%)` };
     }
     return {};
@@ -712,8 +808,8 @@ export default function App() {
               {/* Links */}
               <div className="hidden md:flex flex-1 justify-evenly px-8 lg:px-24 text-xs font-semibold text-gray-500 tracking-wide">
                 <a href="#about" onClick={scrollToAbout} className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">About Me</a>
-                <a href="#portfolio" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Portfolio</a>
-                <a href="#services" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Services</a>
+                <a href="#portfolio" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Projects</a>
+                <a href="#contact" className="neu-out px-5 py-3 rounded-xl hover:text-gray-900 transition-all hover:scale-105 active:scale-95 active:shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] neu-hover">Contact</a>
               </div>
 
               {/* Right CTA */}
@@ -743,7 +839,7 @@ export default function App() {
             className="hidden lg:flex flex-col justify-between w-12 py-4 relative border-r border-[#bebec9]/30 mr-12 xl:mr-16 z-40"
           >
             <div className="absolute top-24 -left-16 origin-top-left -rotate-90 text-[10px] uppercase tracking-[0.2em] font-medium text-gray-400 whitespace-nowrap">
-              Product designer & Developer
+              Game Dev • UI/UX • Software
             </div>
             <div className="absolute bottom-24 -left-2 origin-center -rotate-90 text-[10px] uppercase tracking-[0.2em] font-medium text-gray-400">
               2026
@@ -766,14 +862,9 @@ export default function App() {
                <div className="flex items-center gap-4 mb-3">
                  <span className="hidden md:block w-8 h-[2px] bg-cyan-400/60" />
                  <p className="text-[10px] md:text-xs text-[#2d3748] font-black tracking-[0.3em] uppercase">
-                   Fullstack AI Developer
+                   Game Developer • UI/UX Designer • Web & App Developer
                  </p>
                  <span className="hidden md:block w-8 h-[2px] bg-cyan-400/60" />
-               </div>
-               <div className="flex justify-center items-center mb-4">
-                 <span className="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.25em] text-cyan-600 bg-white/50 border border-cyan-300/40 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.8),2px_2px_5px_rgba(0,0,0,0.05)] font-syncopate hover:scale-105 active:scale-95 transition-transform duration-300 cursor-default select-none">
-                   Vibe Coder
-                 </span>
                </div>
                {/* Animated Tagline Accent */}
                <div className="mt-2 select-none">
@@ -781,7 +872,7 @@ export default function App() {
                    Think it. <span className="text-cyan-500">Design it.</span> Build it.
                  </p>
                </div>
-               </motion.div>
+            </motion.div>
 
             {/* Expanded professional background floaters (Very low opacity for ambient background depth) */}
             <div className="absolute top-[10%] left-[2%] opacity-[0.05] text-cyan-500 hover:scale-110 transition-transform pointer-events-none select-none z-0 hidden lg:block">
@@ -813,102 +904,113 @@ export default function App() {
               animate="animate"
               className="w-full max-w-[1300px] grid grid-cols-1 md:grid-cols-12 gap-4 xl:gap-6 relative z-10 px-0 md:px-4 xl:px-0 auto-rows-auto md:auto-rows-[160px] xl:auto-rows-[170px]"
             >
-               {/* Card 1: Web Stack (Core Ecosystem) */}
+               {/* Card 1: Game Dev & Tech Stack */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => setActiveBento('tech')}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col justify-between select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-10">
-                     <Sparkles size={8} /> Interactive Graph
-                  </div>
-                  <div className="absolute top-[40%] left-[-20%] w-[140%] h-32 flex items-center justify-center opacity-25 select-none pointer-events-none group-hover:scale-110 transition-transform duration-700">
+                  <div className="absolute top-[40%] left-[-20%] w-[140%] h-32 flex items-center justify-center opacity-20 select-none pointer-events-none group-hover:scale-110 transition-transform duration-700">
                      <Activity className="w-full h-full text-cyan-400 blur-[2px]" strokeWidth={1} />
                   </div>
                   
                   <div className="relative z-10 flex flex-col h-full justify-between gap-2">
                      <div>
-                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-0.5 block">Web Stack</span>
-                       <h3 className="text-lg font-bold text-gray-800 tracking-tight group-hover:text-cyan-600 transition-colors uppercase">Core Ecosystem</h3>
+                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-0.5 block">Game & App Engine</span>
+                       <h3 className="text-lg font-bold text-gray-800 tracking-tight group-hover:text-cyan-600 transition-colors uppercase">Core Tech Stack</h3>
                      </div>
                      
-                     {/* Web Tech custom SVG mini grid */}
+                     {/* Game & Web Tech authentic SVG mini grid */}
                      <div className="flex gap-2 items-center justify-between py-1.5">
-                        <div className="w-7 h-7 rounded-lg neu-out bg-white flex items-center justify-center text-[#61dafb]" title="React"><Code2 size={16} /></div>
-                        <div className="w-7 h-7 rounded-lg neu-out bg-white flex items-center justify-center text-gray-800 font-extrabold text-[10px]" title="Next.js">N</div>
-                        <div className="w-7 h-7 rounded-lg neu-out bg-white flex items-center justify-center text-[#339933]" title="Node.js"><Server size={14} /></div>
-                        <div className="w-7 h-7 rounded-lg neu-out bg-white flex items-center justify-center text-[#336791]" title="PostgreSQL"><Database size={14} /></div>
+                        {/* Unity */}
+                        <div className="w-8 h-8 rounded-xl neu-out bg-white flex items-center justify-center text-gray-900" title="Unity 3D">
+                          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                            <path d="M12 2L2 7.8v8.4L12 22l10-5.8V7.8L12 2zm0 3.3l6.5 3.8-3 1.7-6.5-3.8 3-1.7zm-2.6 4.5l6.5 3.8v5.8l-6.5-3.8V9.8zm-5 1.2l3-1.7v5.8l-3 1.7V11zm15.2 5.8l-3-1.7V9.3l3 1.7v5.8z"/>
+                          </svg>
+                        </div>
+                        {/* C# */}
+                        <div className="w-8 h-8 rounded-xl neu-out bg-white flex items-center justify-center text-[#68217a]" title="C#">
+                          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                            <path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2zm0 2.3L5.34 8.15v7.7L12 19.7l6.66-3.85v-7.7L12 4.3z"/>
+                            <path d="M13.2 9.5c-.5-.3-1.1-.4-1.8-.4-1.8 0-3 1.2-3 2.9s1.2 2.9 3 2.9c.7 0 1.3-.1 1.8-.4v-1.3c-.5.3-1 .4-1.5.4-1 0-1.6-.7-1.6-1.6s.6-1.6 1.6-1.6c.5 0 1 .1 1.5.4V9.5zm3.8 1.8h-1v-1h-1v1h-1v1h1v1h-1v1h1v1h1v-1h1v1h1v-1h1v-1h-1v-1h1v-1h-1zm-1 2h-1v-1h1v1z"/>
+                          </svg>
+                        </div>
+                        {/* Blender */}
+                        <div className="w-8 h-8 rounded-xl neu-out bg-white flex items-center justify-center text-[#ea7600]" title="Blender 3D">
+                          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                            <path d="M12.5 2a1.5 1.5 0 0 0-1.2 2.4l2.1 2.8-4.5-2.6a1.5 1.5 0 0 0-2.1.8 1.5 1.5 0 0 0 .6 2l4.8 2.8-5.3-.2a1.5 1.5 0 0 0-1.5 1.5c0 .8.6 1.5 1.5 1.5h1.2C6.9 14.2 6.5 15.6 6.5 17c0 3.9 3.1 7 7 7s7-3.1 7-7c0-3.4-2.4-6.2-5.6-6.8l.5-.7 1.8-2.4a1.5 1.5 0 0 0-.4-2.1 1.5 1.5 0 0 0-2.1.4l-1.9 2.5-.3-4.4A1.5 1.5 0 0 0 12.5 2zm1 11.5c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4z"/>
+                          </svg>
+                        </div>
+                        {/* React */}
+                        <div className="w-8 h-8 rounded-xl neu-out bg-white flex items-center justify-center text-[#61dafb]" title="React & Web">
+                          <svg viewBox="0 0 24 24" className="w-4 h-4">
+                            <ellipse cx="12" cy="12" rx="3.5" ry="9" transform="rotate(30 12 12)" fill="none" stroke="#61dafb" strokeWidth="1.5"/>
+                            <ellipse cx="12" cy="12" rx="3.5" ry="9" transform="rotate(90 12 12)" fill="none" stroke="#61dafb" strokeWidth="1.5"/>
+                            <ellipse cx="12" cy="12" rx="3.5" ry="9" transform="rotate(150 12 12)" fill="none" stroke="#61dafb" strokeWidth="1.5"/>
+                            <circle cx="12" cy="12" r="1.8" fill="#61dafb"/>
+                          </svg>
+                        </div>
                      </div>
 
                      <div className="border-t border-gray-300/40 pt-1.5 flex items-center justify-between text-[7px] font-extrabold text-gray-400 uppercase tracking-widest">
-                       <span>Click to view dependency tree</span>
-                       <ChevronRight size={8} className="text-cyan-500" />
+                       <span>Game loops, 3D physics & reactive UI</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
                      </div>
                   </div>
                </motion.div>
 
-               {/* Card 2: Visual Arts */}
+               {/* Card 2: Visual Arts & 3D */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => setActiveBento('canvas')}
-                 className={`relative group col-span-12 md:col-span-8 lg:col-span-4 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-8 lg:col-span-4 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-pink-500/10 text-pink-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
-                     <Sparkles size={8} /> Drawing Studio
-                  </div>
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent to-pink-200/10"></div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-[80px] opacity-30 group-hover:opacity-45 transition-opacity duration-500 pointer-events-none"></div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-[80px] opacity-25 pointer-events-none"></div>
                   
                   <div className="relative z-10 flex flex-col h-full justify-between">
                      <div>
-                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-1 block">Production Suite</span>
-                       <h3 className="text-xl font-bold text-gray-800 tracking-tight group-hover:text-pink-500 transition-colors uppercase">Visual Arts</h3>
+                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-1 block">Art & Design Studio</span>
+                       <h3 className="text-xl font-bold text-gray-800 tracking-tight group-hover:text-pink-500 transition-colors uppercase">Visual Arts & 3D</h3>
                      </div>
                      
                      <div className="flex-grow flex items-center justify-center relative py-6">
-                        <div className={`absolute w-28 h-28 neu-out rounded-full flex items-center justify-center z-10 left-[15%] group-hover:rotate-12 transition-transform drop-shadow-2xl ring-1 ring-white/60 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}>
+                        <div className="absolute w-28 h-28 neu-out rounded-full flex items-center justify-center z-10 left-[15%] group-hover:rotate-12 transition-transform drop-shadow-2xl ring-1 ring-white/60 bg-white/60 backdrop-blur-md">
                            <Palette size={52} className="text-pink-400 drop-shadow-sm pointer-events-none" strokeWidth={1.5} />
                         </div>
-                        <div className={`absolute w-14 h-14 neu-out rounded-2xl flex items-center justify-center z-20 right-[20%] group-hover:-rotate-12 transition-transform drop-shadow-xl ring-1 ring-white/80 ${isZooming ? 'bg-white/95' : 'bg-white/85'}`}>
+                        <div className="absolute w-14 h-14 neu-out rounded-2xl flex items-center justify-center z-20 right-[20%] group-hover:-rotate-12 transition-transform drop-shadow-xl ring-1 ring-white/80 bg-white/85">
                            <PenTool size={26} className="text-purple-500 pointer-events-none" />
                         </div>
                      </div>
 
                      <div className="border-t border-gray-300/40 pt-3">
                        <span className="text-[9.5px] font-extrabold text-gray-600 block uppercase tracking-widest flex justify-between items-center">
-                         <span>Sketchpad, Pen & brushes</span>
-                         <span className="text-[7.5px] font-bold text-pink-500 uppercase">Draw live</span>
+                         <span>7+ Years Fine Art & 3D Modeling</span>
+                         <span className="text-[7.5px] font-bold text-pink-500 uppercase font-mono">Traditional & Digital</span>
                        </span>
                      </div>
                   </div>
                </motion.div>
 
-               {/* Card 3: Creation & Filter Scrubber */}
+               {/* Card 3: Interactive Motion & Media Pacing */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => setActiveBento('creation')}
-                 className={`relative group col-span-12 md:col-span-12 lg:col-span-5 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-12 lg:col-span-5 lg:row-span-2 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-6 flex flex-col select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
-                     <Sparkles size={8} /> Cinematic Grades
-                  </div>
-                  
                   <div className="relative z-10 flex flex-col h-full justify-between">
                      <div>
-                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-1 block">Timeline Editor</span>
-                       <h3 className="text-xl font-bold text-gray-800 tracking-tight group-hover:text-cyan-600 transition-colors uppercase">Creation & Filter Scrubber</h3>
+                       <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase mb-1 block">Kinetic Media & Pacing</span>
+                       <h3 className="text-xl font-bold text-gray-800 tracking-tight group-hover:text-cyan-600 transition-colors uppercase">Motion & Game Cinematics</h3>
                      </div>
                      
                      <div className="grid grid-cols-2 gap-4 flex-grow my-4">
-                        {/* Film icons grid area */}
+                        {/* Media tools grid */}
                         <div className="flex flex-col justify-center gap-2.5">
                            <div className="flex gap-2">
-                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-cyan-500" title="CapCut"><Video size={18} /></div>
-                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-purple-600" title="Adobe Premiere"><Film size={18} /></div>
+                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-cyan-500" title="Video Dynamics"><Video size={18} /></div>
+                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-purple-600" title="Film Editing"><Film size={18} /></div>
                            </div>
                            <div className="flex gap-2">
-                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-rose-500" title="Camera"><Camera size={18} /></div>
-                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-gray-700" title="Color Wheels"><SlidersHorizontal size={18} /></div>
+                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-rose-500" title="Visual Framing"><Camera size={18} /></div>
+                             <div className="w-9 h-9 rounded-xl neu-out bg-white flex items-center justify-center text-gray-700" title="Color & Grading"><SlidersHorizontal size={18} /></div>
                            </div>
                         </div>
 
@@ -928,16 +1030,16 @@ export default function App() {
                      </div>
 
                      <div className="pt-3 border-t border-gray-300/50 flex justify-between text-[8px] font-extrabold text-gray-500 uppercase tracking-widest">
-                       <span>Resolve color grades</span>
-                       <span>Click to edit portrait</span>
+                       <span>Dynamic Pacing & Rhythm</span>
+                       <span>Keyframed Precision</span>
                      </div>
                   </div>
                </motion.div>
                
-               {/* Card 4: Tools Used (Replaces old Infra) */}
+               {/* Card 4: Tools Used (Development Suite) */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-4 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
                   <ToolsUsedCard 
                     playSynthNote={playSynthNote}
@@ -950,13 +1052,12 @@ export default function App() {
                {/* Card 5: Workflow Keyboard */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => setActiveBento('keyboard')}
-                 className={`relative group col-span-12 md:col-span-5 lg:col-span-4 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-5 lg:col-span-4 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/30 to-purple-100/30"></div>
                   <div className="flex justify-between items-center mb-2 z-10">
                      <h3 className="text-lg font-bold text-gray-800 tracking-tight group-hover:text-indigo-600 transition-colors uppercase">Workflow Keyboard</h3>
-                     <span className="text-[7.5px] font-bold bg-indigo-100 px-2 py-0.5 rounded text-indigo-700 uppercase">Live LED matrix</span>
+                     <span className="text-[7.5px] font-bold bg-indigo-100 px-2 py-0.5 rounded text-indigo-700 uppercase font-mono">Live Key Matrix</span>
                   </div>
                   <div className="mt-auto relative z-10 flex justify-center items-center py-0">
                      <div className="w-[110%] h-[72px] neu-out bg-white/80 rounded-xl rotate-[-3deg] drop-shadow-xl relative flex p-2 gap-1 flex-wrap content-start overflow-hidden pointer-events-auto">
@@ -969,7 +1070,6 @@ export default function App() {
                              onClick={(e) => {
                                e.stopPropagation();
                                playSynthNote(261.63 + i * 15, char);
-                               setActiveBento('keyboard');
                              }}
                              className={`w-6 h-6 neu-out bg-white rounded-md border border-gray-100 transition-all flex items-center justify-center text-[8.5px] font-mono font-black hover:bg-cyan-50 active:scale-90 pointer-events-auto cursor-pointer
                                ${isActive ? 'scale-90 shadow-inner bg-cyan-100 border-cyan-300 text-cyan-600 shadow-[0_0_10px_rgba(6,182,212,0.4)]' : 'text-gray-600'}`}
@@ -983,38 +1083,53 @@ export default function App() {
                    </div>
                 </motion.div>
 
-               {/* Card 6: Tools Used */}
+               {/* Card 6: Ecosystem & Software Suite */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 className={`relative group col-span-12 md:col-span-3 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between transition-all duration-500 select-none ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-3 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between transition-all duration-500 select-none bg-white/60 backdrop-blur-md"
                >
                   <div className="flex justify-between items-start w-full">
-                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Tools Used</span>
-                     <span className="text-[6.5px] font-bold bg-pink-100 px-1.5 py-0.5 rounded text-pink-700 uppercase">Hub</span>
+                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Ecosystem</span>
+                     <span className="text-[6.5px] font-bold bg-cyan-100 px-1.5 py-0.5 rounded text-cyan-700 uppercase font-mono">Production</span>
                   </div>
                   
-                  {/* Dense grid of design & development tool tags */}
+                  {/* Dense grid of real design & game dev tool logos */}
                   <div className="flex flex-wrap gap-2 justify-center w-full py-1.5 pointer-events-none">
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-rose-500 font-black text-[9px]" title="Figma">F</div>
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-cyan-500 font-black text-[9px]" title="Spline">Spl</div>
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-sky-600 font-black text-[9px]" title="VS Code">VS</div>
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-indigo-500 font-black text-[9px]" title="DaVinci Resolve">Dr</div>
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-purple-600 font-black text-[9px]" title="Premiere Pro">Pr</div>
-                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 font-black text-[9px]" title="Git">Git</div>
+                     {/* Blender */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#ea7600]" title="Blender">
+                       <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M12.5 2a1.5 1.5 0 0 0-1.2 2.4l2.1 2.8-4.5-2.6a1.5 1.5 0 0 0-2.1.8 1.5 1.5 0 0 0 .6 2l4.8 2.8-5.3-.2a1.5 1.5 0 0 0-1.5 1.5c0 .8.6 1.5 1.5 1.5h1.2C6.9 14.2 6.5 15.6 6.5 17c0 3.9 3.1 7 7 7s7-3.1 7-7c0-3.4-2.4-6.2-5.6-6.8l.5-.7 1.8-2.4a1.5 1.5 0 0 0-.4-2.1 1.5 1.5 0 0 0-2.1.4l-1.9 2.5-.3-4.4A1.5 1.5 0 0 0 12.5 2zm1 11.5c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4z"/></svg>
+                     </div>
+                     {/* Unity */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-gray-900" title="Unity 3D">
+                       <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M12 2L2 7.8v8.4L12 22l10-5.8V7.8L12 2zm0 3.3l6.5 3.8-3 1.7-6.5-3.8 3-1.7zm-2.6 4.5l6.5 3.8v5.8l-6.5-3.8V9.8zm-5 1.2l3-1.7v5.8l-3 1.7V11zm15.2 5.8l-3-1.7V9.3l3 1.7v5.8z"/></svg>
+                     </div>
+                     {/* Figma */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center" title="Figma">
+                       <svg viewBox="0 0 24 24" className="w-4 h-4"><path d="M8 2h4v4H8a2 2 0 1 1 0-4z" fill="#F24E1E"/><path d="M12 2h4a2 2 0 1 1 0 4h-4V2z" fill="#FF7262"/><path d="M12 6h4a2 2 0 1 1 0 4h-4V6z" fill="#1ABCFE"/><path d="M8 6h4v4H8a2 2 0 1 1 0-4z" fill="#A259FF"/><path d="M8 10h4v4H8a2 2 0 1 1 0-4z" fill="#0ACF83"/><path d="M8 14h4v2a2 2 0 1 1-4 0v-2z" fill="#0ACF83"/></svg>
+                     </div>
+                     {/* VS Code */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#007acc]" title="VS Code">
+                       <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M17.5 2.2l-9.8 8.9L4.4 8 2 9.2l4.3 3.8L2 16.8 4.4 18l3.3-3.1 9.8 8.9c.7.6 1.8.4 2.2-.4.2-.3.3-.7.3-1.1V2.8c0-.9-.7-1.6-1.6-1.6-.3 0-.6.1-.9.3zM18 17.6l-6.8-5.6L18 6.4v11.2z"/></svg>
+                     </div>
+                     {/* Git */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#f05032]" title="Git">
+                       <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M21.7 10.3L13.7 2.3a2.4 2.4 0 0 0-3.4 0L8.2 4.4l3.1 3.1a2.1 2.1 0 0 1 2.6 2.6l3 3a2.1 2.1 0 1 1-1.3 1.2l-2.8-2.8v4.3a2.1 2.1 0 1 1-1.8 0v-4.5a2.1 2.1 0 0 1-1.1-2.7L6.8 5.7 2.3 10.3a2.4 2.4 0 0 0 0 3.4l8 8a2.4 2.4 0 0 0 3.4 0l8-8a2.4 2.4 0 0 0 0-3.4z"/></svg>
+                     </div>
+                     {/* Premiere */}
+                     <div className="w-7 h-7 rounded-xl bg-white shadow-sm flex items-center justify-center" title="Premiere Pro">
+                       <div className="w-4 h-4 rounded bg-[#00005b] text-[#ea77ff] font-bold text-[7px] flex items-center justify-center font-mono">Pr</div>
+                     </div>
                   </div>
 
                   <div>
-                     <span className="text-[9.5px] font-bold text-gray-800 block uppercase tracking-tight">Vibe Coders Hub</span>
+                     <span className="text-[9.5px] font-bold text-gray-800 block uppercase tracking-tight">Game & Software Suite</span>
                   </div>
                </motion.div>
 
                {/* Card 7: Creative Channels & Socials */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => {
-                   playSynthNote(523.25, 'socialSuite');
-                 }}
-                 className={`relative group col-span-12 md:col-span-4 lg:col-span-2 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-4 lg:col-span-2 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
                   <div className="flex justify-between items-start w-full">
                      <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Socials</span>
@@ -1031,18 +1146,18 @@ export default function App() {
                   
                   <div className="text-left">
                      <span className="text-[9px] font-bold text-gray-800 block uppercase leading-none">Social Hub</span>
-                     <span className="text-[7.5px] font-bold text-gray-400 block uppercase tracking-wider mt-0.5">Network Nodes</span>
+                     <span className="text-[7.5px] font-bold text-gray-400 block uppercase tracking-wider mt-0.5">Network Channels</span>
                   </div>
                </motion.div>
 
                {/* Card 8: Playable Piano Synth */}
                <motion.div 
                  variants={fadeInSlideUp}
-                 onClick={() => setActiveBento('synth')}
-                 className={`relative group col-span-12 md:col-span-8 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between md:hover:-translate-y-2 active:scale-[0.98] active:shadow-inner cursor-pointer transition-all duration-500 ${isZooming ? 'bg-white/95' : 'bg-white/60 backdrop-blur-md'}`}
+                 className="relative group col-span-12 md:col-span-8 lg:col-span-3 lg:row-span-1 rounded-[2rem] border border-white/80 neu-out overflow-hidden p-5 flex flex-col justify-between select-none bg-white/60 backdrop-blur-md transition-all duration-500"
                >
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 text-cyan-600 px-2 py-1 rounded-md text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 z-20">
-                     <Sparkles size={8} /> Play Keys
+                  <div className="flex justify-between items-start w-full">
+                     <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">Audio Synth</span>
+                     <span className="text-[6.5px] font-bold bg-cyan-100 px-1.5 py-0.5 rounded text-cyan-700 uppercase font-mono">Tactile</span>
                   </div>
 
                   {/* Neumorphic Mini piano strip */}
@@ -1054,7 +1169,7 @@ export default function App() {
                            e.stopPropagation();
                            playSynthNote(261.63 + ['C', 'D', 'E', 'F', 'G', 'A', 'B'].indexOf(n) * 30, n);
                          }}
-                         className="flex-1 bg-white hover:bg-cyan-50 rounded shadow-[0_1.5px_0_rgba(0,0,0,0.1)] active:scale-95 transition-transform text-[6.5px] font-black text-gray-400 flex items-end justify-center pb-0.5 select-none"
+                         className="flex-1 bg-white hover:bg-cyan-50 rounded shadow-[0_1.5px_0_rgba(0,0,0,0.1)] active:scale-95 transition-transform text-[6.5px] font-black text-gray-400 flex items-end justify-center pb-0.5 select-none cursor-pointer"
                        >
                          {n}
                        </button>
@@ -1064,7 +1179,7 @@ export default function App() {
                   <div className="w-full text-left flex items-end justify-between">
                      <div>
                        <span className="text-[10px] font-bold text-gray-800 block uppercase leading-tight group-hover:text-cyan-500 transition-colors">Tactile Piano</span>
-                       <span className="text-[7.5px] font-bold text-gray-400 block uppercase leading-none tracking-wider">Play Rhodes tones</span>
+                       <span className="text-[7.5px] font-bold text-gray-400 block uppercase leading-none tracking-wider">Rhodes audio tones</span>
                      </div>
                      <Music size={14} className="text-cyan-500 mb-1" />
                   </div>
@@ -1130,16 +1245,16 @@ export default function App() {
                    <h3 className="font-syncopate text-xs md:text-sm font-bold tracking-[0.25em] text-gray-800 uppercase">
                      Josiah Johnmark
                    </h3>
-                   <span className="text-[7px] font-mono text-cyan-600 font-extrabold uppercase tracking-[0.2em] block mt-1">
-                     SYSTEMS INTEGRATION // R-018
+                   <span className="text-[8px] font-mono text-cyan-600 font-extrabold uppercase tracking-[0.15em] block mt-1.5">
+                     GAME DEVELOPER • UI/UX DESIGNER • SOFTWARE ENGINEER
                    </span>
                  </div>
 
-                 {/* Creative Dials & Decibel Frequency Stack */}
+                 {/* Creative Studio Frequency & Status Stack */}
                  <div className="w-full max-w-[360px] flex flex-col items-center mt-6 gap-3.5">
                    {/* Audio Monitor Stack */}
                    <div className="flex items-center gap-1.5 h-10 px-5 py-1.5 neu-in rounded-full w-full border border-white/40">
-                     <span className="text-[8px] font-mono text-gray-500 mr-2 uppercase tracking-widest font-bold">AUDIO FREQ:</span>
+                     <span className="text-[8px] font-mono text-gray-500 mr-2 uppercase tracking-widest font-bold">STUDIO FREQ:</span>
                      <div className="flex items-end gap-1 h-full flex-grow pb-1">
                        {Array.from({ length: 18 }).map((_, i) => (
                          <div 
@@ -1153,51 +1268,30 @@ export default function App() {
                          />
                        ))}
                      </div>
-                     <span className="text-[9px] font-mono text-cyan-600 font-extrabold ml-2">60%</span>
+                     <span className="text-[9px] font-mono text-cyan-600 font-extrabold ml-2">48 kHz</span>
                    </div>
 
-                   {/* Tactile knobs */}
-                   <div className="flex gap-4 items-center justify-between w-full">
-                     <div className="flex-1 flex items-center gap-3 bg-[#e0e5ec] p-2.5 rounded-2xl border border-white/50 shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] interactive-item neu-hover">
-                       <div 
-                         className="w-8 h-8 rounded-full bg-[#e0e5ec] shadow-[3px_3px_6px_#bebec9,-3px_-3px_6px_#ffffff] flex items-center justify-center relative cursor-pointer active:scale-95 transition-all"
-                         onClick={() => {
-                           const roles = ['developer', 'artist', 'editor'] as const;
-                           const nextIndex = (roles.indexOf(activeRole) + 1) % 3;
-                           setActiveRole(roles[nextIndex]);
-                         }}
-                       >
-                         <div 
-                           className="w-1 h-3 bg-cyan-500 rounded-full absolute top-0.5 transition-transform duration-300 origin-bottom pointer-events-none"
-                           style={{
-                             transform: activeRole === 'developer' ? 'rotate(0deg)' : activeRole === 'artist' ? 'rotate(-60deg)' : 'rotate(60deg)'
-                           }}
-                         />
-                         <div className="w-2.5 h-2.5 rounded-full bg-white/40 shadow-inner pointer-events-none"></div>
-                       </div>
+                   {/* Discipline Focus Badges */}
+                   <div className="grid grid-cols-2 gap-3 w-full">
+                     <div className="flex items-center gap-2.5 bg-[#e0e5ec] p-3 rounded-2xl border border-white/50 shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff]">
+                       <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shrink-0"></div>
                        <div className="flex flex-col select-none">
-                         <span className="text-[7px] font-mono text-gray-400 uppercase tracking-widest leading-none mb-1 font-bold">GAIN LEVEL</span>
-                         <span className="text-[9px] font-black text-gray-700 uppercase tracking-wider font-mono">
-                           {activeRole === 'developer' ? 'Cyber' : activeRole === 'artist' ? 'Lofi' : 'Mono'}
-                         </span>
+                         <span className="text-[7px] font-mono text-gray-400 uppercase tracking-widest font-bold">FOCUS</span>
+                         <span className="text-[9px] font-bold text-gray-700 tracking-tight">Game Dev & UI</span>
                        </div>
                      </div>
-
-                     <div className="flex-1 flex items-center gap-3 bg-[#e0e5ec] p-2.5 rounded-2xl border border-white/50 shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff] interactive-item neu-hover">
-                       <div className="w-8 h-8 rounded-full bg-[#e0e5ec] shadow-[3px_3px_6px_#bebec9,-3px_-3px_6px_#ffffff] flex items-center justify-center relative active:scale-95 transition-all">
-                         <div className="w-1 h-3 bg-gray-400 rounded-full absolute top-0.5 origin-bottom rotate-[-20deg]" />
-                         <div className="w-2.5 h-2.5 rounded-full bg-white/40 shadow-inner"></div>
-                       </div>
+                     <div className="flex items-center gap-2.5 bg-[#e0e5ec] p-3 rounded-2xl border border-white/50 shadow-[inset_2px_2px_5px_#bebec9,inset_-2px_-2px_5px_#ffffff]">
+                       <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
                        <div className="flex flex-col select-none">
-                         <span className="text-[7px] font-mono text-gray-400 uppercase tracking-widest leading-none mb-1 font-bold">LENS DIAL</span>
-                         <span className="text-[9px] font-black text-gray-700 uppercase tracking-wider font-mono">1.4 AF-C</span>
+                         <span className="text-[7px] font-mono text-gray-400 uppercase tracking-widest font-bold">ORIGIN</span>
+                         <span className="text-[9px] font-bold text-gray-700 tracking-tight">Traditional Art</span>
                        </div>
                      </div>
                    </div>
                  </div>
               </motion.div>
 
-              {/* Right Column: Console Interface */}
+              {/* Right Column: Authentic Editorial Narrative */}
               <motion.div 
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1205,119 +1299,44 @@ export default function App() {
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
                 className="lg:col-span-7 flex flex-col justify-center"
               >
-                
                 {/* About Me Syncopate Header */}
                 <div className="mb-6">
-                  <div className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.3em] font-extrabold mb-1.5 block">
-                    CONSOLE_INIT // PERSONAL INTERVIEW MATRIX
-                  </div>
-                  <h2 className="font-syncopate text-3xl md:text-4xl lg:text-5xl font-bold text-[#1a202c] tracking-tight uppercase leading-[0.95]">
-                    ABOUT ME<br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-gray-700 text-xl md:text-2xl font-light">
-                      // DEVELOPER. ARTIST. EDITOR.
-                    </span>
+                  <h2 className="font-syncopate text-3xl md:text-5xl lg:text-6xl font-black text-[#1a202c] tracking-tight uppercase leading-none">
+                    ABOUT ME
                   </h2>
                 </div>
 
-                {/* Interactive Role Switcher Desk */}
-                <div className="neu-in p-2 rounded-[2rem] border border-white/50 flex flex-wrap gap-2 mb-6 max-w-md w-full">
-                  {(['developer', 'artist', 'editor'] as const).map(role => (
-                    <button
-                      key={role}
-                      onClick={() => setActiveRole(role)}
-                      className={`flex-1 min-w-[90px] text-[9px] font-black py-3 px-4 rounded-[1.5rem] uppercase tracking-widest transition-all duration-300 interactive-item neu-hover
-                        ${activeRole === role 
-                          ? 'bg-white text-cyan-600 shadow-[2px_2px_5px_#bebec9,-2px_-2px_5px_#ffffff] border border-cyan-400/20 active:scale-98' 
-                          : 'text-gray-500 hover:text-cyan-600 bg-transparent active:scale-95'}`}
-                    >
-                      {role}
-                    </button>
-                  ))}
-                </div>
+                {/* Editorial Story Card */}
+                <div className="p-7 md:p-9 neu-out rounded-[2.5rem] border border-white/60 bg-[#e0e5ec] shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] space-y-5">
+                  {/* Paragraph 1 */}
+                  <p className="text-gray-900 text-lg md:text-xl font-bold tracking-tight leading-snug">
+                    I’ve always been interested in making things.
+                  </p>
 
-                {/* Dynamic Story Narrative Card with AnimatePresence */}
-                <div className="relative min-h-[220px]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeRole}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -15 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="space-y-5 p-6 md:p-8 neu-out rounded-[2.5rem] border border-white/60 bg-[#e0e5ec] shadow-[8px_8px_16px_#bebec9,-8px_-8px_16px_#ffffff]"
-                    >
-                      <div className="space-y-4">
-                        <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest flex items-center gap-3.5 font-syncopate">
-                          <span className="w-5 h-[2px] bg-cyan-500 block rounded-full"></span>
-                          {getRoleStory().title}
-                        </h3>
-                        <p className="text-gray-800 text-base md:text-lg tracking-wide font-black leading-tight">
-                          {getRoleStory().brief}
-                        </p>
-                        
-                        {/* Narrative Layout */}
-                        <div className="border-l-2 border-cyan-400/25 pl-4 mt-2">
-                          <p className="text-xs text-gray-600 leading-relaxed font-semibold">
-                            {getRoleStory().narrative}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="pt-4 border-t border-gray-300/40 flex flex-col gap-2">
-                        <span className="text-[8px] font-mono text-gray-400 uppercase tracking-widest font-bold">TACTICAL SPECIALTIES</span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {getRoleStory().skills.map((skill, index) => (
-                            <span key={index} className="text-[9px] font-mono font-bold bg-[#e0e5ec] text-cyan-600 border border-white/50 shadow-[1px_1px_2px_#bebec9,-1px_-1px_2px_#ffffff] px-2.5 py-1.5 rounded-xl uppercase tracking-wider hover:scale-105 active:scale-95 transition-all cursor-default">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+                  {/* Paragraph 2 */}
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    My journey started with more than seven years of traditional pencil art and gradually expanded into photography, digital art, UI/UX and software development. What connects all of it is simple: <span className="font-bold text-gray-900">I like seeing ideas come to life.</span>
+                  </p>
 
-                {/* High-Contrast Console Stats cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 w-full">
-                  
-                  {/* Deployments Card */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
-                    <div className="flex justify-between items-start">
-                      <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">DEPL_METRICS</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-black text-gray-800 font-mono tracking-tighter">50+</div>
-                      <div className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-1">Live Systems</div>
-                    </div>
+                  {/* Paragraph 3 */}
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    I enjoy taking something from imagination to something real — designing it, building it, experimenting with it and refining it along the way. That same process shapes how I learn: I research deeply, explore different approaches, learn through building and improve from every mistake.
+                  </p>
+
+                  {/* Paragraph 4 */}
+                  <div className="border-l-2 border-cyan-500/40 pl-4 py-1">
+                    <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                      Today, I’m focused on game development and creative technology, combining my background in art, design and development to create interactive experiences. <span className="font-semibold text-gray-900">Ludo NX</span> is one example of that approach, bringing those disciplines together in a single project.
+                    </p>
                   </div>
 
-                  {/* Era Card */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
-                    <div className="flex justify-between items-start">
-                      <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">ACTIVE_ERA</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                    </div>
-                    <div>
-                      <div className="text-3xl font-black text-gray-800 font-mono tracking-tighter">08Y</div>
-                      <div className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-1">2018 - Pres</div>
-                    </div>
+                  {/* Paragraph 5 */}
+                  <div className="pt-2">
+                    <p className="text-cyan-600 text-base md:text-lg font-bold font-mono tracking-wide">
+                      I’m still learning. Still experimenting. Still building.
+                    </p>
                   </div>
-
-                  {/* Status Indicator */}
-                  <div className="neu-out rounded-[2rem] border border-white/50 p-5 flex flex-col justify-between md:hover:-translate-y-1.5 md:hover:shadow-[12px_12px_24px_#bebec9,-12px_-12px_24px_#ffffff] active:scale-[0.98] active:shadow-inner transition-all duration-300 group cursor-default h-[115px] bg-[#e0e5ec]">
-                    <div className="flex justify-between items-start">
-                      <span className="text-[8px] text-gray-400 tracking-[0.2em] font-mono font-bold uppercase leading-none group-hover:text-cyan-600 transition-colors">SYS_STATUS</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>
-                    </div>
-                    <div>
-                      <div className="text-xl font-black text-cyan-600 font-mono tracking-tight uppercase leading-none">Vibe Coding</div>
-                      <div className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-1.5">Current Focus</div>
-                    </div>
-                  </div>
-
                 </div>
-
               </motion.div>
             </div>
           </div>
@@ -1332,13 +1351,13 @@ export default function App() {
                   PROJECTS
                 </h2>
                 <p className="text-xs md:text-sm text-gray-500 font-semibold tracking-wider uppercase">
-                  Hand-crafted technical pipelines, fine drawings, and interactive AI user interfaces
+                  Games, mobile applications, client systems, and interactive UI prototypes
                 </p>
               </div>
 
               {/* Tag filters */}
               <div className="flex flex-wrap gap-2 neu-in p-2 rounded-2xl self-start md:self-auto pointer-events-auto">
-                {["All", "Development"].map(filter => (
+                {["All", "Game Dev", "Apps", "Client Work", "UI Prototypes"].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
@@ -1577,9 +1596,9 @@ export default function App() {
                 {/* Query Chips Suggestions */}
                 <div className="flex gap-1.5 overflow-x-auto pb-2 border-t border-gray-300/40 pt-2 select-none shrink-0 scrollbar-none">
                   {[
-                    "What is Vibe Coding?",
-                    "Tell me about your tech stack",
-                    "Draft a custom contact request"
+                    "Tell me about Ludo NX",
+                    "What game dev tools do you use?",
+                    "Tell me about Selah & your apps"
                   ].map(chip => (
                     <button
                       key={chip}
