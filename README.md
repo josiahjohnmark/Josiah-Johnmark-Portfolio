@@ -16,36 +16,39 @@ npm run lint       # TypeScript check
 
 | What | Where |
 |---|---|
-| **All site copy, projects, links** | `src/data/site.ts` |
+| **All site copy, projects, links** | `src/data/content.json` — edited through the admin panel |
+| Content types and validation | `src/data/schema.ts` |
+| Admin panel | `src/admin/`, `api/` — see [ADMIN.md](ADMIN.md) |
 | Design tokens (colour, type, spacing) | `src/index.css` — the `@theme` block |
 | Page sections | `src/components/` |
 | Images | `public/images/` |
 | Brand assets | `public/brand/` |
 
-**Edit content in `src/data/site.ts`, not inside components.** Every string on the
-page comes from that one file.
+**Edit content through the admin panel at `/admin`**, not inside components. Every
+string on the page comes from `src/data/content.json`, which the panel writes.
+See [ADMIN.md](ADMIN.md) for setup and use.
 
 ## Things to fill in
 
-1. **Social links** — `socials` in `src/data/site.ts`. Each one is `null` by
-   default and anything left `null` is simply not rendered, so the site never
-   ships a link that goes nowhere. Replace `null` with your real profile URL.
-2. **CV** — drop the PDF into `public/` and set `resumeUrl` in `src/data/site.ts`.
-   The download buttons appear automatically once it is set.
-3. **Selah screens** — add images to `public/images/selah/`, then add a `shots`
-   array to the Selah entry in `src/data/site.ts` (copy the shape of `ludoShots`)
-   and remove its `note`.
+1. **GitHub and LinkedIn links** — Admin panel → Profile & contact. Instagram,
+   Facebook and X are already set. Anything left empty is not rendered, so the
+   site never ships a link that goes nowhere.
+2. **CV** — drop the PDF into `public/`, then set the CV path in
+   Profile & contact. The download buttons appear once it is set.
+3. **Selah screens** — Admin panel → Projects → Selah → Screens. Drop the
+   images in, then clear the "Note" field.
 
 ## Brand
 
 The `JJ` monogram is traced vector, not a bitmap:
 
-- `public/brand/jj-mark.svg` — real vector paths, coloured with `currentColor`
-  through a CSS mask (`.jj-mark` in `index.css`), so one file works on any
-  background at any size.
+- `src/brand-mark.ts` — the mark as an inline vector path, rendered by the
+  `Mark` component with `currentColor`. Inline so it cannot fail to load.
+- `public/brand/jj-mark.svg` — the same mark as a standalone file.
 - `public/brand/jj-mark-white.png` / `jj-mark-black.png` — transparent PNGs, 1024px.
 - `public/favicon.svg` — theme-aware: dark mark on light browser tabs, light mark
-  on dark ones.
+  on dark ones. Plus `favicon-96.png`, `apple-touch-icon.png`, `icon-192.png`,
+  `icon-512.png` and `site.webmanifest`.
 - `public/brand/og-image.png` — social sharing preview (1200×630).
 
 Original artwork is kept in `brand-source/`.

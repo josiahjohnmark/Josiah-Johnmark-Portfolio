@@ -1,0 +1,371 @@
+{
+  "profile": {
+    "name": "Josiah Johnmark",
+    "initials": "JJ",
+    "role": "Game Developer & UI/UX Designer",
+    "statement": "I build interactive products — games, apps and interfaces — and carry them from the first sketch through to a shipped build.",
+    "location": "Nigeria · Working remotely",
+    "available": true,
+    "availableLabel": "Available for work",
+    "email": "josiahjohnmark9@gmail.com",
+    "phoneDisplay": "+234 703 322 3491",
+    "whatsapp": "https://wa.me/2347033223491",
+    "telegram": "https://t.me/+2347033223491",
+    "telegramHandle": "@josiahjohnmark9"
+  },
+  "socials": [
+    {
+      "key": "instagram",
+      "label": "Instagram",
+      "url": "https://www.instagram.com/josiah_johnmark/"
+    },
+    {
+      "key": "facebook",
+      "label": "Facebook",
+      "url": "https://www.facebook.com/josiahjohnmark"
+    },
+    {
+      "key": "x",
+      "label": "X",
+      "url": "https://x.com/josiahjohnmark"
+    },
+    {
+      "key": "github",
+      "label": "GitHub",
+      "url": null
+    },
+    {
+      "key": "linkedin",
+      "label": "LinkedIn",
+      "url": null
+    }
+  ],
+  "resumeUrl": null,
+  "about": {
+    "paragraphs": [
+      "I have always been interested in making things.",
+      "My journey started with more than seven years of traditional pencil art and gradually expanded into photography, digital art, UI/UX and software development. What connects all of it is simple: I like seeing ideas come to life.",
+      "I enjoy taking something from imagination to something real — designing it, building it, experimenting with it and refining it along the way. That same process shapes how I learn: I research deeply, explore different approaches, learn through building and improve from every mistake.",
+      "Today I am focused on game development and creative technology, combining my background in art, design and development to create interactive experiences. Ludo NX is one example of that approach, bringing those disciplines together in a single project."
+    ],
+    "closing": "I am still learning. Still experimenting. Still building.",
+    "facts": [
+      {
+        "label": "Foundation",
+        "value": "7+ years traditional art"
+      },
+      {
+        "label": "Focus",
+        "value": "Games & product design"
+      },
+      {
+        "label": "Flagship",
+        "value": "Ludo NX"
+      },
+      {
+        "label": "Based in",
+        "value": "Nigeria, remote"
+      }
+    ]
+  },
+  "drawings": [
+    {
+      "src": "/images/drawings/study-1.webp",
+      "alt": "Graphite portrait study of two figures embracing, part-finished on the board"
+    },
+    {
+      "src": "/images/drawings/study-2.webp",
+      "alt": "Graphite portrait study of an infant, drawn in a ring-bound sketchbook"
+    },
+    {
+      "src": "/images/drawings/study-3.webp",
+      "alt": "Graphite study of lips and smoke, rendered in soft pencil"
+    }
+  ],
+  "capabilities": [
+    {
+      "title": "Game Development",
+      "body": "Gameplay systems, turn logic, dice physics, AI opponents, progression loops and in-game economies. Built in Unity on modular, event-driven C#.",
+      "tools": [
+        "Unity",
+        "C#",
+        "Game systems",
+        "Mobile builds"
+      ]
+    },
+    {
+      "title": "Product & UI/UX Design",
+      "body": "Interface design from research through to handoff — flows, wireframes, design systems, mobile ergonomics and interaction states that hold up in production.",
+      "tools": [
+        "Figma",
+        "Design systems",
+        "Prototyping",
+        "Mobile UX"
+      ]
+    },
+    {
+      "title": "Web & App Development",
+      "body": "Responsive, accessible front-ends for clients and organisations. Clean component architecture, fast loads, and layouts that work on every screen.",
+      "tools": [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Git"
+      ]
+    },
+    {
+      "title": "Visual & 3D",
+      "body": "Brand identity, 3D modelling, texturing and rendering for game assets and key art — grounded in seven years of drawing from observation.",
+      "tools": [
+        "Blender",
+        "Photoshop",
+        "Illustration",
+        "Key art"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "ludo-nx",
+      "index": "01",
+      "title": "Ludo NX",
+      "kind": "Game",
+      "year": "2026",
+      "summary": "A mobile board game that rebuilds Ludo as a modern product — gameplay systems, player progression, customisation and an in-game economy, wrapped in a premium board-game look.",
+      "role": "Game developer · UI/UX designer · Visual designer",
+      "tools": [
+        "Unity",
+        "C#",
+        "Figma",
+        "Blender"
+      ],
+      "platform": "iOS & Android",
+      "cover": "/images/ludo_nx/key-art.png",
+      "coverFit": "cover",
+      "coverTone": "#1b2230",
+      "sections": [
+        {
+          "heading": "Overview",
+          "body": "Ludo NX takes a game almost everyone already knows and rebuilds it as a modern mobile product. It brings together game development, UI/UX design, visual design and interactive systems in one project. I designed the interface and visual direction around a clean, premium board-game feel, then built the systems underneath it: gameplay, progression, profiles, rewards, rankings, customisation and in-game interactions."
+        },
+        {
+          "heading": "Concept",
+          "body": "Rather than treating Ludo as a static digital board, I designed it as a match you enter — distinct player quadrants, clear dice-roll states, and pacing that holds attention from the countdown through to the result screen."
+        },
+        {
+          "heading": "My role",
+          "body": "Solo, end to end. Product structure, interface layouts, asset creation, C# gameplay programming, 3D key art and audio. Every screen and every system in the game is something I designed and built."
+        },
+        {
+          "heading": "Interface design",
+          "body": "Designed in Figma and implemented in Unity. The priorities were mobile ergonomics — everything within thumb reach — legible token paths, dice controls that feel physical, and reward moments that land without getting in the way of the next turn."
+        },
+        {
+          "heading": "Gameplay systems",
+          "body": "A 15×15 board with full turn management, token paths, safe zones and capture logic, dice physics, multiple player setups, and difficulty levels driven by an AI opponent that weighs its options rather than moving at random."
+        },
+        {
+          "heading": "Progression & economy",
+          "body": "A complete loop around the match itself: profile levels and XP, milestone achievements, unlockable dice and token skins, daily rewards, missions, ranking ladders and an in-game shop."
+        },
+        {
+          "heading": "Visual design",
+          "body": "A warm, tactile identity — cream and wood board panels against deep navy chrome, gold detailing, custom token silhouettes and short animations that give digital moves a sense of weight."
+        },
+        {
+          "heading": "Engineering",
+          "body": "Built in Unity on a modular C# architecture with decoupled, event-driven game controllers, optimised sprite atlases and dynamic canvas scaling, so the layout holds from small phones through to tablets."
+        },
+        {
+          "heading": "Result",
+          "body": "A complete mobile title that shows the full range of what I do: game systems, visual polish, product structure and user experience — all in one build."
+        }
+      ],
+      "shots": [
+        {
+          "id": "friends-list",
+          "title": "Friends list",
+          "caption": "In-game friends list with player avatars, online presence and friendship duration, on the game's wood-and-cream board panel.",
+          "src": "/images/ludo_nx/friends-list.png",
+          "shape": "phone"
+        },
+        {
+          "id": "friend-requests",
+          "title": "Friend requests",
+          "caption": "Inbound requests with one-tap accept and decline.",
+          "src": "/images/ludo_nx/friend-requests.png",
+          "shape": "phone"
+        },
+        {
+          "id": "player-search",
+          "title": "Player search",
+          "caption": "Finding other players by username or player ID.",
+          "src": "/images/ludo_nx/player-search.png",
+          "shape": "phone"
+        },
+        {
+          "id": "match-countdown",
+          "title": "Match countdown",
+          "caption": "The pre-match sequence, showing each player's quadrant before the board opens.",
+          "src": "/images/ludo_nx/match-countdown.png",
+          "shape": "phone"
+        },
+        {
+          "id": "match-result",
+          "title": "Match result",
+          "caption": "Post-match breakdown: NX points, tokens captured, win rate and level progress.",
+          "src": "/images/ludo_nx/match-result.png",
+          "shape": "phone"
+        },
+        {
+          "id": "device-framing",
+          "title": "Device framing",
+          "caption": "Layout checked against a modern handset — safe areas, notch clearance and thumb reach.",
+          "src": "/images/ludo_nx/device-framing.png",
+          "shape": "phone"
+        },
+        {
+          "id": "key-art",
+          "title": "Character & dice",
+          "caption": "3D token character and engraved NX dice — modelled, textured and lit for key art.",
+          "src": "/images/ludo_nx/key-art.png",
+          "shape": "square"
+        },
+        {
+          "id": "brand-dice",
+          "title": "Identity & dice system",
+          "caption": "Visual identity, dual-tone dice models and modular board graphics.",
+          "src": "/images/ludo_nx/brand-dice.png",
+          "shape": "square"
+        }
+      ]
+    },
+    {
+      "id": "selah",
+      "index": "02",
+      "title": "Selah",
+      "kind": "Mobile app",
+      "year": "2026",
+      "summary": "A quiet Bible reading and reflection app. Careful typography, unhurried pacing, daily devotionals and verse bookmarking — designed to be calm rather than busy.",
+      "role": "Mobile developer · UI/UX designer",
+      "tools": [
+        "Figma",
+        "Mobile",
+        "Typography"
+      ],
+      "platform": "Mobile",
+      "cover": "/images/thumbnails/selah_thumbnail.png",
+      "coverFit": "contain",
+      "coverTone": "#141416",
+      "sections": [
+        {
+          "heading": "Overview",
+          "body": "Selah is a scripture reading and reflection app built around restraint. The reading view is typographic first — comfortable measure, generous line height, and no competing interface. Daily devotionals, verse bookmarking and distraction-free navigation make up the rest."
+        },
+        {
+          "heading": "Approach",
+          "body": "Most reading apps fill the screen. Selah takes things off it. Controls stay out of the way until they are needed, the pacing is deliberately slow, and the type does the work."
+        }
+      ],
+      "note": "Screens for this project are being prepared."
+    },
+    {
+      "id": "ush-community",
+      "index": "03",
+      "title": "USH Community",
+      "kind": "Client — trading & finance",
+      "year": "2026",
+      "summary": "The public platform for a trading community of more than 20,000 members — market insights, education, analysis, mentorship and resources in one place.",
+      "role": "UI/UX design · Web development · Visual design",
+      "tools": [
+        "React",
+        "Tailwind CSS",
+        "UI/UX"
+      ],
+      "platform": "Web & mobile",
+      "liveUrl": "https://www.ushcommunity.com/",
+      "coverFit": "cover",
+      "coverTone": "#0f1524",
+      "sections": [
+        {
+          "heading": "Overview",
+          "body": "USH Community is a platform for traders, giving access to market insights, trading education, analysis, mentorship and related resources. I designed and built the website to give the community a clear, professional presence, with a visual direction suited to the trading and financial space."
+        },
+        {
+          "heading": "Focus",
+          "body": "A straightforward experience that communicates what the platform is for, and makes the key information and community resources easy to reach for its 20,000+ members — responsive from phone through to desktop."
+        }
+      ]
+    },
+    {
+      "id": "zubairu-mustapha-foundation",
+      "index": "04",
+      "title": "Zubairu Mustapha Foundation",
+      "kind": "Client — nonprofit",
+      "year": "2026",
+      "summary": "The digital home of an NGO working to empower the boy child across Taraba State, Nigeria — mission, programmes and impact, presented clearly.",
+      "role": "UI/UX design · Web development · Visual design",
+      "tools": [
+        "Web development",
+        "UI/UX",
+        "Brand"
+      ],
+      "platform": "Web",
+      "liveUrl": "https://zubairumustaphafoundation.org/",
+      "coverFit": "cover",
+      "coverTone": "#0d1a14",
+      "sections": [
+        {
+          "heading": "Overview",
+          "body": "I designed and built the website for the Zubairu Mustapha Foundation, creating a professional presence for an organisation focused on empowering the boy child. The structure presents the foundation clearly and makes its work easier to find and understand."
+        },
+        {
+          "heading": "Focus",
+          "body": "A clean visual system, intuitive navigation and responsive layouts that give the organisation a credible, modern identity online."
+        }
+      ]
+    }
+  ],
+  "explorations": [
+    {
+      "slug": "project-1",
+      "title": "Coastal property platform",
+      "tag": "Layout & video framing"
+    },
+    {
+      "slug": "project-2",
+      "title": "Cognitive training dashboard",
+      "tag": "3D & data display"
+    },
+    {
+      "slug": "car-brands-hero-section",
+      "title": "Automotive brand index",
+      "tag": "Kinetic carousel"
+    },
+    {
+      "slug": "robot-arm-project",
+      "title": "Robot arm controls",
+      "tag": "Industrial interface"
+    },
+    {
+      "slug": "hero-section-a-brand-add",
+      "title": "Brand launch sequence",
+      "tag": "Parallax typography"
+    },
+    {
+      "slug": "hero-section-with-hover-mouse-effects",
+      "title": "Cursor physics hero",
+      "tag": "Micro-interactions"
+    },
+    {
+      "slug": "project-7",
+      "title": "Wealth dashboard",
+      "tag": "Data density"
+    },
+    {
+      "slug": "project-8",
+      "title": "Creative studio portal",
+      "tag": "Editorial grid"
+    }
+  ]
+}
