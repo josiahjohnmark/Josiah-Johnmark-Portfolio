@@ -2,17 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0b" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Favicons, all generated from the JJ monogram.
+         The SVG is theme-aware: dark mark on light tabs, light mark on dark. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-    <title>Josiah Johnmark | Game Developer, UI/UX Designer & Software Engineer</title>
-    <meta name="description" content="Portfolio of Josiah Johnmark - Game Developer, UI/UX Designer, and Web & App Developer. Focused on interactive gaming experiences, mobile applications, and creative technology." />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <title>Josiah Johnmark — Game Developer & UI/UX Designer</title>
+    <meta
+      name="description"
+      content="Josiah Johnmark is a game developer and UI/UX designer building interactive products — from Ludo NX, a mobile board game built in Unity, to client platforms and mobile apps."
+    />
+    <link rel="canonical" href="https://josiah-johnmark-portfolio-ne8i.vercel.app/" />
+
+    <!-- Open Graph / social preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Josiah Johnmark — Game Developer & UI/UX Designer" />
+    <meta
+      property="og:description"
+      content="Game developer and UI/UX designer. I build interactive products — games, apps and interfaces — from the first sketch to a shipped build."
+    />
+    <meta property="og:url" content="https://josiah-johnmark-portfolio-ne8i.vercel.app/" />
+    <meta property="og:image" content="https://josiah-johnmark-portfolio-ne8i.vercel.app/brand/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Type: Instrument Serif for display, Inter Tight for everything else -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Josiah Johnmark",
+        "jobTitle": "Game Developer & UI/UX Designer",
+        "email": "mailto:josiahjohnmark9@gmail.com",
+        "url": "https://josiah-johnmark-portfolio-ne8i.vercel.app/",
+        "image": "https://josiah-johnmark-portfolio-ne8i.vercel.app/brand/portrait-about.png",
+        "knowsAbout": [
+          "Game development",
+          "Unity",
+          "C#",
+          "UI/UX design",
+          "Figma",
+          "React",
+          "3D modelling"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

@@ -9,3 +9,6 @@ coverage/
 projects videos/
 drawings and art/
 *.zip
+
+# Working source, not site assets (29MB of originals and zips)
+ludo_nx/
