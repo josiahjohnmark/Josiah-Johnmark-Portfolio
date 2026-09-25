@@ -3,8 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { MARK_PATH, MARK_VIEWBOX } from "../brand-mark";
 
 /* --------------------------------------------------------------------------
-   Logo — the traced JJ monogram, inlined as vector so it always renders and
-   takes its colour from the surrounding text. Size it with a height utility.
+   Logo — the traced JJ monogram
    -------------------------------------------------------------------------- */
 export const Mark: React.FC<{ className?: string; title?: string }> = ({
   className = "",
@@ -22,8 +21,8 @@ export const Mark: React.FC<{ className?: string; title?: string }> = ({
 );
 
 /* --------------------------------------------------------------------------
-   Reveal — the site's only scroll animation. A short fade and lift, once.
-   Collapses to a plain div when the visitor prefers reduced motion.
+   Reveal — smooth text/element reveal on scroll. Uses clip-path for a more
+   editorial feel instead of simple opacity fades.
    -------------------------------------------------------------------------- */
 export const Reveal: React.FC<{
   children: React.ReactNode;
@@ -42,10 +41,10 @@ export const Reveal: React.FC<{
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.15, margin: "0px 0px -5% 0px" }}
+      transition={{ duration: 1, delay, ease: [0.76, 0, 0.24, 1] }}
     >
       {children}
     </Tag>
@@ -53,8 +52,7 @@ export const Reveal: React.FC<{
 };
 
 /* --------------------------------------------------------------------------
-   SectionHeading — index number, rule, title. Used by every section so the
-   page has one consistent rhythm.
+   SectionHeading — minimalist: index line, then a big serif title.
    -------------------------------------------------------------------------- */
 export const SectionHeading: React.FC<{
   index: string;
@@ -62,23 +60,22 @@ export const SectionHeading: React.FC<{
   lede?: string;
   id?: string;
 }> = ({ index, title, lede, id }) => (
-  <header className="mb-12 md:mb-16">
+  <header className="mb-14 md:mb-20">
     <Reveal>
       <div className="flex items-center gap-4 mb-6">
         <span className="rule-index">{index}</span>
         <span className="h-px flex-1 bg-[var(--line)]" aria-hidden="true" />
       </div>
-      <h2 id={id} className="h-section text-bone">
+      <h2 id={id} className="h-section text-ink">
         {title}
       </h2>
-      {lede && <p className="lede mt-5 max-w-xl">{lede}</p>}
+      {lede && <p className="lede mt-6 max-w-2xl">{lede}</p>}
     </Reveal>
   </header>
 );
 
 /* --------------------------------------------------------------------------
-   Social icons — small, monochrome, drawn inline so there is no icon-library
-   weight for four glyphs.
+   Social icons — inline SVG, no library weight
    -------------------------------------------------------------------------- */
 export const SocialGlyph: React.FC<{ name: string; size?: number }> = ({
   name,
@@ -131,7 +128,7 @@ export const SocialGlyph: React.FC<{ name: string; size?: number }> = ({
 };
 
 /* --------------------------------------------------------------------------
-   Arrow — one shared glyph for every "go somewhere" affordance.
+   Arrow — shared directional glyph
    -------------------------------------------------------------------------- */
 export const Arrow: React.FC<{ size?: number; className?: string }> = ({
   size = 16,
@@ -155,7 +152,7 @@ export const Arrow: React.FC<{ size?: number; className?: string }> = ({
 );
 
 /* --------------------------------------------------------------------------
-   useScrolled — true once the page has moved past a threshold.
+   useScrolled — true once the page has scrolled past a threshold
    -------------------------------------------------------------------------- */
 export function useScrolled(threshold = 24) {
   const [scrolled, setScrolled] = useState(false);
@@ -169,8 +166,7 @@ export function useScrolled(threshold = 24) {
 }
 
 /* --------------------------------------------------------------------------
-   useBodyLock — stops the page scrolling behind an open overlay, and keeps
-   the scroll position when it closes.
+   useBodyLock — prevent scroll behind overlays
    -------------------------------------------------------------------------- */
 export function useBodyLock(locked: boolean) {
   const y = useRef(0);
@@ -186,7 +182,7 @@ export function useBodyLock(locked: boolean) {
 }
 
 /* --------------------------------------------------------------------------
-   useEscape — closes an overlay on Escape.
+   useEscape — close overlay on Escape key
    -------------------------------------------------------------------------- */
 export function useEscape(active: boolean, onEscape: () => void) {
   useEffect(() => {

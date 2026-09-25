@@ -16,7 +16,7 @@ export default function App() {
     <>
       <a
         href="#work"
-        className="sr-only focus:not-sr-only focus:fixed focus:z-[200] focus:top-4 focus:left-4 focus:inline-flex focus:items-center focus:h-12 focus:px-6 focus:rounded-full focus:bg-bone focus:text-ink focus:text-sm focus:font-medium"
+        className="sr-only focus:not-sr-only focus:fixed focus:z-[200] focus:top-4 focus:left-4 focus:inline-flex focus:items-center focus:h-12 focus:px-6 focus:rounded-full focus:bg-cream focus:text-ink focus:text-sm focus:font-medium"
       >
         Skip to content
       </a>

@@ -3,7 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Project, Shot } from "../data/site";
 import Lightbox from "./Lightbox";
 import { Arrow, useBodyLock, useEscape } from "./primitives";
-import { LiveScreen } from "./LiveScreen";
+
+const EASE = [0.76, 0, 0.24, 1] as const;
 
 const ShotGrid: React.FC<{
   shots: Shot[];
@@ -44,8 +45,8 @@ const ShotGrid: React.FC<{
             </div>
           </button>
           <figcaption className="mt-3">
-            <span className="block text-sm text-bone">{s.title}</span>
-            <span className="block text-xs text-bone-faint leading-relaxed mt-1">
+            <span className="block text-sm text-ink">{s.title}</span>
+            <span className="block text-xs text-ink-light leading-relaxed mt-1">
               {s.caption}
             </span>
           </figcaption>
@@ -68,7 +69,6 @@ const ProjectModal: React.FC<{
   useBodyLock(open);
   useEscape(open && lightbox === null, onClose);
 
-  /* Reset scroll and move focus into the panel each time a project opens. */
   useEffect(() => {
     if (!open) return;
     setLightbox(null);
@@ -87,7 +87,7 @@ const ProjectModal: React.FC<{
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-ink/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] bg-ink/60 backdrop-blur-md"
             onClick={onClose}
           >
             <motion.div
@@ -96,18 +96,18 @@ const ProjectModal: React.FC<{
               aria-modal="true"
               aria-label={`${project.title} case study`}
               onClick={(e) => e.stopPropagation()}
-              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 28 }}
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 40 }}
               animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
               exit={reduced ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-x-0 bottom-0 top-[3vh] md:top-[5vh] bg-ink border-t md:border border-[var(--line-strong)] md:rounded-t-3xl md:inset-x-[3vw] lg:inset-x-[6vw] overflow-y-auto overscroll-contain"
+              transition={{ duration: 0.6, ease: EASE }}
+              className="absolute inset-x-0 bottom-0 top-[3vh] md:top-[5vh] bg-cream md:border md:border-[var(--line)] md:rounded-t-3xl md:inset-x-[3vw] lg:inset-x-[6vw] overflow-y-auto overscroll-contain"
             >
               {/* Sticky header */}
-              <div className="sticky top-0 z-20 bg-ink/90 backdrop-blur-xl border-b border-[var(--line)]">
+              <div className="sticky top-0 z-20 bg-cream/90 backdrop-blur-xl border-b border-[var(--line)]">
                 <div className="px-6 md:px-10 lg:px-14 h-[4.5rem] flex items-center justify-between gap-4">
                   <div className="flex items-baseline gap-3 min-w-0">
                     <span className="rule-index shrink-0">{project.index}</span>
-                    <span className="text-bone text-sm md:text-base truncate">
+                    <span className="text-ink text-sm md:text-base truncate font-medium">
                       {project.title}
                     </span>
                     <span className="label hidden sm:block truncate">{project.kind}</span>
@@ -117,7 +117,7 @@ const ProjectModal: React.FC<{
                     ref={closeRef}
                     type="button"
                     onClick={onClose}
-                    className="w-12 h-12 shrink-0 rounded-full border border-[var(--line-strong)] text-bone flex items-center justify-center hover:bg-ink-elev transition-colors cursor-pointer"
+                    className="w-12 h-12 shrink-0 rounded-full border border-[var(--line-strong)] text-ink flex items-center justify-center hover:bg-cream-dark transition-colors cursor-pointer"
                     aria-label="Close case study"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -130,7 +130,7 @@ const ProjectModal: React.FC<{
               <div className="px-6 md:px-10 lg:px-14 pb-24 md:pb-32">
                 {/* Title block */}
                 <header className="pt-10 md:pt-16 max-w-4xl">
-                  <h2 className="display text-bone text-[clamp(2.25rem,7vw,4.5rem)]">
+                  <h2 className="display text-ink text-[clamp(2.25rem,7vw,4.5rem)]">
                     {project.title}
                   </h2>
                   <p className="lede mt-6 max-w-[52ch]">{project.summary}</p>
@@ -146,25 +146,13 @@ const ProjectModal: React.FC<{
                   ].map(([k, v]) => (
                     <div key={k}>
                       <dt className="label mb-2">{k}</dt>
-                      <dd className="text-sm text-bone leading-snug">{v}</dd>
+                      <dd className="text-sm text-ink leading-snug">{v}</dd>
                     </div>
                   ))}
                 </dl>
 
-                {/* Live Interactive Screen (Expanded Workstation) */}
-                {project.liveUrl && (
-                  <div className="mt-10 md:mt-14">
-                    <LiveScreen
-                      url={project.liveUrl}
-                      title={project.title}
-                      variant="expanded"
-                      mirrors={project.mirrors}
-                    />
-                  </div>
-                )}
-
-                {/* Cover (for projects without liveUrl or with key art) */}
-                {project.cover && !project.liveUrl && (
+                {/* Cover */}
+                {project.cover && (
                   <div
                     className="frame rounded-2xl mt-10 md:mt-12 aspect-[16/9]"
                     style={{ backgroundColor: project.coverTone }}
@@ -183,9 +171,9 @@ const ProjectModal: React.FC<{
                   </div>
                 )}
 
-                {/* Live site / Multi-domain ecosystem */}
+                {/* Live site link */}
                 {project.liveUrl && project.mirrors && project.mirrors.length > 0 ? (
-                  <div className="card mt-10 md:mt-12 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="mt-10 md:mt-12 p-6 md:p-8 border border-[var(--line)] rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                       <span className="label block mb-2">Multi-domain network</span>
                       <div className="flex flex-wrap items-center gap-3 mt-1">
@@ -193,10 +181,10 @@ const ProjectModal: React.FC<{
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-bone hover:text-gold text-base md:text-lg font-mono inline-flex items-center gap-1.5 transition-colors"
+                          className="text-ink hover:text-accent text-base md:text-lg font-mono inline-flex items-center gap-1.5 transition-colors"
                         >
                           {project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}
-                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-gold/15 text-gold border border-gold/30">
+                          <span className="text-[10px] uppercase font-sans px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
                             Primary
                           </span>
                         </a>
@@ -206,9 +194,9 @@ const ProjectModal: React.FC<{
                             href={m.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-bone-muted hover:text-bone text-sm md:text-base font-mono inline-flex items-center gap-1.5 transition-colors"
+                            className="text-ink-light hover:text-ink text-sm md:text-base font-mono inline-flex items-center gap-1.5 transition-colors"
                           >
-                            <span className="text-bone-faint">·</span>
+                            <span className="text-ink-light">·</span>
                             <span>{m.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
                           </a>
                         ))}
@@ -220,7 +208,7 @@ const ProjectModal: React.FC<{
                       rel="noopener noreferrer"
                       className="btn btn-ghost shrink-0"
                     >
-                      Visit primary flagship
+                      Visit site
                       <Arrow size={15} />
                     </a>
                   </div>
@@ -229,11 +217,11 @@ const ProjectModal: React.FC<{
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="card mt-10 md:mt-12 p-6 md:p-8 flex flex-wrap items-center justify-between gap-4 group/live"
+                    className="mt-10 md:mt-12 p-6 md:p-8 border border-[var(--line)] rounded-2xl flex flex-wrap items-center justify-between gap-4 group/live block"
                   >
                     <div>
                       <span className="label block mb-2">Live site</span>
-                      <span className="text-bone text-base md:text-lg break-all">
+                      <span className="text-ink text-base md:text-lg break-all">
                         {project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}
                       </span>
                     </div>
@@ -260,7 +248,7 @@ const ProjectModal: React.FC<{
                           <span className="rule-index">
                             {String(i + 1).padStart(2, "0")}
                           </span>
-                          <h4 className="text-bone text-lg md:text-xl font-display">
+                          <h4 className="text-ink text-lg md:text-xl font-display">
                             {s.heading}
                           </h4>
                         </div>
@@ -274,7 +262,7 @@ const ProjectModal: React.FC<{
                 {shots.length > 0 && (
                   <div className="mt-16 md:mt-24">
                     <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-[var(--line)] pt-8 mb-8">
-                      <h3 className="display text-bone text-[clamp(1.5rem,3.2vw,2.25rem)]">
+                      <h3 className="display text-ink text-[clamp(1.5rem,3.2vw,2.25rem)]">
                         Screens
                       </h3>
                       <span className="label">

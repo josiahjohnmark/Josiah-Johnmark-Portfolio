@@ -1,191 +1,121 @@
-import React from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { motion } from "motion/react";
 import { projects, type Project } from "../data/site";
-import { Arrow, Reveal, SectionHeading } from "./primitives";
-import { LiveScreen } from "./LiveScreen";
+import { Reveal, SectionHeading } from "./primitives";
+
 
 /* --------------------------------------------------------------------------
-   Media panel — an interactive live desktop screen for live websites,
-   a real cover where one exists, and an honest typographic panel otherwise.
+   Hover preview image that follows cursor — the signature effect
    -------------------------------------------------------------------------- */
-const ProjectMedia: React.FC<{ project: Project; onOpen?: () => void }> = ({
-  project,
-  onOpen,
-}) => {
-  if (project.liveUrl) {
-    return (
-      <LiveScreen
-        url={project.liveUrl}
-        title={project.title}
-        variant="card"
-        mirrors={project.mirrors}
-        onOpen={onOpen}
-      />
-    );
-  }
+const HoverPreview: React.FC<{
+  activeProject: Project | null;
+  mousePos: { x: number; y: number };
+}> = ({ activeProject, mousePos }) => {
+  /* Determine preview image: cover image, or a generated gradient if none */
+  const imgSrc = activeProject?.cover;
 
-  if (project.cover) {
-    return (
-      <div
-        className="frame rounded-2xl w-full aspect-[4/3] sm:aspect-[16/10]"
-        style={{ backgroundColor: project.coverTone }}
-      >
-        <img
-          src={project.cover}
-          alt={`${project.title} — cover`}
-          loading="lazy"
-          decoding="async"
-          className={
-            project.coverFit === "contain"
-              ? "object-contain p-[14%]"
-              : "object-cover"
-          }
-        />
-      </div>
-    );
-  }
-
-  /* Typographic cover fallback */
   return (
     <div
-      className="frame rounded-2xl w-full aspect-[4/3] sm:aspect-[16/10] relative flex items-center justify-center p-8"
+      className={`project-hover-img ${activeProject ? "visible" : ""}`}
       style={{
-        background: `linear-gradient(145deg, ${project.coverTone} 0%, #0a0a0b 100%)`,
+        left: mousePos.x - 220,
+        top: mousePos.y - 155,
       }}
     >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-[0.55]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(244,242,238,0.045) 1px, transparent 1px)",
-          backgroundSize: "clamp(56px, 9%, 96px) 100%",
-        }}
-      />
-      <span className="display text-bone/90 text-[clamp(1.75rem,4.2vw,3rem)] text-center relative leading-[1.05]">
-        {project.title}
-      </span>
+      {imgSrc ? (
+        <img src={imgSrc} alt="" />
+      ) : (
+        <div
+          className="w-full h-full"
+          style={{
+            background: `linear-gradient(135deg, ${activeProject?.coverTone || "#333"} 0%, #1C1D20 100%)`,
+          }}
+        />
+      )}
+      <div className="project-hover-badge" aria-hidden="true">
+        View
+      </div>
     </div>
   );
 };
 
+/* --------------------------------------------------------------------------
+   Single project row — large serif title, label on the right
+   -------------------------------------------------------------------------- */
 const ProjectRow: React.FC<{
   project: Project;
-  flipped: boolean;
   onOpen: () => void;
-}> = ({ project, flipped, onOpen }) => (
-  <Reveal as="article" className="group/card">
-    <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-      {/* Media */}
-      <div className={`lg:col-span-7 ${flipped ? "lg:order-2" : ""}`}>
-        <div
-          onClick={onOpen}
-          className="block w-full text-left cursor-pointer"
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onOpen();
-            }
-          }}
-          aria-label={`Open the ${project.title} case study`}
-        >
-          <ProjectMedia project={project} onOpen={onOpen} />
-        </div>
-      </div>
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
+}> = ({ project, onOpen, onHoverStart, onHoverEnd }) => (
+  <motion.div
+    className="project-row"
+    onClick={onOpen}
+    onMouseEnter={onHoverStart}
+    onMouseLeave={onHoverEnd}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onOpen();
+      }
+    }}
+    tabIndex={0}
+    role="button"
+    aria-label={`Open the ${project.title} case study`}
+  >
+    <div className="flex items-baseline gap-6">
+      <span className="rule-index hidden md:inline-block w-8">{project.index}</span>
+      <h3>{project.title}</h3>
+    </div>
 
-      {/* Text */}
-      <div className={`lg:col-span-5 ${flipped ? "lg:order-1" : ""}`}>
-        <div className="flex items-center gap-3 mb-5">
-          <span className="rule-index">{project.index}</span>
-          <span className="h-px w-8 bg-[var(--line-strong)]" aria-hidden="true" />
-          <span className="label !text-bone-muted">{project.kind}</span>
-        </div>
+    <div className="hidden md:flex items-center gap-8">
+      <span className="label !text-ink-light">{project.kind}</span>
+      <span className="text-sm text-ink-light">{project.year}</span>
+      {project.liveUrl && (
+        <span className="w-2 h-2 rounded-full bg-[#3DD68C]" title="Live" />
+      )}
+    </div>
+  </motion.div>
+);
 
-        <h3 className="display text-bone text-[clamp(1.9rem,4.5vw,2.75rem)]">
-          {project.title}
-        </h3>
+/* --------------------------------------------------------------------------
+   Work section — project list with floating hover preview
+   -------------------------------------------------------------------------- */
+const Work: React.FC<{ onOpen: (p: Project) => void }> = ({ onOpen }) => {
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-        <p className="prose-body mt-4">{project.summary}</p>
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  }, []);
 
-        <dl className="mt-7 border-t border-[var(--line)]">
-          {[
-            ["Role", project.role],
-            ["Platform", project.platform],
-            ["Tools", project.tools.join("  ·  ")],
-          ].map(([k, v]) => (
-            <div
-              key={k}
-              className="flex items-baseline justify-between gap-5 py-3.5 border-b border-[var(--line)]"
-            >
-              <dt className="label shrink-0">{k}</dt>
-              <dd className="text-sm text-bone-muted text-right leading-snug">{v}</dd>
-            </div>
+  return (
+    <section id="work" className="section" onMouseMove={handleMouseMove}>
+      <div className="shell">
+        <SectionHeading
+          index="01"
+          title="Selected work"
+          lede="A game, a mobile app and three live web platforms — each one designed and built end to end."
+        />
+
+        <div ref={containerRef} className="project-list">
+          {projects.map((p) => (
+            <Reveal key={p.id} delay={0}>
+              <ProjectRow
+                project={p}
+                onOpen={() => onOpen(p)}
+                onHoverStart={() => setActiveProject(p)}
+                onHoverEnd={() => setActiveProject(null)}
+              />
+            </Reveal>
           ))}
-        </dl>
-
-        <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <button
-            type="button"
-            onClick={onOpen}
-            className="inline-flex items-center gap-2 text-sm text-bone cursor-pointer group/link"
-          >
-            Case study
-            <Arrow
-              size={15}
-              className="text-gold transition-transform duration-500 group-hover/link:translate-x-1"
-            />
-          </button>
-
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-quiet text-sm inline-flex items-center gap-1.5"
-            >
-              Visit live site
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                aria-hidden="true"
-              >
-                <path d="M7 17 17 7M9 7h8v8" />
-              </svg>
-            </a>
-          )}
         </div>
-      </div>
-    </div>
-  </Reveal>
-);
 
-const Work: React.FC<{ onOpen: (p: Project) => void }> = ({ onOpen }) => (
-  <section id="work" className="section hairline">
-    <div className="shell">
-      <SectionHeading
-        index="01"
-        title="Selected work"
-        lede="A game, a mobile app and three live web platforms — each one designed and built end to end."
-      />
-
-      <div className="space-y-24 md:space-y-32 lg:space-y-40">
-        {projects.map((p, i) => (
-          <ProjectRow
-            key={p.id}
-            project={p}
-            flipped={i % 2 === 1}
-            onOpen={() => onOpen(p)}
-          />
-        ))}
+        <HoverPreview activeProject={activeProject} mousePos={mousePos} />
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Work;

@@ -3,7 +3,7 @@ import { capabilities } from "../data/site";
 import { Reveal, SectionHeading } from "./primitives";
 
 const Capabilities: React.FC = () => (
-  <section id="capabilities" className="section hairline">
+  <section id="capabilities" className="section">
     <div className="shell">
       <SectionHeading
         index="04"
@@ -14,12 +14,12 @@ const Capabilities: React.FC = () => (
       <ul className="border-t border-[var(--line)]">
         {capabilities.map((c, i) => (
           <Reveal as="li" key={c.title} delay={Math.min(i, 3) * 0.05}>
-            <div className="border-b border-[var(--line)] py-9 md:py-11 grid md:grid-cols-12 gap-5 md:gap-10 items-start">
+            <div className="border-b border-[var(--line)] py-10 md:py-12 grid md:grid-cols-12 gap-5 md:gap-10 items-start">
               <div className="md:col-span-1">
                 <span className="rule-index">{String(i + 1).padStart(2, "0")}</span>
               </div>
 
-              <h3 className="md:col-span-4 display text-bone text-[clamp(1.4rem,2.8vw,1.9rem)] leading-tight">
+              <h3 className="md:col-span-4 display text-ink text-[clamp(1.4rem,2.8vw,2rem)] leading-tight">
                 {c.title}
               </h3>
 

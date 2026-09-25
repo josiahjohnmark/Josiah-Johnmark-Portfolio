@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { explorations } from "../data/site";
 import { Reveal, SectionHeading } from "./primitives";
 
-/* Animated previews are only fetched once a card has been hovered, so the
-   section costs nothing on load — especially on mobile, where it never
-   animates at all. */
 const Tile: React.FC<{ slug: string; title: string; tag: string }> = ({
   slug,
   title,
@@ -42,7 +39,7 @@ const Tile: React.FC<{ slug: string; title: string; tag: string }> = ({
         )}
       </div>
       <figcaption className="mt-3">
-        <span className="block text-sm text-bone-muted transition-colors duration-400 group-hover/tile:text-bone">
+        <span className="block text-sm text-ink-mid transition-colors duration-400 group-hover/tile:text-ink">
           {title}
         </span>
         <span className="label mt-1 block">{tag}</span>
@@ -52,7 +49,7 @@ const Tile: React.FC<{ slug: string; title: string; tag: string }> = ({
 };
 
 const Explorations: React.FC = () => (
-  <section id="explorations" className="section hairline">
+  <section id="explorations" className="section">
     <div className="shell">
       <SectionHeading
         index="02"

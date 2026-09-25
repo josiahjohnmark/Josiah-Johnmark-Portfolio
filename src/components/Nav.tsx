@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { nav, profile } from "../data/site";
-import { Arrow, Mark, useBodyLock, useEscape, useScrolled } from "./primitives";
+import { useBodyLock, useEscape } from "./primitives";
+
+const EASE = [0.76, 0, 0.24, 1] as const;
 
 const Nav: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const scrolled = useScrolled(32);
+  const [scrolled, setScrolled] = useState(false);
 
   useBodyLock(open);
   useEscape(open, () => setOpen(false));
+
+  /* Check when scrolled past hero */
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 220);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const toTop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -18,63 +29,63 @@ const Nav: React.FC = () => {
 
   return (
     <>
+      {/* =========================================================================
+          TOP NAV (Visible at top of page over dark hero)
+          ========================================================================= */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-          scrolled || open
-            ? "bg-ink/85 backdrop-blur-xl border-b border-[var(--line)]"
-            : "border-b border-transparent"
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
+          scrolled && !open
+            ? "-translate-y-full opacity-0 pointer-events-none"
+            : "translate-y-0 opacity-100"
         }`}
         style={{ height: "var(--nav-h)" }}
       >
         <nav
-          className="shell h-full flex items-center justify-between gap-6"
+          className="shell h-full flex items-center justify-between"
           aria-label="Primary"
         >
-          {/* Mark + name */}
+          {/* Left: copyright + name */}
           <a
             href="#top"
             onClick={toTop}
-            className="flex items-center gap-3 shrink-0 group/logo"
+            className="flex items-center gap-2 shrink-0 text-white/90 hover:text-white transition-colors"
             aria-label={`${profile.name} — back to top`}
           >
-            <Mark className="h-6 text-bone transition-colors duration-500 group-hover/logo:text-gold" />
-            <span className="hidden sm:block text-sm tracking-[0.02em] text-bone font-medium">
-              {profile.name}
+            <span className="text-sm font-medium tracking-[0.01em]">
+              © Code by {profile.name}
             </span>
           </a>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-9">
+          <div className="hidden md:flex items-center gap-10">
             {nav.map((item) => (
-              <a key={item.href} href={item.href} className="link-quiet text-sm">
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-white/80 hover:text-white transition-colors relative py-1"
+              >
                 {item.label}
               </a>
             ))}
           </div>
 
-          <div className="hidden md:block">
-            <a href="#contact" className="btn btn-primary !min-h-[2.75rem] !px-5 !text-sm">
-              Start a project
-            </a>
-          </div>
-
-          {/* Mobile toggle — 48px target */}
+          {/* Mobile hamburger on hero */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden -mr-2 w-12 h-12 flex items-center justify-center text-bone"
+            className="md:hidden -mr-2 w-12 h-12 flex items-center justify-center text-white"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
           >
             <span className="relative block w-6 h-3.5" aria-hidden="true">
               <span
-                className={`absolute left-0 w-6 h-px bg-current transition-all duration-400 ${
+                className={`absolute left-0 w-6 h-px bg-current transition-all duration-500 ${
                   open ? "top-1.5 rotate-45" : "top-0"
                 }`}
               />
               <span
-                className={`absolute left-0 w-6 h-px bg-current transition-all duration-400 ${
+                className={`absolute left-0 w-6 h-px bg-current transition-all duration-500 ${
                   open ? "top-1.5 -rotate-45" : "top-3"
                 }`}
               />
@@ -83,48 +94,91 @@ const Nav: React.FC = () => {
         </nav>
       </header>
 
-      {/* Mobile menu */}
+      {/* =========================================================================
+          DENNIS SNELLENBERG FLOATING CIRCULAR BURGER BUTTON (appears on scroll)
+          ========================================================================= */}
+      <AnimatePresence>
+        {scrolled && (
+          <motion.button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="floating-burger-btn"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={open}
+          >
+            <span className="relative block w-6 h-3.5" aria-hidden="true">
+              <span
+                className={`absolute left-0 w-6 h-[1.5px] bg-white transition-all duration-400 ${
+                  open ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 w-6 h-[1.5px] bg-white transition-all duration-400 ${
+                  open ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* =========================================================================
+          FULL-SCREEN SLIDE-OUT MENU DRAWER
+          ========================================================================= */}
       <AnimatePresence>
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-ink md:hidden flex flex-col"
-            style={{ paddingTop: "var(--nav-h)" }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="fixed inset-0 md:left-auto md:w-[480px] z-50 bg-[#1C1D20] text-white flex flex-col justify-between p-8 md:p-14 shadow-2xl"
           >
-            <div className="shell flex-1 flex flex-col justify-center gap-1 pb-24">
+            <div className="flex items-center justify-between pb-8 border-b border-white/10">
+              <span className="text-xs uppercase tracking-widest text-white/40">Navigation</span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-xs hover:bg-white/20 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3 py-10">
               {nav.map((item, i) => (
                 <motion.a
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{
-                    duration: 0.45,
-                    delay: 0.05 + i * 0.05,
-                    ease: [0.16, 1, 0.3, 1],
+                    duration: 0.5,
+                    delay: 0.1 + i * 0.08,
+                    ease: EASE,
                   }}
-                  className="display text-[clamp(2.5rem,13vw,3.5rem)] text-bone py-3 flex items-baseline gap-4"
+                  className="font-sans font-light text-[clamp(2.2rem,6vw,3.5rem)] text-white/90 hover:text-white hover:translate-x-3 transition-transform py-1"
                 >
-                  <span className="rule-index">{String(i + 1).padStart(2, "0")}</span>
                   {item.label}
                 </motion.a>
               ))}
             </div>
 
-            <div className="shell pb-10 border-t border-[var(--line)] pt-6">
+            <div className="pt-8 border-t border-white/10 space-y-4">
+              <span className="text-xs uppercase tracking-widest text-white/40 block">Get in touch</span>
               <a
                 href={`mailto:${profile.email}`}
-                onClick={() => setOpen(false)}
-                className="btn btn-primary w-full"
+                className="text-sm text-white/80 hover:text-accent transition-colors block"
               >
-                Start a project <Arrow size={15} />
+                {profile.email}
               </a>
-              <p className="label mt-5">{profile.location}</p>
+              <p className="text-xs text-white/50">{profile.location}</p>
             </div>
           </motion.div>
         )}
