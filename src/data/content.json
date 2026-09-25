@@ -140,8 +140,8 @@
         "Blender"
       ],
       "platform": "iOS & Android",
-      "cover": "/images/ludo_nx/key-art.png",
-      "coverFit": "cover",
+      "cover": "/images/projects/ludo_nx/ludo_nx_logo.png",
+      "coverFit": "contain",
       "coverTone": "#1b2230",
       "sections": [
         {
