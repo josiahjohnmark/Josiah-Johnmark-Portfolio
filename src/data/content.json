@@ -289,8 +289,9 @@
         { "label": ".org", "url": "https://www.dakardapper.org/" },
         { "label": ".shop", "url": "https://www.dakardapper.shop/" }
       ],
-      "coverFit": "cover",
-      "coverTone": "#161311",
+      "cover": "/images/projects/dakar-dapper/dakar_dapper_logo.jpeg",
+      "coverFit": "contain",
+      "coverTone": "#EAEAE6",
       "sections": [
         {
           "heading": "Overview",
@@ -321,8 +322,9 @@
       ],
       "platform": "Web & mobile",
       "liveUrl": "https://www.ushcommunity.com/",
-      "coverFit": "cover",
-      "coverTone": "#0f1524",
+      "cover": "/images/projects/ush/ush_logo.jpeg",
+      "coverFit": "contain",
+      "coverTone": "#000000",
       "sections": [
         {
           "heading": "Overview",
@@ -349,8 +351,9 @@
       ],
       "platform": "Web",
       "liveUrl": "https://zubairumustaphafoundation.org/",
-      "coverFit": "cover",
-      "coverTone": "#0d1a14",
+      "cover": "/images/projects/zmf/zmf_foundation_website.svg",
+      "coverFit": "contain",
+      "coverTone": "#004aad",
       "sections": [
         {
           "heading": "Overview",

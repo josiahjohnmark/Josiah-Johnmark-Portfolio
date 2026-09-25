@@ -4,14 +4,6 @@ import { profile } from "../data/site";
 
 const EASE = [0.76, 0, 0.24, 1] as const;
 
-const GlobeIcon: React.FC<{ className?: string }> = ({ className = "w-3.5 h-3.5" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-    <circle cx="12" cy="12" r="10" />
-    <path d="M2 12h20" />
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-  </svg>
-);
-
 const Hero: React.FC = () => {
   const reduced = useReducedMotion();
 
@@ -28,84 +20,121 @@ const Hero: React.FC = () => {
     <>
       {/* =========================================================================
           HERO — Dennis Snellenberg signature layout:
-          - Studio slate background that seamlessly melts portrait borders
-          - Badges on left ("Located in Nigeria" + spinning globe) and right (role)
-          - Centered portrait anchored at the bottom
-          - Infinite sliding marquee text moving horizontally behind portrait
+          - Studio grey background (#999D9E)
+          - Left: "Located in Nigeria" capsule pill with spinning wireframe globe
+          - Right: Diagonal arrow + "Freelance / Designer & Developer"
+          - Center: Commanding portrait filling vertical height, head near top
+          - Behind: Continuous giant marquee typography in pure white
           ========================================================================= */}
       <section
         id="top"
-        className="relative h-[92vh] min-h-[640px] max-h-[1050px] flex flex-col justify-between overflow-hidden bg-[#161719] text-white select-none"
-        style={{ paddingTop: "calc(var(--nav-h) + 1rem)" }}
+        className="relative h-[92vh] min-h-[680px] max-h-[1100px] flex flex-col justify-end overflow-hidden bg-[#999D9E] text-white select-none"
       >
-        {/* Subtle studio glow in center */}
+        {/* Soft top studio light vignette */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-40"
+          className="absolute inset-0 pointer-events-none opacity-25"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 60%, rgba(69, 92, 233, 0.15) 0%, rgba(22, 23, 25, 0) 70%)",
+              "radial-gradient(ellipse at 50% 25%, rgba(255, 255, 255, 0.4) 0%, rgba(153, 157, 158, 0) 70%)",
           }}
           aria-hidden="true"
         />
 
-        {/* Top meta row: Left Location badge / Right arrow + role */}
-        <div className="shell relative z-20 flex items-start justify-between gap-6">
-          {/* Left badge */}
-          <motion.div {...fadeIn(0.1)} className="flex items-center gap-3">
-            <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white/90 text-xs font-medium tracking-wide">
-              <span>Located in Nigeria</span>
-              <div className="w-5 h-5 rounded-full border border-white/30 flex items-center justify-center animate-spin-slow">
-                <GlobeIcon className="w-3.5 h-3.5 text-white/80" />
-              </div>
+        {/* -----------------------------------------------------------------------
+            LEFT BADGE: "Located in Nigeria" capsule with rotating wireframe globe
+            Exact Dennis Snellenberg style attached to the left edge
+            ----------------------------------------------------------------------- */}
+        <motion.div
+          {...fadeIn(0.2)}
+          className="absolute left-0 top-[36%] md:top-[42%] -translate-y-1/2 z-20"
+        >
+          <div className="bg-[#1C1D20] text-white pl-5 md:pl-7 pr-3 py-2.5 md:py-3 rounded-r-full flex items-center gap-3.5 md:gap-4 shadow-2xl border-y border-r border-white/10 group cursor-default">
+            <div className="text-[11px] md:text-xs leading-[1.25] font-sans tracking-wide text-left select-none">
+              <span className="block text-white/80">Located</span>
+              <span className="block text-white/80">in</span>
+              <span className="block text-white font-semibold">Nigeria</span>
             </div>
 
-            {profile.available && (
-              <span className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/80">
-                <span className="w-2 h-2 rounded-full bg-[#3DD68C] animate-pulse" />
-                {profile.availableLabel}
-              </span>
-            )}
-          </motion.div>
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#999D9E]/30 border border-white/20 flex items-center justify-center text-white/95 shrink-0">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="globe-spin"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                <path d="M2 12h20" />
+              </svg>
+            </div>
+          </div>
+        </motion.div>
 
-          {/* Right role title */}
-          <motion.div {...fadeIn(0.2)} className="text-right">
-            <span className="block text-white text-xl font-light leading-none mb-1">↘</span>
-            <p className="text-white text-sm md:text-base font-medium tracking-tight">
-              Freelance Game Developer
-            </p>
-            <p className="text-white/60 text-xs md:text-sm">&amp; UI/UX Designer</p>
-          </motion.div>
-        </div>
+        {/* -----------------------------------------------------------------------
+            RIGHT BADGE: Down-right arrow + "Freelance Designer & Developer"
+            Exact Dennis Snellenberg style positioned on right side
+            ----------------------------------------------------------------------- */}
+        <motion.div
+          {...fadeIn(0.25)}
+          className="absolute right-6 md:right-16 lg:right-28 top-[36%] md:top-[42%] -translate-y-1/2 z-20 text-left pointer-events-none select-none"
+        >
+          <div className="flex flex-col items-start">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              className="text-white mb-2 md:mb-3"
+              aria-hidden="true"
+            >
+              <path d="M7 7l10 10M17 7v10H7" />
+            </svg>
+            <div className="text-white text-lg md:text-2xl lg:text-[1.65rem] font-sans font-normal leading-[1.18] tracking-tight">
+              <p>Freelance</p>
+              <p className="font-light text-white/90">Designer &amp; Developer</p>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* The Dennis Snellenberg Signature Marquee — slides continuously behind portrait */}
-        <div className="absolute inset-x-0 bottom-4 md:bottom-8 z-10 pointer-events-none overflow-hidden">
+        {/* -----------------------------------------------------------------------
+            SIGNATURE MARQUEE: Dennis Snellenberg giant continuous sliding text
+            Slides continuously behind portrait at the bottom
+            ----------------------------------------------------------------------- */}
+        <div className="absolute inset-x-0 bottom-2 md:bottom-6 z-10 pointer-events-none overflow-hidden select-none">
           <div className="hero-marquee-track">
-            <span className="font-sans font-medium text-[clamp(4.5rem,13vw,12.5rem)] leading-none tracking-[-0.04em] text-white/90 pr-12">
-              {profile.name} — {profile.role} —
+            <span className="font-sans font-normal text-[clamp(6rem,16vw,15.5rem)] leading-none tracking-[-0.035em] text-white pr-12 md:pr-16">
+              — {profile.name} — {profile.name}
             </span>
-            <span className="font-sans font-medium text-[clamp(4.5rem,13vw,12.5rem)] leading-none tracking-[-0.04em] text-white/90 pr-12">
-              {profile.name} — {profile.role} —
+            <span className="font-sans font-normal text-[clamp(6rem,16vw,15.5rem)] leading-none tracking-[-0.035em] text-white pr-12 md:pr-16">
+              — {profile.name} — {profile.name}
             </span>
           </div>
         </div>
 
-        {/* Centered portrait — anchored at bottom, in front of marquee */}
+        {/* -----------------------------------------------------------------------
+            CENTERED PORTRAIT: Large, commanding vertical scale like Dennis
+            Head reaches near top, waist grounded at bottom, marquee behind chest
+            ----------------------------------------------------------------------- */}
         <motion.div
           {...fadeIn(0.3)}
-          className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-20"
+          className="relative inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-20 overflow-hidden h-[74vh] sm:h-[78vh] md:h-[84vh] lg:h-[88vh] max-h-[920px]"
         >
-          <div className="relative w-[75vw] max-w-[360px] sm:max-w-[420px] md:w-[36vw] md:max-w-[480px] lg:max-w-[520px]">
-            <img
-              src="/brand/portrait-hero.png"
-              alt={`${profile.name}, ${profile.role}`}
-              width={535}
-              height={714}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              className="w-full h-auto object-bottom select-none drop-shadow-2xl"
-            />
-          </div>
+          <img
+            src="/brand/portrait-clean.png"
+            alt={`${profile.name}, ${profile.role}`}
+            width={1313}
+            height={812}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl translate-y-[2px]"
+          />
         </motion.div>
       </section>
 

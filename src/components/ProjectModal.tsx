@@ -31,7 +31,7 @@ const ShotGrid: React.FC<{
             aria-label={`Enlarge: ${s.title}`}
           >
             <div
-              className={`frame rounded-xl ${
+              className={`frame rounded-xl bg-[#EAEAE6] overflow-hidden ${
                 shape === "phone" ? "aspect-[440/956]" : "aspect-square"
               }`}
             >
@@ -40,7 +40,10 @@ const ShotGrid: React.FC<{
                 alt={s.caption}
                 loading="lazy"
                 decoding="async"
-                className="object-cover transition-transform duration-700 group-hover/shot:scale-[1.03]"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = "none";
+                }}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover/shot:scale-[1.03]"
               />
             </div>
           </button>
@@ -154,19 +157,22 @@ const ProjectModal: React.FC<{
                 {/* Cover */}
                 {project.cover && (
                   <div
-                    className="frame rounded-2xl mt-10 md:mt-12 aspect-[16/9]"
-                    style={{ backgroundColor: project.coverTone }}
+                    className="frame rounded-2xl mt-10 md:mt-12 aspect-[16/9] overflow-hidden"
+                    style={{ backgroundColor: project.coverTone || "#EAEAE6" }}
                   >
                     <img
                       src={project.cover}
                       alt={`${project.title} key art`}
                       loading="lazy"
                       decoding="async"
-                      className={
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = "none";
+                      }}
+                      className={`w-full h-full ${
                         project.coverFit === "contain"
                           ? "object-contain p-[11%]"
                           : "object-cover"
-                      }
+                      }`}
                     />
                   </div>
                 )}

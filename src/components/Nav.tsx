@@ -44,13 +44,18 @@ const Nav: React.FC = () => {
           className="shell h-full flex items-center justify-between"
           aria-label="Primary"
         >
-          {/* Left: copyright + name */}
+          {/* Left: copyright + logo + name */}
           <a
             href="#top"
             onClick={toTop}
-            className="flex items-center gap-2 shrink-0 text-white/90 hover:text-white transition-colors"
+            className="flex items-center gap-3 shrink-0 text-white/95 hover:text-white transition-opacity group"
             aria-label={`${profile.name} — back to top`}
           >
+            <img
+              src="/brand/jj-logo-clean.png"
+              alt={profile.name}
+              className="h-7 w-auto object-contain brightness-0 invert group-hover:scale-105 transition-transform"
+            />
             <span className="text-sm font-medium tracking-[0.01em]">
               © Code by {profile.name}
             </span>
@@ -140,7 +145,14 @@ const Nav: React.FC = () => {
             className="fixed inset-0 md:left-auto md:w-[480px] z-50 bg-[#1C1D20] text-white flex flex-col justify-between p-8 md:p-14 shadow-2xl"
           >
             <div className="flex items-center justify-between pb-8 border-b border-white/10">
-              <span className="text-xs uppercase tracking-widest text-white/40">Navigation</span>
+              <div className="flex items-center gap-3">
+                <img
+                  src="/brand/jj-logo-clean.png"
+                  alt={profile.name}
+                  className="h-6 w-auto object-contain brightness-0 invert"
+                />
+                <span className="text-xs uppercase tracking-widest text-white/40">Navigation</span>
+              </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}

@@ -50,18 +50,18 @@ const About: React.FC = () => (
           </Reveal>
         </div>
 
-        {/* Right: portrait */}
+        {/* Right: portrait with #999D9E studio background */}
         <Reveal delay={0.1}>
           <div className="lg:sticky lg:top-[calc(var(--nav-h)+2.5rem)]">
-            <div className="w-full max-w-[480px] mx-auto lg:mx-0">
+            <div className="w-full max-w-[440px] aspect-[4/5] mx-auto lg:mx-0 rounded-3xl overflow-hidden bg-[#999D9E] pt-8 px-4 flex items-end justify-center shadow-lg">
               <img
-                src="/brand/portrait-about.png"
+                src="/brand/portrait-clean.png"
                 alt={`${profile.name} in the studio`}
-                width={571}
-                height={714}
+                width={700}
+                height={700}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-auto rounded-xl"
+                className="w-full h-auto object-bottom select-none drop-shadow-xl scale-[1.4] origin-bottom translate-y-[2px]"
               />
             </div>
           </div>
@@ -81,7 +81,7 @@ const About: React.FC = () => (
           <ul className="grid grid-cols-3 gap-3 md:gap-6">
             {drawings.map((d) => (
               <li key={d.src}>
-                <div className="frame rounded-xl aspect-square">
+                <div className="frame rounded-2xl aspect-square bg-[#EAEAE6] overflow-hidden border border-[var(--line)]">
                   <img
                     src={d.src}
                     alt={d.alt}
@@ -89,7 +89,10 @@ const About: React.FC = () => (
                     height={720}
                     loading="lazy"
                     decoding="async"
-                    className="object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = "none";
+                    }}
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </li>

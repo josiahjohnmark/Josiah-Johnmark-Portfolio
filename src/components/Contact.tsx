@@ -53,11 +53,11 @@ const Contact: React.FC = () => {
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-20 pb-16 md:pb-24">
               {/* Left: big heading + portrait circle */}
               <div className="flex items-end gap-6 md:gap-10">
-                <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden shrink-0 border-2 border-white/10">
+                <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden shrink-0 border-2 border-white/20 bg-[#999D9E] flex items-end justify-center pt-2">
                   <img
-                    src="/brand/portrait-about.png"
+                    src="/brand/portrait-clean.png"
                     alt={profile.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto object-bottom scale-110"
                   />
                 </div>
                 <div>
