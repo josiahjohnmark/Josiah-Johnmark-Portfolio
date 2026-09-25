@@ -1,12 +1,28 @@
 import React from "react";
 import { projects, type Project } from "../data/site";
 import { Arrow, Reveal, SectionHeading } from "./primitives";
+import { LiveScreen } from "./LiveScreen";
 
 /* --------------------------------------------------------------------------
-   Media panel — a real cover where one exists, and an honest typographic
-   panel where one does not. Never a stock image standing in for work.
+   Media panel — an interactive live desktop screen for live websites,
+   a real cover where one exists, and an honest typographic panel otherwise.
    -------------------------------------------------------------------------- */
-const ProjectMedia: React.FC<{ project: Project }> = ({ project }) => {
+const ProjectMedia: React.FC<{ project: Project; onOpen?: () => void }> = ({
+  project,
+  onOpen,
+}) => {
+  if (project.liveUrl) {
+    return (
+      <LiveScreen
+        url={project.liveUrl}
+        title={project.title}
+        variant="card"
+        mirrors={project.mirrors}
+        onOpen={onOpen}
+      />
+    );
+  }
+
   if (project.cover) {
     return (
       <div
@@ -28,7 +44,7 @@ const ProjectMedia: React.FC<{ project: Project }> = ({ project }) => {
     );
   }
 
-  /* Typographic cover for the two client sites. */
+  /* Typographic cover fallback */
   return (
     <div
       className="frame rounded-2xl w-full aspect-[4/3] sm:aspect-[16/10] relative flex items-center justify-center p-8"
@@ -61,14 +77,21 @@ const ProjectRow: React.FC<{
     <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center">
       {/* Media */}
       <div className={`lg:col-span-7 ${flipped ? "lg:order-2" : ""}`}>
-        <button
-          type="button"
+        <div
           onClick={onOpen}
           className="block w-full text-left cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpen();
+            }
+          }}
           aria-label={`Open the ${project.title} case study`}
         >
-          <ProjectMedia project={project} />
-        </button>
+          <ProjectMedia project={project} onOpen={onOpen} />
+        </div>
       </div>
 
       {/* Text */}
@@ -148,7 +171,7 @@ const Work: React.FC<{ onOpen: (p: Project) => void }> = ({ onOpen }) => (
       <SectionHeading
         index="01"
         title="Selected work"
-        lede="A game, an app and two client platforms — each one designed and built end to end."
+        lede="A game, a mobile app and three live web platforms — each one designed and built end to end."
       />
 
       <div className="space-y-24 md:space-y-32 lg:space-y-40">

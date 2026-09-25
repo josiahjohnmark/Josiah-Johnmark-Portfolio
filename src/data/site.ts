@@ -14,6 +14,7 @@ const content = raw as unknown as Content;
 export type {
   Capability,
   Content,
+  DomainMirror,
   Drawing,
   Exploration,
   Fact,

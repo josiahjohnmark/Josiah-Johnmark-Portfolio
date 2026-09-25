@@ -270,8 +270,45 @@
       "note": "Screens for this project are being prepared."
     },
     {
-      "id": "ush-community",
+      "id": "dakar-dapper",
       "index": "03",
+      "title": "Dakar Dapper",
+      "kind": "Client — luxury menswear & e-commerce",
+      "year": "2026",
+      "summary": "The digital storefront for an editorial menswear and accessories brand curated in Lagos and delivering across Nigeria — catalog browsing, cart and wishlist workflows, and a multi-domain network.",
+      "role": "UI/UX design · Web & e-commerce development",
+      "tools": [
+        "E-Commerce",
+        "UI/UX",
+        "Responsive Web",
+        "Frontend"
+      ],
+      "platform": "Web & mobile",
+      "liveUrl": "https://www.dakardapper.com/",
+      "mirrors": [
+        { "label": ".org", "url": "https://www.dakardapper.org/" },
+        { "label": ".shop", "url": "https://www.dakardapper.shop/" }
+      ],
+      "coverFit": "cover",
+      "coverTone": "#161311",
+      "sections": [
+        {
+          "heading": "Overview",
+          "body": "Dakar Dapper is a luxury menswear fashion line curated in Lagos, creating shirts, trousers, footwear, and accessories. I designed and built the digital storefront to reflect the brand's proper, high-fashion identity: warm ivory tones, Cormorant Garamond typography, and intuitive browsing across curated collections."
+        },
+        {
+          "heading": "Multi-domain network",
+          "body": "The brand operates across three domain properties: dakardapper.com as the primary commercial flagship, alongside dakardapper.org and dakardapper.shop serving as brand and dedicated retail mirrors."
+        },
+        {
+          "heading": "Storefront architecture",
+          "body": "A fast, responsive storefront featuring an instant search overlay, wishlist persistence, slide-over cart drawer, and direct ordering workflows tailored for Nigerian and international clientele."
+        }
+      ]
+    },
+    {
+      "id": "ush-community",
+      "index": "04",
       "title": "USH Community",
       "kind": "Client — trading & finance",
       "year": "2026",
@@ -299,7 +336,7 @@
     },
     {
       "id": "zubairu-mustapha-foundation",
-      "index": "04",
+      "index": "05",
       "title": "Zubairu Mustapha Foundation",
       "kind": "Client — nonprofit",
       "year": "2026",

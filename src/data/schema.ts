@@ -52,6 +52,8 @@ export type Shot = {
 
 export type Section = { heading: string; body: string };
 
+export type DomainMirror = { label: string; url: string };
+
 export type Project = {
   id: string;
   index: string;
@@ -63,6 +65,7 @@ export type Project = {
   tools: string[];
   platform: string;
   liveUrl?: string;
+  mirrors?: DomainMirror[];
   cover?: string;
   coverFit: "cover" | "contain";
   coverTone: string;
@@ -203,6 +206,12 @@ export function validateContent(data: unknown): Issue[] {
         out.push({ path: `${at}.coverTone`, message: "must be a hex colour like #1b2230" });
       }
       optionalUrl(pr?.liveUrl, `${at}.liveUrl`, out);
+      if (isArr(pr?.mirrors)) {
+        pr.mirrors.forEach((m, j) => {
+          requireText(m?.label, `${at}.mirrors[${j}].label`, out, "Mirror label");
+          optionalUrl(m?.url, `${at}.mirrors[${j}].url`, out);
+        });
+      }
       if (isArr(pr?.sections)) {
         pr.sections.forEach((s, j) => {
           requireText(s?.heading, `${at}.sections[${j}].heading`, out, "Section heading");

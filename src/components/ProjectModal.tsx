@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Project, Shot } from "../data/site";
 import Lightbox from "./Lightbox";
 import { Arrow, useBodyLock, useEscape } from "./primitives";
+import { LiveScreen } from "./LiveScreen";
 
 const ShotGrid: React.FC<{
   shots: Shot[];
@@ -150,8 +151,20 @@ const ProjectModal: React.FC<{
                   ))}
                 </dl>
 
-                {/* Cover */}
-                {project.cover && (
+                {/* Live Interactive Screen (Expanded Workstation) */}
+                {project.liveUrl && (
+                  <div className="mt-10 md:mt-14">
+                    <LiveScreen
+                      url={project.liveUrl}
+                      title={project.title}
+                      variant="expanded"
+                      mirrors={project.mirrors}
+                    />
+                  </div>
+                )}
+
+                {/* Cover (for projects without liveUrl or with key art) */}
+                {project.cover && !project.liveUrl && (
                   <div
                     className="frame rounded-2xl mt-10 md:mt-12 aspect-[16/9]"
                     style={{ backgroundColor: project.coverTone }}
@@ -170,8 +183,48 @@ const ProjectModal: React.FC<{
                   </div>
                 )}
 
-                {/* Live site */}
-                {project.liveUrl && (
+                {/* Live site / Multi-domain ecosystem */}
+                {project.liveUrl && project.mirrors && project.mirrors.length > 0 ? (
+                  <div className="card mt-10 md:mt-12 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                      <span className="label block mb-2">Multi-domain network</span>
+                      <div className="flex flex-wrap items-center gap-3 mt-1">
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-bone hover:text-gold text-base md:text-lg font-mono inline-flex items-center gap-1.5 transition-colors"
+                        >
+                          {project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-gold/15 text-gold border border-gold/30">
+                            Primary
+                          </span>
+                        </a>
+                        {project.mirrors.map((m) => (
+                          <a
+                            key={m.url}
+                            href={m.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-bone-muted hover:text-bone text-sm md:text-base font-mono inline-flex items-center gap-1.5 transition-colors"
+                          >
+                            <span className="text-bone-faint">·</span>
+                            <span>{m.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-ghost shrink-0"
+                    >
+                      Visit primary flagship
+                      <Arrow size={15} />
+                    </a>
+                  </div>
+                ) : project.liveUrl ? (
                   <a
                     href={project.liveUrl}
                     target="_blank"
@@ -192,7 +245,7 @@ const ProjectModal: React.FC<{
                       />
                     </span>
                   </a>
-                )}
+                ) : null}
 
                 {/* Narrative */}
                 <div className="mt-14 md:mt-20 grid lg:grid-cols-12 gap-y-10 gap-x-14">
