@@ -43,27 +43,28 @@ const Hero: React.FC = () => {
         {/* -----------------------------------------------------------------------
             LEFT BADGE: "Located in Nigeria" capsule with rotating wireframe globe
             Exact Dennis Snellenberg style attached to the left edge
+            On mobile (< md), placed at top-20 to stay well above the head
             ----------------------------------------------------------------------- */}
         <motion.div
           {...fadeIn(0.2)}
-          className="absolute left-0 top-[35%] md:top-[40%] -translate-y-1/2 z-30"
+          className="absolute left-0 top-20 sm:top-24 md:top-[40%] -translate-y-1/2 z-30"
         >
-          <div className="bg-[#1C1D20] text-white pl-5 md:pl-7 pr-3 py-3 md:py-3.5 rounded-r-full flex items-center gap-3.5 md:gap-4 shadow-2xl border-y border-r border-white/10 group cursor-default">
-            <div className="text-xs sm:text-[13px] md:text-sm leading-[1.25] font-sans tracking-wide text-left select-none">
+          <div className="bg-[#1C1D20] text-white pl-4 sm:pl-5 md:pl-7 pr-2.5 sm:pr-3 py-2 sm:py-3 md:py-3.5 rounded-r-full flex items-center gap-2.5 sm:gap-3.5 md:gap-4 shadow-2xl border-y border-r border-white/10 group cursor-default">
+            <div className="text-[11px] sm:text-[13px] md:text-sm leading-[1.25] font-sans tracking-wide text-left select-none">
               <span className="block text-white/80">Located</span>
               <span className="block text-white/80">in</span>
               <span className="block text-white font-semibold">Nigeria</span>
             </div>
 
-            <div className="w-11 h-11 md:w-13 md:h-13 rounded-full bg-[#999D9E]/30 border border-white/20 flex items-center justify-center text-white/95 shrink-0">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 md:w-13 md:h-13 rounded-full bg-[#999D9E]/30 border border-white/20 flex items-center justify-center text-white/95 shrink-0">
               <svg
-                width="22"
-                height="22"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.6"
-                className="globe-spin"
+                className="globe-spin sm:w-[22px] sm:h-[22px]"
                 aria-hidden="true"
               >
                 <circle cx="12" cy="12" r="10" />
@@ -76,26 +77,26 @@ const Hero: React.FC = () => {
 
         {/* -----------------------------------------------------------------------
             RIGHT BADGE: Down-right arrow + "Freelance Designer & Developer"
-            Exact Dennis Snellenberg style positioned on right side with large font
+            On mobile (< md), placed at top-20 to stay well above the head
             ----------------------------------------------------------------------- */}
         <motion.div
           {...fadeIn(0.25)}
-          className="absolute right-6 md:right-16 lg:right-28 top-[35%] md:top-[40%] -translate-y-1/2 z-30 text-left pointer-events-none select-none"
+          className="absolute right-4 sm:right-6 md:right-16 lg:right-28 top-20 sm:top-24 md:top-[40%] -translate-y-1/2 z-30 text-left pointer-events-none select-none"
         >
           <div className="flex flex-col items-start">
             <svg
-              width="30"
-              height="30"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="text-white mb-2 md:mb-3"
+              className="text-white mb-1.5 sm:mb-2 md:mb-3 md:w-[30px] md:h-[30px]"
               aria-hidden="true"
             >
               <path d="M7 7l10 10M17 7v10H7" />
             </svg>
-            <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] font-sans font-normal leading-[1.12] tracking-tight">
+            <div className="text-white text-sm sm:text-base md:text-3xl lg:text-[2.2rem] font-sans font-normal leading-[1.15] tracking-tight">
               <p>Freelance</p>
               <p className="font-light text-white/90">Designer &amp; Developer</p>
             </div>
@@ -104,11 +105,13 @@ const Hero: React.FC = () => {
 
         {/* -----------------------------------------------------------------------
             CENTERED PORTRAIT: BEHIND the sliding marquee text (z-10)
-            Head reaches near top, chest & body sits behind the giant white letters
+            - Person center is at 54.38% of image canvas
+            - translateX(-8%) centers the person and gives subtle left shift as preferred
+            - h-[62vh] on mobile gives clean breathing room below badges
             ----------------------------------------------------------------------- */}
         <motion.div
           {...fadeIn(0.3)}
-          className="relative inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-hidden h-[76vh] sm:h-[80vh] md:h-[85vh] lg:h-[89vh] max-h-[950px]"
+          className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-hidden h-[62vh] sm:h-[72vh] md:h-[85vh] lg:h-[89vh] max-h-[950px]"
         >
           <img
             src="/brand/portrait-clean.png"
@@ -118,21 +121,24 @@ const Hero: React.FC = () => {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl translate-y-[2px]"
+            className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl"
+            style={{
+              /* Center the person with subtle leftward shift */
+              transform: "translateX(-8%) translateY(2px)",
+            }}
           />
         </motion.div>
 
         {/* -----------------------------------------------------------------------
             SIGNATURE MARQUEE: IN FRONT of the portrait (z-20)
-            Giant bold white typography sliding continuously across his lower chest
-            Matches Dennis Snellenberg's exact proportion and layering
+            - On mobile: push it lower so it doesn't overlap the face
             ----------------------------------------------------------------------- */}
         <div className="absolute inset-x-0 bottom-0 md:bottom-2 z-20 pointer-events-none overflow-hidden select-none">
           <div className="hero-marquee-track">
-            <span className="font-sans font-normal text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-16 md:pr-24 drop-shadow-sm">
+            <span className="font-sans font-normal text-[clamp(6rem,20vw,22rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-16 md:pr-24 drop-shadow-sm">
               — {profile.name} — {profile.name}
             </span>
-            <span className="font-sans font-normal text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-16 md:pr-24 drop-shadow-sm">
+            <span className="font-sans font-normal text-[clamp(6rem,20vw,22rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-16 md:pr-24 drop-shadow-sm">
               — {profile.name} — {profile.name}
             </span>
           </div>
@@ -141,10 +147,6 @@ const Hero: React.FC = () => {
 
       {/* =========================================================================
           EDITORIAL INTRO SECTION — Dennis Snellenberg style
-          - Clean off-white background
-          - Large editorial statement
-          - Ethos description
-          - Circular magnetic "About me" button
           ========================================================================= */}
       <section className="section bg-cream">
         <div className="shell grid lg:grid-cols-12 gap-10 md:gap-14 items-start">
