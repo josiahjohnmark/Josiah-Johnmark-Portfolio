@@ -220,7 +220,7 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.25, ease: EASE }}
-        className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-hidden h-[84vh] sm:h-[88vh] md:h-[90vh] lg:h-[94vh]"
+        className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-visible h-[82vh] sm:h-[86vh] md:h-[90vh] lg:h-[94vh]"
       >
         <img
           src="/brand/portrait-clean.png"
@@ -230,7 +230,7 @@ const Hero: React.FC = () => {
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl scale-[1.18] sm:scale-[1.12] md:scale-100 origin-bottom"
+          className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl origin-bottom"
           style={{
             /* Centered on the person with subtle leftward shift */
             transform: "translateX(-7%) translateY(0px)",
