@@ -74,27 +74,17 @@ const Nav: React.FC = () => {
             ))}
           </div>
 
-          {/* Mobile hamburger on hero */}
+          {/* Mobile menu button matching Dennis Snellenberg Image 2: "• Menu" */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden -mr-2 w-12 h-12 flex items-center justify-center text-white"
+            className="md:hidden flex items-center gap-1.5 py-1 px-1 text-white hover:opacity-80 transition-opacity"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
           >
-            <span className="relative block w-6 h-3.5" aria-hidden="true">
-              <span
-                className={`absolute left-0 w-6 h-px bg-current transition-all duration-500 ${
-                  open ? "top-1.5 rotate-45" : "top-0"
-                }`}
-              />
-              <span
-                className={`absolute left-0 w-6 h-px bg-current transition-all duration-500 ${
-                  open ? "top-1.5 -rotate-45" : "top-3"
-                }`}
-              />
-            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-white inline-block" />
+            <span className="text-sm font-medium tracking-tight">{open ? "Close" : "Menu"}</span>
           </button>
         </nav>
       </header>

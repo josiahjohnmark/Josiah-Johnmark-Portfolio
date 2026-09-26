@@ -51,12 +51,12 @@ const ScrollResponsiveMarquee: React.FC = () => {
   }, [smoothVelocity]);
 
   return (
-    <div className="absolute inset-x-0 bottom-16 sm:bottom-20 md:bottom-2 z-20 pointer-events-none overflow-hidden select-none">
+    <div className="absolute inset-x-0 bottom-[24vh] sm:bottom-[22vh] md:bottom-2 z-20 pointer-events-none overflow-hidden select-none">
       <div ref={trackRef} className="flex whitespace-nowrap will-change-transform w-fit">
-        <span className="font-sans font-normal text-[clamp(5.5rem,18vw,22rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-12 md:pr-24 drop-shadow-sm">
+        <span className="font-sans font-normal text-[clamp(7rem,22vw,14rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-12 md:pr-24 drop-shadow-sm">
           — {profile.name} — {profile.name}
         </span>
-        <span className="font-sans font-normal text-[clamp(5.5rem,18vw,22rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-12 md:pr-24 drop-shadow-sm">
+        <span className="font-sans font-normal text-[clamp(7rem,22vw,14rem)] md:text-[clamp(8.5rem,24vw,22rem)] leading-[0.82] tracking-[-0.04em] text-white pr-12 md:pr-24 drop-shadow-sm">
           — {profile.name} — {profile.name}
         </span>
       </div>
@@ -125,7 +125,7 @@ const Hero: React.FC = () => {
       </motion.div>
 
       {/* -----------------------------------------------------------------------
-          DESKTOP RIGHT BADGE: Down-right arrow + "Freelance Designer & Developer"
+          DESKTOP RIGHT BADGE: Down-right arrow + "Freelance Game Dev & UI/UX Designer"
           ----------------------------------------------------------------------- */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
@@ -148,38 +148,66 @@ const Hero: React.FC = () => {
           </svg>
           <div className="text-white text-2xl md:text-3xl lg:text-[2.2rem] font-sans font-normal leading-[1.12] tracking-tight">
             <p>Freelance</p>
-            <p className="font-light text-white/90">Designer &amp; Developer</p>
+            <p className="font-light text-white/90">Game Dev &amp; UI/UX Designer</p>
           </div>
         </div>
       </motion.div>
 
       {/* -----------------------------------------------------------------------
           MOBILE BOTTOM-LEFT BADGE (Exact Dennis Snellenberg Image 2):
-          Placed below the sliding text in the bottom-left corner
+          Placed in bottom-left corner with arrow and updated role
           ----------------------------------------------------------------------- */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-        className="md:hidden absolute left-5 bottom-4 z-30 pointer-events-none select-none"
+        className="md:hidden absolute left-6 bottom-7 z-30 pointer-events-none select-none"
       >
         <div className="flex flex-col items-start">
           <svg
-            width="20"
-            height="20"
+            width="22"
+            height="22"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
-            className="text-white mb-1"
+            strokeWidth="2.2"
+            className="text-white mb-2"
             aria-hidden="true"
           >
             <path d="M7 7l10 10M17 7v10H7" />
           </svg>
-          <div className="text-white text-base font-sans font-normal leading-[1.15] tracking-tight">
-            <p>Freelance</p>
-            <p className="font-light text-white/90">Designer &amp; Developer</p>
+          <div className="text-white text-base sm:text-lg font-sans leading-[1.2] tracking-tight">
+            <p className="font-normal">Freelance</p>
+            <p className="font-light text-white/90">Game Dev &amp; UI/UX Designer</p>
           </div>
+        </div>
+      </motion.div>
+
+      {/* -----------------------------------------------------------------------
+          MOBILE BOTTOM-RIGHT GLOBE (Exact Dennis Snellenberg Image 2):
+          White wireframe globe positioned at bottom-right, aligned with bottom text
+          ----------------------------------------------------------------------- */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
+        className="md:hidden absolute right-6 bottom-7 z-30 pointer-events-none select-none"
+      >
+        <div className="w-12 h-12 flex items-center justify-center text-white/90">
+          <svg
+            width="46"
+            height="46"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.1"
+            className="globe-spin"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            <path d="M2 12h20" />
+          </svg>
         </div>
       </motion.div>
 
@@ -192,7 +220,7 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.25, ease: EASE }}
-        className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-hidden h-[78vh] sm:h-[84vh] md:h-[90vh] lg:h-[94vh]"
+        className="absolute inset-x-0 bottom-0 flex justify-center items-end pointer-events-none z-10 overflow-hidden h-[84vh] sm:h-[88vh] md:h-[90vh] lg:h-[94vh]"
       >
         <img
           src="/brand/portrait-clean.png"
@@ -202,10 +230,10 @@ const Hero: React.FC = () => {
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl scale-[1.12] sm:scale-[1.08] md:scale-100 origin-bottom"
+          className="h-full w-auto max-w-none object-contain object-bottom select-none drop-shadow-2xl scale-[1.18] sm:scale-[1.12] md:scale-100 origin-bottom"
           style={{
             /* Centered on the person with subtle leftward shift */
-            transform: "translateX(-8%) translateY(2px)",
+            transform: "translateX(-7%) translateY(0px)",
           }}
         />
       </motion.div>
