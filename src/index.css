@@ -555,3 +555,90 @@ body.no-scroll { overflow: hidden; }
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* ==========================================================================
+   Dennis Snellenberg Floating Cursor Project Preview Modal
+   ========================================================================== */
+
+.project-hover-img {
+  position: fixed;
+  width: 380px;
+  height: 270px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 120;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, left, top;
+}
+
+.project-hover-img.visible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.project-hover-badge {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: #455CE9; /* Dennis blue */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow: 0 10px 25px rgba(69, 92, 233, 0.45);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   Dennis Snellenberg Curved Fill Button
+   Organic curved wave fills the button from bottom to top on hover
+   ========================================================================== */
+
+.btn-curve {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+.btn-curve::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 150%;
+  height: 220%;
+  background-color: var(--fill-bg, #1C1D20);
+  border-radius: 50%;
+  transform: translate(-50%, 0);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.55s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.btn-curve:hover::before {
+  transform: translate(-50%, -85%);
+  border-radius: 0%;
+}
+
+.btn-curve:hover {
+  color: #ffffff !important;
+}
+
+.btn-curve-blue::before {
+  background-color: #455CE9;
+}
+

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { projects, type Project } from "../data/site";
 import { Reveal, SectionHeading } from "./primitives";
@@ -16,12 +16,12 @@ const HoverPreview: React.FC<{
 
   return (
     <div
-      className={`project-hover-img rounded-2xl overflow-hidden ${
+      className={`project-hover-img ${
         activeProject ? "visible" : ""
       }`}
       style={{
-        left: mousePos.x - 220,
-        top: mousePos.y - 155,
+        left: mousePos.x - 190,
+        top: mousePos.y - 135,
         backgroundColor: activeProject?.coverTone || "#1C1D20",
       }}
     >
@@ -178,11 +178,14 @@ const Work: React.FC<{ onOpen: (p: Project) => void }> = ({ onOpen }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    /* Only track mouse when no project is expanded */
-    if (!expandedId) {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    }
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!expandedId) {
+        setMousePos({ x: e.clientX, y: e.clientY });
+      }
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
   }, [expandedId]);
 
   const handleToggle = useCallback((p: Project) => {
@@ -192,7 +195,7 @@ const Work: React.FC<{ onOpen: (p: Project) => void }> = ({ onOpen }) => {
   }, []);
 
   return (
-    <section id="work" className="section" onMouseMove={handleMouseMove}>
+    <section id="work" className="section">
       <div className="shell">
         <SectionHeading
           index="01"

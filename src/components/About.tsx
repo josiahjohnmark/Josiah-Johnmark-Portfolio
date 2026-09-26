@@ -50,10 +50,10 @@ const About: React.FC = () => (
           </Reveal>
         </div>
 
-        {/* Right: portrait with #999D9E studio background */}
+        {/* Right: portrait with #999D9E studio background scaled up boldly */}
         <Reveal delay={0.1}>
           <div className="lg:sticky lg:top-[calc(var(--nav-h)+2.5rem)]">
-            <div className="w-full max-w-[440px] aspect-[4/5] mx-auto lg:mx-0 rounded-3xl overflow-hidden bg-[#999D9E] pt-8 px-4 flex items-end justify-center shadow-lg">
+            <div className="w-full max-w-[480px] lg:max-w-[540px] aspect-[4/5] mx-auto lg:mx-0 rounded-[2rem] overflow-hidden bg-[#999D9E] pt-10 px-2 flex items-end justify-center shadow-2xl border border-black/5">
               <img
                 src="/brand/portrait-clean.png"
                 alt={`${profile.name} in the studio`}
@@ -61,7 +61,7 @@ const About: React.FC = () => (
                 height={700}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-auto object-bottom select-none drop-shadow-xl scale-[1.4] origin-bottom translate-y-[2px]"
+                className="w-full h-auto object-bottom select-none drop-shadow-2xl scale-[1.55] origin-bottom translate-y-[4px]"
               />
             </div>
           </div>

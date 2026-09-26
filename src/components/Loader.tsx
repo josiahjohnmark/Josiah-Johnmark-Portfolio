@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
+import { motion } from "motion/react";
 
 /* --------------------------------------------------------------------------
    50 major-language greetings — the final one is English "Hello"
+   Dennis Snellenberg signature sequence
    -------------------------------------------------------------------------- */
 const GREETINGS = [
   "مرحبا",       // Arabic
@@ -57,23 +59,42 @@ const GREETINGS = [
 ];
 
 const TOTAL_GREETINGS = GREETINGS.length;
-const TOTAL_DURATION_MS = 3000;
-const HOLD_HELLO_MS = 1000;       // Exactly 1 second as requested
-const DOOR_DURATION_S = 1.25;
+const TOTAL_DURATION_MS = 2800;
+const HOLD_HELLO_MS = 1000; // Exactly 1 second on "Hello"
 
 interface LoaderProps {
   onStartOpening?: () => void;
   onComplete: () => void;
 }
 
+const curveEase = [0.76, 0, 0.24, 1] as const;
+
 const Loader: React.FC<LoaderProps> = ({ onStartOpening, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [greeting, setGreeting] = useState(GREETINGS[0]);
-  const [phase, setPhase] = useState<"counting" | "holding" | "opening" | "done">("counting");
+  const [phase, setPhase] = useState<"counting" | "holding" | "rising" | "done">("counting");
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
+
   const startRef = useRef<number>(0);
   const rafRef = useRef<number>(0);
   const lastIdxRef = useRef<number>(-1);
 
+  // Measure window dimensions
+  useEffect(() => {
+    setDimension({ width: window.innerWidth, height: window.innerHeight });
+    const handleResize = () => {
+      setDimension({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Lock scroll to top while loader is active
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Progress counter and greeting cycler
   const tick = useCallback(
     (now: number) => {
       if (!startRef.current) startRef.current = now;
@@ -112,60 +133,56 @@ const Loader: React.FC<LoaderProps> = ({ onStartOpening, onComplete }) => {
   useEffect(() => {
     if (phase === "holding") {
       const timer = setTimeout(() => {
-        setPhase("opening");
+        window.scrollTo(0, 0);
+        setPhase("rising");
         onStartOpening?.();
       }, HOLD_HELLO_MS);
       return () => clearTimeout(timer);
     }
-    if (phase === "opening") {
-      const timer = setTimeout(
-        () => {
-          setPhase("done");
-          onComplete();
-        },
-        DOOR_DURATION_S * 1000 + 200
-      );
-      return () => clearTimeout(timer);
-    }
-  }, [phase, onStartOpening, onComplete]);
+  }, [phase, onStartOpening]);
 
-  if (phase === "done") return null;
+  if (phase === "done" || dimension.width === 0) return null;
 
-  const isOpening = phase === "opening";
+  // Dennis Snellenberg SVG curve coordinates:
+  // Starts with a concave curve extending 300px below window height,
+  // then flattens out as the entire curtain slides up off-screen.
+  const initialPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height + 320} 0 ${dimension.height} L0 0`;
+  const targetPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height} L0 0`;
+
+  const isRising = phase === "rising";
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
-      aria-hidden="true"
+    <motion.div
+      initial={{ top: 0 }}
+      animate={isRising ? { top: "-100vh" } : { top: 0 }}
+      transition={{ duration: 0.95, ease: curveEase as unknown as number[] }}
+      onAnimationComplete={() => {
+        if (isRising) {
+          window.scrollTo(0, 0);
+          setPhase("done");
+          onComplete();
+        }
+      }}
+      className="fixed inset-0 z-[99999] h-screen w-screen pointer-events-none"
     >
-      {/* LEFT DOOR */}
-      <div
-        className="absolute inset-y-0 left-0 w-1/2 bg-[#1C1D20] z-[10001]"
-        style={{
-          transform: isOpening ? "translateX(-100%)" : "translateX(0%)",
-          transition: isOpening
-            ? `transform ${DOOR_DURATION_S}s cubic-bezier(0.16, 1, 0.3, 1)`
-            : "none",
-        }}
-      />
+      {/* Curved SVG curtain — fills background and sweeps upward with liquid curve */}
+      <svg
+        className="absolute top-0 w-full h-[calc(100%+320px)] pointer-events-none fill-[#1C1D20]"
+        viewBox={`0 0 ${dimension.width} ${dimension.height + 320}`}
+      >
+        <motion.path
+          initial={{ d: initialPath }}
+          animate={isRising ? { d: targetPath } : { d: initialPath }}
+          transition={{ duration: 0.95, ease: curveEase as unknown as number[] }}
+        />
+      </svg>
 
-      {/* RIGHT DOOR */}
+      {/* Greeting text + counter — sits centered inside the dark curtain, fades up as curtain ascends */}
       <div
-        className="absolute inset-y-0 right-0 w-1/2 bg-[#1C1D20] z-[10001]"
+        className="relative z-10 h-full w-full flex flex-col items-center justify-center gap-6 select-none"
         style={{
-          transform: isOpening ? "translateX(100%)" : "translateX(0%)",
-          transition: isOpening
-            ? `transform ${DOOR_DURATION_S}s cubic-bezier(0.16, 1, 0.3, 1)`
-            : "none",
-        }}
-      />
-
-      {/* GREETING + COUNTER — fades out swiftly as doors begin parting */}
-      <div
-        className="relative z-[10002] flex flex-col items-center justify-center gap-6 select-none"
-        style={{
-          opacity: isOpening ? 0 : 1,
-          transform: isOpening ? "scale(0.92)" : "scale(1)",
+          opacity: isRising ? 0 : 1,
+          transform: isRising ? "translateY(-40px)" : "translateY(0px)",
           transition: "opacity 0.25s ease, transform 0.3s ease",
         }}
       >
@@ -181,7 +198,7 @@ const Loader: React.FC<LoaderProps> = ({ onStartOpening, onComplete }) => {
           {String(progress).padStart(3, "\u2007")}%
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
