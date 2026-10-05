@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAuth } from "./_lib/auth";
-import { getSha, putFile } from "./_lib/github";
-import { slugify } from "../src/data/schema";
+import { requireAuth } from "./_lib/auth.js";
+import { getSha, putFile } from "./_lib/github.js";
+import { slugify } from "../src/data/schema.js";
 
 /* Images arrive already resized and converted by the browser, so this handler
    only has to name them safely and commit them. That keeps the function small

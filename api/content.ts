@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAuth } from "./_lib/auth";
-import { getFile, putFile } from "./_lib/github";
-import { renumber, validateContent, type Content } from "../src/data/schema";
+import { requireAuth } from "./_lib/auth.js";
+import { getFile, putFile } from "./_lib/github.js";
+import { renumber, validateContent, type Content } from "../src/data/schema.js";
 
 const CONTENT_PATH = "src/data/content.json";
 
