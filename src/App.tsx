@@ -10,10 +10,17 @@ import Loader from "./components/Loader";
 import Nav from "./components/Nav";
 import Work from "./components/Work";
 import Magnetic from "./components/Magnetic";
+import { initVisitorTracker } from "./lib/tracker";
 
 export default function App() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [loaded, setLoaded] = useState(false);
+
+  // Initialize real-time visitor analytics tracking
+  useEffect(() => {
+    const cleanup = initVisitorTracker();
+    return cleanup;
+  }, []);
 
   // Ensure scroll is at absolute top when page is refreshed or loaded
   useEffect(() => {

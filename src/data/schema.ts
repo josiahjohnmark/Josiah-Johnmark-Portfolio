@@ -65,6 +65,8 @@ export type Project = {
   tools: string[];
   platform: string;
   liveUrl?: string;
+  /** Label for the live link card, e.g. "Google Play". Defaults to "Live site". */
+  liveLabel?: string;
   mirrors?: DomainMirror[];
   cover?: string;
   coverFit: "cover" | "contain";

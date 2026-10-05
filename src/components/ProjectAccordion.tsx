@@ -254,7 +254,7 @@ const StickyProjectHeader: React.FC<{
                 rel="noopener noreferrer"
                 className="btn btn-ghost !min-h-[2.5rem] !px-4 text-sm hidden sm:inline-flex"
               >
-                Visit site <Arrow size={13} />
+                {project.liveLabel ? "Open" : "Visit site"} <Arrow size={13} />
               </a>
             )}
             <button
@@ -405,7 +405,7 @@ const ProjectAccordion: React.FC<{
               className="mt-8 md:mt-10 p-5 md:p-7 border border-[var(--line)] rounded-2xl flex flex-wrap items-center justify-between gap-4 group/live block"
             >
               <div>
-                <span className="label block mb-2">Live site</span>
+                <span className="label block mb-2">{project.liveLabel || "Live site"}</span>
                 <span className="text-ink text-base md:text-lg break-all">
                   {project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}
                 </span>

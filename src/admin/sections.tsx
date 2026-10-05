@@ -335,6 +335,13 @@ const ProjectEditor: React.FC<{
         onChange={(v) => update({ liveUrl: v.trim() === "" ? undefined : v.trim() })}
       />
 
+      <Text
+        label="Live link label"
+        value={project.liveLabel ?? ""}
+        placeholder="Live site"
+        onChange={(v) => update({ liveLabel: v.trim() === "" ? undefined : v })}
+      />
+
       <div className="divider" />
 
       <ImageField

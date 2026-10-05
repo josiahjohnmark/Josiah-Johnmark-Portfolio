@@ -1,6 +1,7 @@
+@import "tailwindcss";
+
 /* ==========================================================================
-   Admin panel. Same palette as the site, but a denser, functional layout —
-   this is a tool, not a page.
+   Admin Creator Studio & Analytics Dashboard.
    ========================================================================== */
 
 :root {
@@ -607,4 +608,188 @@ select.input { appearance: none; cursor: pointer; }
     transition-duration: 0.001ms !important;
   }
   .spinner { animation-duration: 0.7s !important; }
+}
+
+/* ==========================================================================
+   Mobile app shell (≤ 900px): app header, bottom tab bar, "More" sheet,
+   publish bar docked above the tabs. Desktop keeps the sidebar layout.
+   ========================================================================== */
+
+:root { --tabbar-h: 4rem; }
+
+.mobile-title,
+.tabbar { display: none; }
+
+@media (max-width: 900px) {
+  .desktop-only,
+  .sidebar,
+  .scrim,
+  .menu-toggle { display: none !important; }
+
+  html, body { overscroll-behavior-y: none; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+
+  .admin {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 5rem);
+  }
+
+  .topbar {
+    height: calc(var(--topbar-h) + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .mobile-title {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-body { padding-inline: 0; }
+  /* Let every flex/grid child shrink to the phone width instead of
+     pushing the page sideways; icons keep their size. */
+  .admin-main :where(div, section, article, header, form, p, span, a, label, li) { min-width: 0; }
+  .admin-main svg { flex-shrink: 0; }
+  .admin-main { overflow-wrap: break-word; }
+  .admin-main { padding: 1rem max(1rem, env(safe-area-inset-left)) 0; }
+
+  /* ---- bottom tab bar ---- */
+  .tabbar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 46;
+    background: rgba(14, 14, 16, 0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tab-btn {
+    height: var(--tabbar-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: 0;
+    color: var(--faint);
+    font: 500 0.68rem/1 var(--sans);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s var(--ease), transform 0.15s var(--ease);
+  }
+  .tab-btn span {
+    max-width: 100%;
+    padding-inline: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tab-btn:active { transform: scale(0.92); }
+  .tab-btn.is-active { color: var(--gold); }
+  .tab-btn.is-active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 1.75rem;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: var(--gold);
+  }
+
+  /* ---- publish bar docks above the tab bar, only when there is work ---- */
+  .publishbar {
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+    padding: 0.6rem 0.75rem !important;
+  }
+  .publishbar:not(.is-dirty) { display: none; }
+  .publishbar .publish-note input { font-size: 16px; padding-block: 0.6rem; }
+  .publishbar button { padding-inline: 1rem; white-space: nowrap; }
+
+  .toast-pos {
+    left: 1rem !important;
+    right: 1rem !important;
+    max-width: none !important;
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 4.75rem) !important;
+  }
+
+  /* inputs at 16px stop iOS zooming the page on focus */
+  input, textarea, select { font-size: 16px !important; }
+}
+
+/* ---- "More" bottom sheet ---- */
+.sheet-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(0, 0, 0, 0.55);
+  animation: sheet-fade 0.2s ease;
+}
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 56;
+  max-height: 85dvh;
+  overflow-y: auto;
+  background: var(--elev);
+  border-top: 1px solid var(--line-strong);
+  border-radius: 1.25rem 1.25rem 0 0;
+  padding: 0.5rem 0.75rem calc(1rem + env(safe-area-inset-bottom));
+  animation: sheet-up 0.32s var(--ease);
+}
+.sheet-grip {
+  width: 2.5rem;
+  height: 4px;
+  margin: 0.35rem auto 0.75rem;
+  border-radius: 99px;
+  background: var(--line-strong);
+}
+.sheet-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.6rem 0.75rem;
+  border: 0;
+  border-radius: 0.875rem;
+  background: none;
+  color: var(--bone);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sheet-item:active,
+.sheet-item.is-active { background: var(--elev-2); }
+.sheet-item.is-active .sheet-icon { color: var(--gold); background: rgba(216, 180, 74, 0.12); }
+.sheet-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: var(--elev-3);
+  color: var(--muted);
+}
+.sheet-divider { height: 1px; margin: 0.5rem 0.75rem; background: var(--line); }
+
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes sheet-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Installed as a home-screen app: no browser chrome above the header */
+@media (display-mode: standalone) {
+  .topbar { background: rgba(10, 10, 11, 0.98); }
 }

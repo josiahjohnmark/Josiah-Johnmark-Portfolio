@@ -131,7 +131,7 @@
       "title": "Ludo NX",
       "kind": "Game",
       "year": "2026",
-      "summary": "A mobile board game that rebuilds Ludo as a modern product — gameplay systems, player progression, customisation and an in-game economy, wrapped in a premium board-game look.",
+      "summary": "A mobile board game that rebuilds Ludo as a modern product — gameplay systems, player progression, customisation and an in-game economy, wrapped in a premium board-game look. Currently in active development: an early build is on Google Play while I debug and finish the remaining features.",
       "role": "Game developer · UI/UX designer · Visual designer",
       "tools": [
         "Unity",
@@ -139,7 +139,9 @@
         "Figma",
         "Blender"
       ],
-      "platform": "iOS & Android",
+      "platform": "Android (Google Play)",
+      "liveUrl": "https://play.google.com/store/apps/details?id=com.ludonx.game",
+      "liveLabel": "Google Play · early access, in development",
       "cover": "/images/projects/ludo_nx/ludo_nx_logo.png",
       "coverFit": "contain",
       "coverTone": "#1b2230",
@@ -177,11 +179,53 @@
           "body": "Built in Unity on a modular C# architecture with decoupled, event-driven game controllers, optimised sprite atlases and dynamic canvas scaling, so the layout holds from small phones through to tablets."
         },
         {
-          "heading": "Result",
-          "body": "A complete mobile title that shows the full range of what I do: game systems, visual polish, product structure and user experience — all in one build."
+          "heading": "Status",
+          "body": "Ludo NX is still in active development. An early build is available on Google Play, but the game isn't finished yet — I'm currently debugging a few technical issues and completing the remaining features before a full release. Expect regular updates as it moves toward 1.0."
         }
       ],
       "shots": [
+        {
+          "id": "gameplay-board",
+          "title": "Gameplay board",
+          "caption": "The match screen: a four-player 15×15 board, player cards with level, NX points and win rate, twin dice and a timed ROLL control.",
+          "src": "/images/ludo_nx/gameplay-board.webp",
+          "shape": "phone"
+        },
+        {
+          "id": "tournament-leaderboard",
+          "title": "Tournament leaderboard",
+          "caption": "Ranked tournament standings with energy and NX point totals, top-three podium colours and the player's own position pinned at the bottom.",
+          "src": "/images/ludo_nx/tournament-leaderboard.webp",
+          "shape": "phone"
+        },
+        {
+          "id": "menu-settings",
+          "title": "Menu & settings",
+          "caption": "The main menu grid, account management, language selection (English, Hausa, Igbo, Tarok) and legal panels.",
+          "src": "/images/ludo_nx/menu-settings.webp",
+          "shape": "square"
+        },
+        {
+          "id": "profile-avatar",
+          "title": "Profile & avatars",
+          "caption": "Collectible character card, avatar picker and the change-name dialog.",
+          "src": "/images/ludo_nx/profile-avatar.webp",
+          "shape": "square"
+        },
+        {
+          "id": "shop",
+          "title": "In-game shop",
+          "caption": "Shop cards for energy, token sets, emoji packs and dice skins.",
+          "src": "/images/ludo_nx/shop.webp",
+          "shape": "square"
+        },
+        {
+          "id": "dice-faces",
+          "title": "Dice faces",
+          "caption": "Rendered dice faces used for roll results across the board and shop.",
+          "src": "/images/ludo_nx/dice-faces.webp",
+          "shape": "square"
+        },
         {
           "id": "friends-list",
           "title": "Friends list",
@@ -286,8 +330,14 @@
       "platform": "Web & mobile",
       "liveUrl": "https://www.dakardapper.com/",
       "mirrors": [
-        { "label": ".org", "url": "https://www.dakardapper.org/" },
-        { "label": ".shop", "url": "https://www.dakardapper.shop/" }
+        {
+          "label": ".org",
+          "url": "https://www.dakardapper.org/"
+        },
+        {
+          "label": ".shop",
+          "url": "https://www.dakardapper.shop/"
+        }
       ],
       "cover": "/images/projects/dakar-dapper/dakar_dapper_logo.jpeg",
       "coverFit": "contain",

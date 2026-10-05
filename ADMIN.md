@@ -68,32 +68,52 @@ whether the server can reach GitHub, and names anything still missing.
 
 ---
 
-## Using it
+## Creator Studio Sections (Social Media Style)
 
-**Sections** are in the sidebar:
+The admin panel is designed like a modern Creator Studio (similar to Instagram Professional Dashboard / Threads / YouTube Studio):
 
-| Section | What you edit |
+| Section | What you see & edit |
 |---|---|
-| Profile & contact | Name, role, the hero sentence, availability badge, email, WhatsApp, Telegram, social links, CV |
-| About | Your story paragraphs, quick facts, the graphite drawings |
-| Projects | Everything about each project, plus adding and removing them |
-| Explorations | The personal experiments strip |
-| What I do | The four disciplines |
-| Help & status | How publishing works, and whether the server is configured |
+| 📊 **Insights & Analytics** | **100% Real visitor data from Supabase**: total visitors, live active viewers right now, dwell time (minutes & seconds spent), country flags & cities, device split (mobile vs desktop), and live visitor feed |
+| 📱 **Portfolio Feed** | Social media post feed of your projects: cover images, tags, reordering, inline post editor, and 1-click "New Project Post" composer |
+| 👤 **Profile & Bio** | Creator profile card, instant "🟢 Available for Work" status toggle, hero headline, WhatsApp, Telegram, email, and social profiles |
+| ⚡ **Stories & Experiments** | Explorations and interactive animation reels |
+| 🎨 **About & Story** | Narrative paragraphs, quick facts counters, graphite drawings |
+| 🗂️ **Disciplines** | Product design, motion, brand systems, and tools |
+| 🗄️ **Supabase & Database** | Connect your Supabase project URL & Anon key, test connection, and copy the 1-click SQL schema |
+| ℹ️ **System & Status** | GitHub connection status and publishing pipeline |
 
-**Nothing is live until you press Publish.** Edit as much as you like; the bar
-at the bottom shows *Unpublished changes* until you do. Publishing writes a
-commit to GitHub, Vercel rebuilds, and the live site updates in about a minute.
+### On your phone
 
-The optional box next to the Publish button is a short note about what you
-changed. It becomes the commit message, so your history reads sensibly later.
+On screens narrower than 900px the panel switches to an app layout: a bottom
+tab bar (Insights, Projects, Profile, More), the current section's name in the
+header, and a Publish bar that appears above the tabs only when you have
+unpublished changes. Sign out, View site and Supabase live in the **More** sheet.
 
-**Reordering.** Use the ↑ and ↓ buttons on any list — projects, case study
-sections, screenshots, paragraphs. Project numbers (01, 02…) are worked out
-from the order, so you never type them.
+Install it like an app so it opens full-screen from your home screen:
 
-**Deleting** takes two taps: ✕, then *Sure?*. It cancels itself after a few
-seconds if you do not confirm.
+- **Android (Chrome):** open `/admin` → ⋮ menu → **Add to Home screen** / **Install app**
+- **iPhone (Safari):** open `/admin` → Share → **Add to Home Screen**
+
+It installs as **Studio**.
+
+---
+
+## Setting up Real Supabase Analytics (2 Minutes)
+
+To get 100% genuine, un-fabricated visitor counts, minutes spent, and geographic locations:
+
+1. Create a free project at [supabase.com](https://supabase.com).
+2. Go to **SQL Editor → New Query**, copy the SQL schema from the admin panel (**Supabase & Database** tab or the "Connect Supabase" modal), and press **Run**.
+3. Go to **Project Settings → API** and copy:
+   - **Project URL**
+   - **anon public key**
+4. In your portfolio admin panel (`/admin`), click **Connect Supabase**, paste your URL and Anon Key, and click **Save & Activate**.
+5. You can also add them to Vercel Environment Variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   and redeploy.
+6. As soon as visitors browse your portfolio, their dwell time, country, city, and device type stream live into your Creator Studio!
 
 ---
 
